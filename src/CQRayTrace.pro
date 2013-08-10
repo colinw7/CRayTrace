@@ -41,7 +41,6 @@ CRGBName.cpp \
 CThread.cpp \
 CSample.cpp \
 CSolidNoise.cpp \
-CRegExp.cpp \
 pthread_rdwr.c \
 
 HEADERS += \
@@ -101,7 +100,6 @@ CXMLText.h \
 CXMLToken.h \
 CXMLTypes.h \
 CXMLVisitor.h \
-CRegExp.h \
 pthread_rdwr.h \
 
 DESTDIR     = ../bin
@@ -113,6 +111,7 @@ INCLUDEPATH += \
 ../../CImageLib/include \
 ../../CFile/include \
 ../../CMath/include \
+../../CRegExp/include \
 ../../CStrUtil/include \
 ../../COS/include \
 ../../CUtil/include \
@@ -123,10 +122,12 @@ unix:LIBS += \
 -L../../CImageLib/lib \
 -L../../CFile/lib \
 -L../../CMath/lib \
+-L../../CRegExp/lib \
 -L../../CStrUtil/lib \
 -L../../COS/lib \
 -lCImageLib \
 -lCFile \
+-lCRegExp \
 -lCStrUtil \
 -lCOS \
 -ltre -lpng -ljpeg
