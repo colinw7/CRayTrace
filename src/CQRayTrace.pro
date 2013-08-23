@@ -28,20 +28,9 @@ CRayTriangle.cpp \
 CRayNoiseTexture.cpp \
 CRayMarbleTexture.cpp \
 CRayImageTexture.cpp \
-CXML.cpp \
-CXMLComment.cpp \
-CXMLExecute.cpp \
-CXMLNamedChar.cpp \
-CXMLParser.cpp \
-CXMLTag.cpp \
-CXMLText.cpp \
-CXMLToken.cpp \
-CXMLVisitor.cpp \
 CRGBName.cpp \
-CThread.cpp \
 CSample.cpp \
 CSolidNoise.cpp \
-pthread_rdwr.c \
 
 HEADERS += \
 CQRayTrace.h \
@@ -86,21 +75,8 @@ CShape3D.h \
 CSolidNoise.h \
 CSphere3D.h \
 CSquare3D.h \
-CThread.h \
 CTransform2D.h \
 CTriangle3D.h \
-CXMLComment.h \
-CXMLExecute.h \
-CXML.h \
-CXMLLib.h \
-CXMLNamedChar.h \
-CXMLParser.h \
-CXMLTag.h \
-CXMLText.h \
-CXMLToken.h \
-CXMLTypes.h \
-CXMLVisitor.h \
-pthread_rdwr.h \
 
 DESTDIR     = ../bin
 OBJECTS_DIR = ../obj
@@ -108,7 +84,9 @@ LIB_DIR     = ../lib
 
 INCLUDEPATH += \
 ../include \
+../../CXML/include \
 ../../CImageLib/include \
+../../CThread/include \
 ../../CFile/include \
 ../../CMath/include \
 ../../CRegExp/include \
@@ -119,13 +97,17 @@ INCLUDEPATH += \
 
 unix:LIBS += \
 -L$$LIB_DIR \
+-L../../CXML/lib \
 -L../../CImageLib/lib \
+-L../../CThread/lib \
 -L../../CFile/lib \
 -L../../CMath/lib \
 -L../../CRegExp/lib \
 -L../../CStrUtil/lib \
 -L../../COS/lib \
+-lCXML \
 -lCImageLib \
+-lCThread \
 -lCFile \
 -lCRegExp \
 -lCStrUtil \
