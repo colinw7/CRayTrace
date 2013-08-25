@@ -28,7 +28,6 @@ CRayTriangle.cpp \
 CRayNoiseTexture.cpp \
 CRayMarbleTexture.cpp \
 CRayImageTexture.cpp \
-CRGBName.cpp \
 CSample.cpp \
 CSolidNoise.cpp \
 
@@ -69,7 +68,6 @@ CNPlane3D.h \
 COctTree.h \
 CParaboloid3D.h \
 CPlane3D.h \
-CRGBName.h \
 CSample.h \
 CShape3D.h \
 CSolidNoise.h \
@@ -91,6 +89,7 @@ INCLUDEPATH += \
 ../../CMath/include \
 ../../CRegExp/include \
 ../../CStrUtil/include \
+../../CRGBName/include \
 ../../COS/include \
 ../../CUtil/include \
 .
@@ -104,6 +103,7 @@ unix:LIBS += \
 -L../../CMath/lib \
 -L../../CRegExp/lib \
 -L../../CStrUtil/lib \
+-L../../CRGBName/lib \
 -L../../COS/lib \
 -lCXML \
 -lCImageLib \
@@ -111,5 +111,6 @@ unix:LIBS += \
 -lCFile \
 -lCRegExp \
 -lCStrUtil \
+-lCRGBName \
 -lCOS \
 -ltre -lpng -ljpeg
