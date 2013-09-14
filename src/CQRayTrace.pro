@@ -73,7 +73,6 @@ CShape3D.h \
 CSolidNoise.h \
 CSphere3D.h \
 CSquare3D.h \
-CTransform2D.h \
 CTriangle3D.h \
 
 DESTDIR     = ../bin
