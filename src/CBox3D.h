@@ -29,12 +29,12 @@ class CBox3DT : public CShape3DT<T> {
   T getZSize() const { return rz_; }
 
   BBox getBBox() const {
-    return BBox(transformFrom(pmin_), transformFrom(pmax_));
+    return BBox(CShape3D::transformFrom(pmin_), CShape3D::transformFrom(pmax_));
   }
 
   bool intersect(const Line &line, T *tmin, T *tmax) const {
-    Point p1 = transformTo(line.start());
-    Point p2 = transformTo(line.end  ());
+    Point p1 = CShape3D::transformTo(line.start());
+    Point p2 = CShape3D::transformTo(line.end  ());
 
     Point v = Vector(p1, p2).point();
 
@@ -103,7 +103,7 @@ class CBox3DT : public CShape3DT<T> {
   }
 
   Vector pointNormal(const Point &point) const {
-    Point p = transformTo(point);
+    Point p = CShape3D::transformTo(point);
 
     Vector n;
 
@@ -115,11 +115,11 @@ class CBox3DT : public CShape3DT<T> {
     else if (REAL_EQ(p.z, rz_)) n = Vector( 0, 0, 1);
     else                        n = Vector( 1, 0, 0);
 
-    return transformFrom(n);
+    return CShape3D::transformFrom(n);
   }
 
   CVector2D pointToSurfaceVector(const Point &point) const {
-    Point p = transformTo(point);
+    Point p = CShape3D::transformTo(point);
 
     if (REAL_EQ(p.x, 0.0)) return CVector2D(p.y/ry_, p.z/rz_);
     if (REAL_EQ(p.y, 0.0)) return CVector2D(p.y/rx_, p.z/rz_);

@@ -78,7 +78,7 @@ class CDisk3DT : public CShape3DT<T> {
     Point p1(-radius_, -radius_, height_);
     Point p2( radius_,  radius_, height_);
 
-    return BBox(transformFrom(p1), transformFrom(p2));
+    return BBox(CShape3D::transformFrom(p1), CShape3D::transformFrom(p2));
   }
 
   bool intersect(const Line &line, T *t) const {
@@ -93,8 +93,8 @@ class CDisk3DT : public CShape3DT<T> {
     //
     //  t = (h - oz)/dz
 
-    Point p1 = transformTo(line.start());
-    Point p2 = transformTo(line.end  ());
+    Point p1 = CShape3D::transformTo(line.start());
+    Point p2 = CShape3D::transformTo(line.end  ());
 
     Line l(p1, p2);
 
@@ -114,14 +114,14 @@ class CDisk3DT : public CShape3DT<T> {
   }
 
   Vector pointNormal(const Point &point) const {
-    Point p = transformTo(point);
+    Point p = CShape3D::transformTo(point);
 
     Vector dpdu, dpdv;
 
     pointDetails(p, NULL, NULL, &dpdu, &dpdv);
 
-    dpdu = transformFrom(dpdu);
-    dpdv = transformFrom(dpdv);
+    dpdu = CShape3D::transformFrom(dpdu);
+    dpdv = CShape3D::transformFrom(dpdv);
 
     Vector n = dpdu.crossProduct(dpdv);
 
@@ -129,7 +129,7 @@ class CDisk3DT : public CShape3DT<T> {
   }
 
   CVector2D pointToSurfaceVector(const Point &point) const {
-    Point p = transformTo(point);
+    Point p = CShape3D::transformTo(point);
 
     T u, v;
 

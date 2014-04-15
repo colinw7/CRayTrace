@@ -84,7 +84,7 @@ class CTriangle3DT : public CShape3DT<T> {
     Point p1(CPoint3D::min(CPoint3D::min(point1_, point2_), point3_));
     Point p2(CPoint3D::max(CPoint3D::max(point1_, point2_), point3_));
 
-    return BBox(transformFrom(p1), transformFrom(p2));
+    return BBox(CShape3D::transformFrom(p1), CShape3D::transformFrom(p2));
   }
 
   CPolygonOrientation orientationXY() {
@@ -120,8 +120,8 @@ class CTriangle3DT : public CShape3DT<T> {
   }
 
   bool intersect(const Line &line, T *t) const {
-    Point p1 = transformTo(line.start());
-    Point p2 = transformTo(line.end  ());
+    Point p1 = CShape3D::transformTo(line.start());
+    Point p2 = CShape3D::transformTo(line.end  ());
 
     Vector ld(p1, p2); // p2 - p1
 
@@ -199,7 +199,7 @@ class CTriangle3DT : public CShape3DT<T> {
     else
       n = getNormal();
 
-    return transformFrom(n);
+    return CShape3D::transformFrom(n);
   }
 
   const Vector &getNormal() const {

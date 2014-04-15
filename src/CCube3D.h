@@ -40,12 +40,12 @@ class CCube3DT : public CShape3DT<T> {
   T getSize() const { return size_; }
 
   BBox getBBox() const {
-    return BBox(transformFrom(pmin_), transformFrom(pmax_));
+    return BBox(CShape3D::transformFrom(pmin_), CShape3D::transformFrom(pmax_));
   }
 
   bool intersect(const Line &line, T *tmin, T *tmax) const {
-    Point p1 = transformTo(line.start());
-    Point p2 = transformTo(line.end  ());
+    Point p1 = CShape3D::transformTo(line.start());
+    Point p2 = CShape3D::transformTo(line.end  ());
 
     Line l(p1, p2);
 
@@ -121,7 +121,7 @@ class CCube3DT : public CShape3DT<T> {
   }
 
   Vector pointNormal(const Point &point) const {
-    Point p = transformTo(point);
+    Point p = CShape3D::transformTo(point);
 
     Vector n;
 
@@ -133,11 +133,11 @@ class CCube3DT : public CShape3DT<T> {
     else if (fabs(plane6_.value(p)) <= 1E-6) n = plane6_.getNormal();
     else                                     n = Vector(1,0,0);
 
-    return transformFrom(n);
+    return CShape3D::transformFrom(n);
   }
 
   CVector2D pointToSurfaceVector(const Point &point) const {
-    Point p = transformTo(point);
+    Point p = CShape3D::transformTo(point);
 
     if (fabs(plane1_.value(p)) <= 1E-6)
       return CVector2D((p.y - pmin_.y)/(pmax_.y - pmin_.y), (p.z - pmin_.z)/(pmax_.z - pmin_.z));

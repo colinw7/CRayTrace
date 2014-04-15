@@ -78,12 +78,12 @@ class CSquare3DT : public CShape3DT<T> {
              std::max(std::max(std::max(yp_[0], yp_[1]), yp_[2]), yp_[3]),
              std::max(std::max(std::max(zp_[0], zp_[1]), zp_[2]), zp_[3]));
 
-    return BBox(transformFrom(p1), transformFrom(p2));
+    return BBox(CShape3D::transformFrom(p1), CShape3D::transformFrom(p2));
   }
 
   bool intersect(const Line &line, T *t) const {
-    Point p1 = transformTo(line.start());
-    Point p2 = transformTo(line.end  ());
+    Point p1 = CShape3D::transformTo(line.start());
+    Point p2 = CShape3D::transformTo(line.end  ());
 
     Line l(p1, p2);
 
@@ -101,7 +101,7 @@ class CSquare3DT : public CShape3DT<T> {
   Vector pointNormal(const Point &) const {
     Vector n = plane_.getNormal();
 
-    return transformFrom(n);
+    return CShape3D::transformFrom(n);
   }
 
   CVector2D pointToSurfaceVector(const Point &point) const {
