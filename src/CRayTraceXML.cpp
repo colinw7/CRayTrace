@@ -5,6 +5,7 @@
 #include <CRayShapeLib.h>
 #include <CXMLLib.h>
 #include <CRGBName.h>
+#include <CEnv.h>
 
 using std::string;
 using std::vector;
@@ -72,8 +73,6 @@ read(const string &filename)
       CRGBName::lookup(opt_value, &r, &g, &b, &a);
 
       CRGBA fg(r, g, b, a);
-
-      CRGBName::lookup(opt_value, &r, &g, &b);
 
       raytrace_->setFg(fg);
     }
@@ -469,7 +468,7 @@ read(const string &filename)
           name = opt_value;
 
           if (name[0] == '$')
-            name = COSEnv::getenv(name.substr(1));
+            name = CEnvInst.get(name.substr(1));
         }
         else if (opt_name == "scale") {
           if (opt_value == "auto")
