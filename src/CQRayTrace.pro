@@ -1,10 +1,14 @@
 TEMPLATE = app
 
+QT += widgets
+
 TARGET = CQRayTrace
 
 DEPENDPATH += .
 
-QT += widgets
+QMAKE_CXXFLAGS += -std=c++11
+
+MOC_DIR = .moc
 
 CONFIG += debug
 
@@ -57,23 +61,9 @@ CRaySphere.h \
 CRayTexture.h \
 CRayTraceShapeData.h \
 CRayTriangle.h \
-CBox3D.h \
-CCone3D.h \
-CCube3D.h \
-CCylinder3D.h \
-CDisk3D.h \
-CHyperboloid3D.h \
-CMathGeom3D.h \
-CNPlane3D.h \
 COctTree.h \
-CParaboloid3D.h \
-CPlane3D.h \
 CSample.h \
-CShape3D.h \
 CSolidNoise.h \
-CSphere3D.h \
-CSquare3D.h \
-CTriangle3D.h \
 
 DESTDIR     = ../bin
 OBJECTS_DIR = ../obj
