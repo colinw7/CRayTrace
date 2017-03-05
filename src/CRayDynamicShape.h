@@ -4,10 +4,6 @@
 #include <CRayShape.h>
 
 class CRayDynamicShape : public CRayShape {
- protected:
-  double min_t_;
-  double max_t_;
-
  public:
   CRayDynamicShape(double min_t, double max_t) :
    min_t_(min_t), max_t_(max_t) {
@@ -39,6 +35,10 @@ class CRayDynamicShape : public CRayShape {
 
   virtual bool hitAt(const CRay &ray, double tmin, double tmax,
                      double t, CRayHitData *hit_data) const = 0;
+
+ protected:
+  double min_t_ { 0.0 };
+  double max_t_ { 0.0 };
 };
 
 #endif

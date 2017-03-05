@@ -27,13 +27,14 @@ class CRayTraceCamera {
   CPoint3D worldToRaster(const CPoint3D &p) const;
 
  private:
-  CRayTrace *raytrace_;
-  double     z1_, z2_;
-  bool       perspective_;
+  CRayTrace *raytrace_ { nullptr };
+  double     z1_ { 1.0 }, z2_ { 20.0 };
+  bool       perspective_ { true };
   CPoint3D   position_;
   CPoint3D   lookAt_;
   CVector3D  up_;
-  double     fov_;
+  double     fov_ { 60.0 };
+  bool       valid_ { true };
 
   mutable CMatrix3DH worldToCamera_;
   mutable CMatrix3DH cameraToWorld_;

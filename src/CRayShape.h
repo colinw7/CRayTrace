@@ -12,10 +12,7 @@
 
 class CRayShape {
  public:
-  CRayShape() :
-   id_(), texture_(), alpha_(1.0), reflect_(0.0), refract_(0.0), refract_index_(1.0),
-   ignore_light_(false) {
-  }
+  CRayShape();
 
   virtual ~CRayShape() { }
 
@@ -25,19 +22,7 @@ class CRayShape {
     texture_ = new CRaySimpleTexture(color);
   }
 
-  CRGBA getColor(const CPoint3D &p) const {
-    if      (texture_.isValid()) {
-      if (texture_->isPointTexture())
-        return textureValue(p);
-      else {
-        CVector2D uv = pointToSurfaceVector(p);
-
-        return textureValue(uv);
-      }
-    }
-    else
-      return CRGBA(1,1,1);
-  }
+  CRGBA getColor(const CPoint3D &p=CPoint3D()) const;
 
   virtual void setTexture(CRayTexture *texture) {
     texture_ = texture;
@@ -47,12 +32,12 @@ class CRayShape {
     texture_ = new CRayImageTexture(image);
   }
 
-  ACCESSOR(Id          , std::string, id           )
-  ACCESSOR(Alpha       , double     , alpha        )
-  ACCESSOR(Reflect     , double     , reflect      )
-  ACCESSOR(Refract     , double     , refract      )
-  ACCESSOR(RefractIndex, double     , refract_index)
-  ACCESSOR(IgnoreLight , bool       , ignore_light )
+  ACCESSOR(Id          , std::string, id          )
+  ACCESSOR(Alpha       , double     , alpha       )
+  ACCESSOR(Reflect     , double     , reflect     )
+  ACCESSOR(Refract     , double     , refract     )
+  ACCESSOR(RefractIndex, double     , refractIndex)
+  ACCESSOR(IgnoreLight , bool       , ignoreLight )
 
   virtual bool hit(const CRay &ray, double tmin, double tmax, CRayHitData &hit_data) const {
     return hit(ray, tmin, tmax, &hit_data);
@@ -97,11 +82,11 @@ class CRayShape {
  protected:
   std::string          id_;
   CRefPtr<CRayTexture> texture_;
-  double               alpha_;
-  double               reflect_;
-  double               refract_;
-  double               refract_index_;
-  bool                 ignore_light_;
+  double               alpha_        { 1.0 };
+  double               reflect_      { 0.0 };
+  double               refract_      { 0.0 };
+  double               refractIndex_ { 1.0 };
+  bool                 ignoreLight_  { false };
 };
 
 #endif

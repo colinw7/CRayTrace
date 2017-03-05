@@ -7,9 +7,6 @@
 class CRayTrace;
 
 class CRayTraceXML {
- private:
-  CRayTrace *raytrace_;
-
  public:
   CRayTraceXML(CRayTrace *raytrace) :
    raytrace_(raytrace) {
@@ -23,6 +20,9 @@ class CRayTraceXML {
 
   bool parseReal(const std::string &name, const std::string &value, double *real) const;
   bool parsePoint(const std::string &name, const std::string &value, CPoint3D &point) const;
+
+ private:
+  CRayTrace *raytrace_ { nullptr };
 };
 
 #endif

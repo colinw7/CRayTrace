@@ -7,34 +7,25 @@
 
 #include <CRayNoiseTexture.h>
 #include <CRayMarbleTexture.h>
-//#include <CRayMandelbrotTexture.h>
+#include <CRayMandelbrotTexture.h>
 
 #include <CSample.h>
 
 #include <CImageLib.h>
-#include <CRGBName.h>
 
-//#include <CImport3DS.h>
-//#include <CImportV3D.h>
-//#include <CImportScene.h>
+#include <CImport3DS.h>
+#include <CImportV3D.h>
+#include <CImportScene.h>
 
-//#include <CGeometry3D.h>
-//#include <CGeomScene3D.h>
+#include <CGeometry3D.h>
+#include <CGeomScene3D.h>
 
-#include <CFuncs.h>
 #include <CStrUtil.h>
 #include <CTransform2D.h>
-#include <algorithm>
-
-using std::string;
-using std::vector;
+#include <CRGBName.h>
 
 CRayTrace::
-CRayTrace() :
- renderer_(NULL), camera_(NULL), shapes_(), width_(500), height_(500),
- num_samples_(0), minT_(1E-10), maxT_(1E50), lights_(), bg_(0,0,0), fg_(0.2,0.2,0.2),
- reflect_depth_(1), refract_depth_(2), alpha_depth_(2), smooth_normals_(false),
- changed_(false), trace_(false)
+CRayTrace()
 {
   camera_ = new CRayTraceCamera(this);
 
@@ -48,7 +39,8 @@ CRayTrace::
 
   delete octTree_;
 
-  std::for_each(shapes_.begin(), shapes_.end(), CDeletePointer());
+  for (auto &shape : shapes_)
+    delete shape;
 }
 
 void
@@ -64,7 +56,7 @@ setSize(uint width, uint height)
 
 bool
 CRayTrace::
-addFile(const string &filename)
+addFile(const std::string &filename)
 {
   CRayTraceXML xml(this);
 
@@ -204,10 +196,9 @@ addPlane(const CPoint3D &p1, const CPoint3D &p2,
   return plane;
 }
 
-#if 0
 void
 CRayTrace::
-addModel(const string &filename, double scale, bool auto_scale,
+addModel(const std::string &filename, double scale, bool auto_scale,
          const CPoint3D &translate, bool auto_translate,
          const CPoint3D &rotate, const CRayTraceShapeData &shape_data)
 {
@@ -218,7 +209,7 @@ addModel(const string &filename, double scale, bool auto_scale,
     return;
   }
 
-  string suffix = file.getSuffix();
+  std::string suffix = file.getSuffix();
 
   suffix = CStrUtil::toLower(suffix);
 
@@ -289,11 +280,8 @@ addScene(const CGeomScene3D &scene, double scale, bool auto_scale,
 
   const CGeomScene3D::ObjectList &objects = scene.getObjects();
 
-  CGeomScene3D::ObjectList::const_iterator po1 = objects.begin();
-  CGeomScene3D::ObjectList::const_iterator po2 = objects.end  ();
-
-  for ( ; po1 != po2; ++po1)
-    addObject(**po1, scale, false, translate1, false, c, false, rotate, shape_data);
+  for (const auto &object : objects)
+    addObject(*object, scale, false, translate1, false, c, false, rotate, shape_data);
 }
 
 void
@@ -355,12 +343,7 @@ addObject(CGeomObject3D &object, double scale, bool auto_scale,
 
   const CGeomObject3D::FaceList &faces = object.getFaces();
 
-  CGeomObject3D::FaceList::const_iterator pf1 = faces.begin();
-  CGeomObject3D::FaceList::const_iterator pf2 = faces.end  ();
-
-  for ( ; pf1 != pf2; ++pf1) {
-    const CGeomFace3D *face = *pf1;
-
+  for (const auto &face : faces) {
     const CGeomFace3D::VertexList &vertices = face->getVertices();
 
     uint num_vertices = vertices.size();
@@ -378,16 +361,12 @@ addObject(CGeomObject3D &object, double scale, bool auto_scale,
     }
   }
 
-  pf1 = faces.begin();
-
   CRayTraceShapeData shape_data1 = shape_data;
 
-  vector<CPoint3D>  points;
-  vector<CVector3D> normals;
+  std::vector<CPoint3D>  points;
+  std::vector<CVector3D> normals;
 
-  for ( ; pf1 != pf2; ++pf1) {
-    const CGeomFace3D *face = *pf1;
-
+  for (const auto &face : faces) {
     const CRGBA &color = face->getMaterial().getDiffuse();
 
     shape_data1.color = color.stringEncode();
@@ -444,7 +423,6 @@ addObject(CGeomObject3D &object, double scale, bool auto_scale,
     }
   }
 }
-#endif
 
 void
 CRayTrace::
@@ -475,8 +453,8 @@ applyShapeData(CRayShape *shape, const CRayTraceShapeData &shape_data)
   if (shape_data.noise)
     shape->setTexture(new CRayNoiseTexture());
 
-  //if (shape_data.mandelbrot)
-  //  shape->setTexture(new CRayMandelbrotTexture());
+  if (shape_data.mandelbrot)
+    shape->setTexture(new CRayMandelbrotTexture());
 
   if (shape_data.image != "") {
     CImageFileSrc src(shape_data.image);
@@ -506,30 +484,44 @@ addLight(const CPoint3D &position)
 
 CRayShape *
 CRayTrace::
-getShape(const string &name) const
+getShape(const std::string &name) const
 {
-  ShapeList::const_iterator pshape1 = shapes_.begin();
-  ShapeList::const_iterator pshape2 = shapes_.end();
+  for (const auto &shape : shapes_)
+    if (shape->getId() == name)
+      return shape;
 
-  for ( ; pshape1 != pshape2; ++pshape1)
-    if ((*pshape1)->getId() == name)
-      return *pshape1;
+  return nullptr;
+}
 
-  return NULL;
+CRayShape *
+CRayTrace::
+getShape(int ind) const
+{
+  if (ind >= 0 && ind < int(shapes_.size()))
+    return shapes_[ind];
+
+  return nullptr;
 }
 
 CRayTraceLight *
 CRayTrace::
-getLight(const string &name) const
+getLight(const std::string &name) const
 {
-  LightList::const_iterator plight1 = lights_.begin();
-  LightList::const_iterator plight2 = lights_.end();
+  for (const auto &light : lights_)
+    if (light->getName() == name)
+      return light;
 
-  for ( ; plight1 != plight2; ++plight1)
-    if ((*plight1)->getName() == name)
-      return *plight1;
+  return nullptr;
+}
 
-  return NULL;
+CRayTraceLight *
+CRayTrace::
+getLight(int ind) const
+{
+  if (ind >= 0 && ind < int(lights_.size()))
+    return lights_[ind];
+
+  return nullptr;
 }
 
 void
@@ -553,12 +545,18 @@ void
 CRayTrace::
 initRender()
 {
+  for (const auto &thread : threads_)
+    delete thread;
+
+  threads_.clear();
+
+  // add shapes to oct tree
   octTree_->reset();
 
-  ShapeList::const_iterator pshape1, pshape2;
+  for (const auto &shape : shapes_)
+    octTree_->addData(shape);
 
-  for (pshape1 = shapes_.begin(), pshape2 = shapes_.end(); pshape1 != pshape2; ++pshape1)
-    octTree_->addData(*pshape1);
+  //---
 
   sampled_ = (num_samples_ > 0);
 
@@ -620,10 +618,8 @@ void
 CRayTrace::
 termRender()
 {
-  ThreadList::iterator pt1, pt2;
-
-  for (pt1 = threads_.begin(), pt2 = threads_.end(); pt1 != pt2; ++pt1)
-    (*pt1)->join();
+  for (const auto &thread : threads_)
+    thread->join();
 
   if (sampled_)
     delete samples_;
@@ -800,12 +796,9 @@ lightColor(const CPoint3D &point, const CVector3D &normal)
 
   CRGBA color(0.1,0.1,0.1);
 
-  LightList::const_iterator plight1 = lights_.begin();
-  LightList::const_iterator plight2 = lights_.end();
-
-  for ( ; plight1 != plight2; ++plight1) {
+  for (const auto &light : lights_) {
     // get ray from point to light
-    CRay lray(point, (*plight1)->getPosition());
+    CRay lray(point, light->getPosition());
 
     // get angle to normal
     double factor = normal.dotProduct(lray.getDirection().unit());
@@ -832,7 +825,7 @@ lightColor(const CPoint3D &point, const CVector3D &normal)
     }
 
     // add light color
-    color += alpha*factor*(*plight1)->getAmbient();
+    color += alpha*factor*light->getAmbient();
   }
 
   return color.clamped();
@@ -852,13 +845,8 @@ getHitData(const CRay &ray, double minT, double maxT, HitData &hitData)
 
   addTreeShapes(t, ray, p1, p2, minT, maxT, hitData);
 #else
-  ShapeList::const_iterator pshape1, pshape2;
-
-  for (pshape1 = shapes_.begin(), pshape2 = shapes_.end(); pshape1 != pshape2; ++pshape1) {
-    CRayShape *shape = *pshape1;
-
+  for (const auto &shape : shapes_)
     updateHitData(shape, ray, minT, maxT, hitData);
-  }
 #endif
 
   return hitData.getSet();
@@ -877,13 +865,8 @@ addTreeShapes(OctTree *t, const CRay &ray, const CPoint3D &p1, const CPoint3D &p
 
   const OctTree::DataList &dataList = t->getDataList();
 
-  OctTree::DataList::const_iterator pd1, pd2;
-
-  for (pd1 = dataList.begin(), pd2 = dataList.end(); pd1 != pd2; ++pd1) {
-    CRayShape *shape = *pd1;
-
+  for (const auto &shape : dataList)
     updateHitData(shape, ray, minT, maxT, hitData);
-  }
 
   if (t->isSplit()) {
     for (uint i = 0; i < 8; ++i) {
@@ -912,11 +895,8 @@ drawLights()
 {
   if (! renderer_) return;
 
-  LightList::const_iterator plight1 = lights_.begin();
-  LightList::const_iterator plight2 = lights_.end();
-
-  for ( ; plight1 != plight2; ++plight1) {
-    CPoint3D p = camera_->worldToRaster((*plight1)->getPosition());
+  for (const auto &light : lights_) {
+    CPoint3D p = camera_->worldToRaster(light->getPosition());
 
     int px = int(p.x);
     int py = int(p.y);
@@ -937,5 +917,5 @@ execute()
   for (uint i = 0; i < n; ++i)
     raytrace_->stepRender(renderer_, window_);
 
-  return NULL;
+  return nullptr;
 }

@@ -3,7 +3,7 @@
 
 CRayTraceCamera::
 CRayTraceCamera(CRayTrace *raytrace) :
- raytrace_(raytrace), z1_(1), z2_(20), perspective_(true), fov_(60)
+ raytrace_(raytrace)
 {
   setPosition(CPoint3D (0.5,0.5,-1.0));
   setLookAt  (CPoint3D (0.5,0.5, 0.0));
@@ -14,6 +14,8 @@ void
 CRayTraceCamera::
 init()
 {
+  valid_ = true;
+
   double aspect = 1.0;
 
   double screen[4];
@@ -38,14 +40,16 @@ init()
 
   cameraToWorld_.setLookAt(getPosition(), getLookAt(), getUp());
 
-  worldToCamera_ = cameraToWorld_.inverse();
+  if (! cameraToWorld_.invert(worldToCamera_))
+    valid_ = false;
 
   screenToRaster_ =
     CMatrix3DH::scale(raytrace_->getWidth () - 1.0, raytrace_->getHeight() - 1.0, 1.0)*
     CMatrix3DH::scale(1.0/(screen[1] - screen[0]), 1.0/(screen[2] - screen[3]), 1.0)*
     CMatrix3DH::translation(-screen[0], -screen[3], 0.0);
 
-  rasterToScreen_ = screenToRaster_.inverse();
+  if (! screenToRaster_.invert(rasterToScreen_))
+    valid_ = false;
 
   if (perspective_) {
     double iz21 = 1.0/(z2 - z1);
@@ -63,11 +67,12 @@ init()
     cameraToScreen_ =
       CMatrix3DH(1.0 , 0.0 ,  0.0, 0.0,
                  0.0 , 1.0 ,  0.0, 0.0,
-                 0.0 , 0.0 , iz21, -z1,
+                 0.0 , 0.0 , iz21, -z1*iz21,
                  0.0 , 0.0 ,  0.0, 1.0);
   }
 
-  screenToCamera_ = cameraToScreen_.inverse();
+  if (! cameraToScreen_.invert(screenToCamera_))
+    valid_ = false;
 
   worldToScreen_  = cameraToScreen_*worldToCamera_;
   rasterToCamera_ = screenToCamera_*rasterToScreen_;

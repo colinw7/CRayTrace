@@ -5,9 +5,6 @@
 #include <CRayTexture.h>
 
 class CRayImageTexture : public CRayTexture {
- private:
-  CImagePtr image_;
-
  public:
   CRayImageTexture(CImagePtr image);
 
@@ -16,6 +13,9 @@ class CRayImageTexture : public CRayTexture {
   virtual CRGBA value(const CVector2D &uv) const;
 
   virtual bool isPointTexture() const { return false; }
+
+ private:
+  CImagePtr image_;
 };
 
 #endif

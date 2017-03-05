@@ -8,17 +8,17 @@
 class CRayTexture;
 
 struct CRayHitData {
-  double    t;
+  double    t { 0.0 };
   CVector3D normal;
   CRGBA     color;
 };
 
 struct CRayHitData1 {
-  double       t;
+  double       t { 0.0 };
   CVector3D    normal;
   CVector2D    uv;
   CVector3D    hit_point;
-  CRayTexture *texture;
+  CRayTexture *texture { nullptr };
 };
 
 #endif

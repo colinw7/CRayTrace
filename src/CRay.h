@@ -5,110 +5,102 @@
 #include <CLine3D.h>
 #include <CNormal3D.h>
 
-template<typename T>
-class CRayT : public CLine3DT<T> {
- private:
-  typedef CPoint3DT<T>  Point;
-  typedef CVector3DT<T> Vector;
-  typedef CNormal3DT<T> Normal;
-
-  T min_t_, max_t_;
-  T time_;
-
+class CRay : public CLine3D {
  public:
-  CRayT() :
-   CLine3DT<T>() {
+  CRay() : CLine3D() { }
+
+  CRay(const CPoint3D &origin, const CVector3D &direction,
+       double min_t = 1E-6, double max_t = 1E50, double time = 0.0) :
+   CLine3D(origin, direction), min_t_(min_t), max_t_(max_t), time_(time) {
   }
 
-  CRayT(const Point &origin, const Vector &direction,
-        T min_t = 1E-6, T max_t = 1E50, T time = 0.0) :
-   CLine3DT<T>(origin, direction), min_t_(min_t), max_t_(max_t), time_(time) {
+  CRay(const CPoint3D &from, const CPoint3D &to,
+       double min_t = 1E-6, double max_t = 1E50, double time = 0.0) :
+   CLine3D(from, to), min_t_(min_t), max_t_(max_t), time_(time) {
   }
 
-  CRayT(const Point &from, const Point &to, T min_t = 1E-6, T max_t = 1E50, T time = 0.0) :
-   CLine3DT<T>(from, to), min_t_(min_t), max_t_(max_t), time_(time) {
+  CRay(const CRay &ray) :
+   CLine3D(ray), min_t_(ray.min_t_), max_t_(ray.max_t_), time_(ray.time_) {
   }
 
-  CRayT(const CRayT &ray) :
-   CLine3DT<T>(ray), min_t_(ray.min_t_), max_t_(ray.max_t_), time_(ray.time_) {
+  const CPoint3D  &getOrigin   () const { return CLine3D::start (); }
+  const CVector3D &getDirection() const { return CLine3D::vector(); }
+
+  void setOrigin(const CPoint3D &origin) { setStart(origin); }
+  void setOrigin(double x, double y, double z) { setStart(CPoint3D(x, y, z)); }
+
+  void setDirection(const CVector3D &direction) { setVector(direction); }
+
+  ACCESSOR(minT, double, min_t)
+  ACCESSOR(maxT, double, max_t)
+
+  CPoint3D operator()(double t) const {
+    return CLine3D::point(t);
   }
 
-  const Point  &getOrigin   () const { return CLine3DT<T>::start (); }
-  const Vector &getDirection() const { return CLine3DT<T>::vector(); }
-
-  void setOrigin(const Point &origin) { setStart(origin); }
-  void setOrigin(T x, T y, T z) { setStart(Point(x, y, z)); }
-
-  void setDirection(const Vector &direction) { setVector(direction); }
-
-  ACCESSOR(minT, T, min_t)
-  ACCESSOR(maxT, T, max_t)
-
-  Point operator()(T t) const {
-    return CLine3DT<T>::point(t);
+  CPoint3D pointAt(double t) const {
+    return CLine3D::point(t);
   }
 
-  Point pointAt(T t) const {
-    return CLine3DT<T>::point(t);
-  }
-
-  CRayT reflect(const Point &origin, const Normal &normal) const {
+  CRay reflect(const CPoint3D &origin, const CNormal3D &normal) const {
     // using unit direction results in tolerance problems (vector too small)
-    T cos_theta1 = getDirection().dotProduct(normal);
+    double cos_theta1 = CNormal3D::dotProduct(getDirection(), normal);
 
-    Vector direction = getDirection() - 2*cos_theta1*normal;
+    CVector3D direction = getDirection() - 2*cos_theta1*normal;
 
-    return CRayT(origin, direction);
+    return CRay(origin, direction);
   }
 
-  CRayT reflect(const Point &origin, const Vector &normal) const {
+  CRay reflect(const CPoint3D &origin, const CVector3D &normal) const {
     // using unit direction results in tolerance problems (vector too small)
-    T cos_theta1 = getDirection().dotProduct(normal);
+    double cos_theta1 = getDirection().dotProduct(normal);
 
-    Vector direction = getDirection() - 2*cos_theta1*normal;
+    CVector3D direction = getDirection() - 2*cos_theta1*normal;
 
-    return CRayT(origin, direction);
+    return CRay(origin, direction);
   }
 
-  CRayT refract(const Point &origin, const Vector &normal, T n1, T n2) const {
-    T cos_theta1 = getDirection().unit().dotProduct(normal);
+  CRay refract(const CPoint3D &origin, const CVector3D &normal, double n1, double n2) const {
+    double cos_theta1 = getDirection().unit().dotProduct(normal);
 
-    T n12 = n1/n2;
+    double n12 = n1/n2;
 
-    T x = 1.0 - (n12*n12)*(1.0 - cos_theta1*cos_theta1);
+    double x = 1.0 - (n12*n12)*(1.0 - cos_theta1*cos_theta1);
 
     if (x < 0)
       return reflect(origin, normal);
 
-    T cos_theta2 = sqrt(x);
+    double cos_theta2 = sqrt(x);
 
-    Vector direction;
+    CVector3D direction;
 
     if (cos_theta1 > 0) {
-      T a = n12*cos_theta1 - cos_theta2;
+      double a = n12*cos_theta1 - cos_theta2;
 
       direction = (n12*getDirection() + a*normal).unit();
     }
     else {
-      T a = cos_theta2 + n12*cos_theta1;
+      double a = cos_theta2 + n12*cos_theta1;
 
       direction = (n12*getDirection() - a*normal).unit();
     }
 
-    return CRayT(origin, direction);
+    return CRay(origin, direction);
   }
 
   void print(std::ostream &os=std::cout) const {
     os << "(" << getOrigin() << ") + t(" << getDirection() << ")";
   }
 
-  friend std::ostream &operator<<(std::ostream &os, const CRayT &ray) {
+  friend std::ostream &operator<<(std::ostream &os, const CRay &ray) {
     ray.print(os);
 
     return os;
   }
-};
 
-typedef CRayT<double> CRay;
+ private:
+  double min_t_, max_t_;
+  double time_;
+};
 
 #endif

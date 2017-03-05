@@ -4,9 +4,6 @@
 #include <CRayTexture.h>
 
 class CRaySimpleTexture : public CRayTexture {
- private:
-  CRGBA color_;
-
  public:
   CRaySimpleTexture(const CRGBA &color) :
    color_(color) {
@@ -15,6 +12,9 @@ class CRaySimpleTexture : public CRayTexture {
   virtual ~CRaySimpleTexture() { }
 
   virtual CRGBA value(const CPoint3D &) const { return color_; }
+
+ private:
+  CRGBA color_;
 };
 
 #endif

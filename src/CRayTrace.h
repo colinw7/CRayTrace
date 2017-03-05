@@ -22,8 +22,8 @@ class CRayCube;
 class CRayBox;
 class CRayPlane;
 class CRayTraceCamera;
-//class CGeomScene3D;
-//class CGeomObject3D;
+class CGeomScene3D;
+class CGeomObject3D;
 class CSampleMultiJitter;
 class CRayTraceThread;
 class CRayTraceLight;
@@ -47,10 +47,12 @@ class CRayTraceRenderer {
   virtual void end() { }
 };
 
+//------
+
 struct CRayTraceWindow {
-  uint xmin, ymin, xmax, ymax;
-  uint x, y, width, height;
-  uint hits;
+  uint xmin { 0 }, ymin { 0 }, xmax { 100 }, ymax { 100 };
+  uint x { 0 }, y { 0 }, width { 100 }, height { 100 };
+  uint hits { 0 };
 
   CRayTraceWindow() {
     init(0, 0, 100, 100);
@@ -102,16 +104,13 @@ struct CRayTraceWindow {
   }
 };
 
+//------
+
 // ray trace
 class CRayTrace {
  public:
   // hit information
   class HitData {
-   private:
-    bool       set_;
-    CRayShape *shape_;
-    double     t_;
-
    public:
     // compare functor for sort
     class Compare {
@@ -122,9 +121,7 @@ class CRayTrace {
     };
 
    public:
-    HitData() :
-     set_(false), shape_(NULL), t_(0.0) {
-    }
+    HitData() { }
 
     HitData(CRayShape *shape, double t) :
      set_(true), shape_(shape), t_(t) {
@@ -141,11 +138,17 @@ class CRayTrace {
         t_     = t;
       }
     }
+
+   private:
+    bool       set_   { false };
+    CRayShape *shape_ { nullptr };
+    double     t_     { 0.0 };
   };
 
+  typedef std::vector<CRayTraceLight *> LightList;
+  typedef std::vector<CRayShape *>      ShapeList;
+
  private:
-  typedef std::vector<CRayShape *>           ShapeList;
-  typedef std::vector<CRayTraceLight *>      LightList;
   typedef COctTree<CRayShape,CBBox3D,double> OctTree;
 
  public:
@@ -171,6 +174,8 @@ class CRayTrace {
   ACCESSOR (Trace        , bool             , trace)
 
   virtual void setSize(uint width, uint height);
+
+  //---
 
   bool addFile(const std::string &filename);
 
@@ -200,7 +205,6 @@ class CRayTrace {
   CRayPlane *addPlane(const CPoint3D &p1, const CPoint3D &p2,
                       const CPoint3D &p3, const CRayTraceShapeData &shape_data);
 
-#if 0
   void addModel(const std::string &filename, double scale, bool auto_scale,
                 const CPoint3D &translate, bool auto_translate,
                 const CPoint3D &rotate, const CRayTraceShapeData &shape_data);
@@ -213,15 +217,24 @@ class CRayTrace {
                  const CPoint3D &translate, bool auto_translate,
                  const CPoint3D &center, bool auto_center,
                  const CPoint3D &rotate, const CRayTraceShapeData &shape_data);
-#endif
 
   void applyShapeData(CRayShape *shape, const CRayTraceShapeData &shape_data);
 
-  CRayTraceLight *addLight(const CPoint3D &position);
+  const ShapeList &getShapes() const { return shapes_; }
 
   CRayShape *getShape(const std::string &name) const;
+  CRayShape *getShape(int ind) const;
+
+  //---
+
+  CRayTraceLight *addLight(const CPoint3D &position);
+
+  const LightList &getLights() const { return lights_; }
 
   CRayTraceLight *getLight(const std::string &name) const;
+  CRayTraceLight *getLight(int ind) const;
+
+  //---
 
   void render();
   void render(CRayTraceRenderer *renderer);
@@ -261,26 +274,29 @@ class CRayTrace {
  private:
   typedef std::vector<CRayTraceThread *> ThreadList;
 
-  CRayTraceRenderer *  renderer_;
-  CRayTraceCamera *    camera_;
+  CRayTraceRenderer *  renderer_ { nullptr };
+  CRayTraceCamera *    camera_ { nullptr };
   ShapeList            shapes_;
-  OctTree *            octTree_;
-  uint                 width_, height_;
-  uint                 num_samples_;
-  double               minT_, maxT_;
+  OctTree *            octTree_ { nullptr };
+  uint                 width_ { 500 }, height_ { 500 };
+  uint                 num_samples_ { 0 };
+  double               minT_ { 1E-10 }, maxT_ { 1E50 };
   LightList            lights_;
-  CRGBA                bg_, fg_;
-  uint                 reflect_depth_;
-  uint                 refract_depth_;
-  uint                 alpha_depth_;
-  bool                 smooth_normals_;
-  bool                 changed_;
-  bool                 trace_;
-  bool                 sampled_;
-  CSampleMultiJitter * samples_;
+  CRGBA                bg_ { 0.0, 0.0, 0.0 };
+  CRGBA                fg_ { 0.2, 0.2, 0.2 };
+  uint                 reflect_depth_ { 1 };
+  uint                 refract_depth_ { 2 };
+  uint                 alpha_depth_ { 2 };
+  bool                 smooth_normals_ { false };
+  bool                 changed_ { false };
+  bool                 trace_ { false };
+  bool                 sampled_ { false };
+  CSampleMultiJitter * samples_ { nullptr };
   CRayTraceWindow      window_;
   ThreadList           threads_;
 };
+
+//------
 
 #include <CThread.h>
 
@@ -297,8 +313,8 @@ class CRayTraceThread : public CThread {
   void *execute();
 
  private:
-  CRayTrace         *raytrace_;
-  CRayTraceRenderer *renderer_;
+  CRayTrace         *raytrace_ { nullptr };
+  CRayTraceRenderer *renderer_ { nullptr };
   CRayTraceWindow    window_;
 };
 

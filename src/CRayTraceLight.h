@@ -16,7 +16,7 @@ class CRayTraceLight {
   ACCESSOR(Ambient , CRGBA      , ambient )
 
  private:
-  CRayTrace   *raytrace_;
+  CRayTrace   *raytrace_ { nullptr };
   std::string  name_;
   CPoint3D     position_;
   CRGBA        ambient_;

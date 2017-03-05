@@ -23,6 +23,8 @@ read(const string &filename)
   if (tag->getName() != "raytracer")
     return false;
 
+  double scale = 1.0;
+
   int width  = raytrace_->getWidth ();
   int height = raytrace_->getHeight();
 
@@ -42,6 +44,9 @@ read(const string &filename)
     }
     else if (opt_name == "height") {
       height = CStrUtil::toInteger(opt_value);
+    }
+    else if (opt_name == "scale") {
+      scale = CStrUtil::toReal(opt_value);
     }
     else if (opt_name == "num_samples") {
       int num_samples = CStrUtil::toInteger(opt_value);
@@ -388,7 +393,11 @@ read(const string &filename)
       }
 
       //CRayBox *box =
-      raytrace_->addBox(xsize, ysize, zsize, shape_data);
+      shape_data.translate.x *= scale;
+      shape_data.translate.y *= scale;
+      shape_data.translate.z *= scale;
+
+      raytrace_->addBox(xsize*scale, ysize*scale, zsize*scale, shape_data);
     }
     // handle triangle
     else if (name == "triangle") {
@@ -448,7 +457,6 @@ read(const string &filename)
       //CRayPlane *plane =
       raytrace_->addPlane(point1, point2, point3, shape_data);
     }
-#if 0
     // handle model
     else if (name == "model") {
       string   name           = "";
@@ -494,7 +502,6 @@ read(const string &filename)
         raytrace_->addModel(name, scale, auto_scale, translate, auto_translate,
                             rotate, shape_data);
     }
-#endif
     // handle light
     else if (name == "light") {
       string   id       = "light";
@@ -617,9 +624,9 @@ shapeOption(CRayTraceShapeData &shape_data, const string &name, const string &va
   else if (name == "noise") {
     shape_data.noise = CStrUtil::toBool(value);
   }
-//else if (name == "mandelbrot") {
-//  shape_data.mandelbrot = CStrUtil::toBool(value);
-//}
+  else if (name == "mandelbrot") {
+    shape_data.mandelbrot = CStrUtil::toBool(value);
+  }
   else if (name == "image") {
     shape_data.image = value;
   }

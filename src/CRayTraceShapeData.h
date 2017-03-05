@@ -9,14 +9,14 @@ struct CRayTraceShapeData {
   CPoint3D    translate;
   CPoint3D    scale;
   CPoint3D    rotate;
-  bool        marble;
-  bool        noise;
-//bool        mandelbrot;
+  bool        marble { false };
+  bool        noise { false };
+  bool        mandelbrot { false };
   std::string image;
-  double      reflect;
-  double      refract;
-  double      refract_index;
-  bool        ignore_light;
+  double      reflect { 0.0 };
+  double      refract { 0.0 };
+  double      refract_index { 1.0 };
+  bool        ignore_light { false };
 
   CRayTraceShapeData() {
     init();
@@ -30,7 +30,7 @@ struct CRayTraceShapeData {
     rotate        = CPoint3D(0,0,0);
     marble        = false;
     noise         = false;
-  //mandelbrot    = false;
+    mandelbrot    = false;
     image         = "";
     reflect       = 0.0;
     refract       = 0.0;

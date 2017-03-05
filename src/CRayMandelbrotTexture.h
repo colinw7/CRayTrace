@@ -6,11 +6,6 @@
 #include <CColorRange.h>
 
 class CRayMandelbrotTexture : public CRayTexture {
- private:
-  CMandelbrot mandelbrot_;
-  CColorRange colors_;
-  double      xmin_, ymin_, xmax_, ymax_;
-
  public:
   CRayMandelbrotTexture();
 
@@ -19,6 +14,11 @@ class CRayMandelbrotTexture : public CRayTexture {
   virtual CRGBA value(const CVector2D &uv) const;
 
   virtual bool isPointTexture() const { return false; }
+
+ private:
+  CMandelbrot mandelbrot_;
+  CColorRange colors_;
+  double      xmin_ { 0.0 }, ymin_ { 0.0 }, xmax_ { 0.0 }, ymax_ { 0.0 };
 };
 
 #endif

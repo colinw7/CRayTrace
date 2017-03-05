@@ -15,41 +15,47 @@ CONFIG += debug
 # Input
 SOURCES += \
 CQRayTrace.cpp \
-CRayTrace.cpp \
-CRayTraceCamera.cpp \
-CRayTraceLight.cpp \
 CRayBox.cpp \
 CRayCone.cpp \
 CRayCube.cpp \
 CRayCylinder.cpp \
 CRayDisk.cpp \
 CRayHyperboloid.cpp \
+CRayImageTexture.cpp \
+CRayMandelbrotTexture.cpp \
+CRayMarbleTexture.cpp \
+CRayNoiseTexture.cpp \
 CRayParaboloid.cpp \
 CRayPlane.cpp \
+CRayShape.cpp \
 CRaySphere.cpp \
+CRayTraceCamera.cpp \
+CRayTrace.cpp \
+CRayTraceLight.cpp \
 CRayTraceXML.cpp \
 CRayTriangle.cpp \
-CRayNoiseTexture.cpp \
-CRayMarbleTexture.cpp \
-CRayImageTexture.cpp \
+\
+CMandelbrot.cpp \
+CPointFractal.cpp \
+CColorRange.cpp \
 CSample.cpp \
 CSolidNoise.cpp \
 
 HEADERS += \
 CQRayTrace.h \
-CRayTrace.h \
-CRayTraceCamera.h \
-CRayTraceLight.h \
-CRayTraceXML.h \
 CRayBox.h \
 CRayCone.h \
 CRayCube.h \
 CRayCylinder.h \
+CRayDifferential.h \
 CRayDisk.h \
+CRayDynamicShape.h \
+CRayDynamicSphere.h \
 CRay.h \
 CRayHitData.h \
 CRayHyperboloid.h \
 CRayImageTexture.h \
+CRayMandelbrotTexture.h \
 CRayMarbleTexture.h \
 CRayNoiseTexture.h \
 CRayParaboloid.h \
@@ -59,8 +65,13 @@ CRayShapeLib.h \
 CRaySimpleTexture.h \
 CRaySphere.h \
 CRayTexture.h \
+CRayTraceCamera.h \
+CRayTrace.h \
+CRayTraceLight.h \
 CRayTraceShapeData.h \
+CRayTraceXML.h \
 CRayTriangle.h \
+\
 COctTree.h \
 CSample.h \
 CSolidNoise.h \
@@ -71,8 +82,12 @@ LIB_DIR     = ../lib
 
 INCLUDEPATH += \
 ../include \
+../../CQUtil/include \
+../../CQPropertyTree/include \
 ../../CXML/include \
+../../CImportModel/include \
 ../../CImageLib/include \
+../../CFont/include \
 ../../CThread/include \
 ../../CFile/include \
 ../../CMath/include \
@@ -85,21 +100,36 @@ INCLUDEPATH += \
 
 unix:LIBS += \
 -L$$LIB_DIR \
+-L../../CQPropertyTree/lib \
+-L../../CQUtil/lib \
 -L../../CXML/lib \
+-L../../CImportModel/lib \
+-L../../CConfig/lib \
 -L../../CImageLib/lib \
+-L../../CFont/lib \
 -L../../CThread/lib \
+-L../../CFileUtil/lib \
 -L../../CFile/lib \
 -L../../CMath/lib \
 -L../../CRegExp/lib \
 -L../../CStrUtil/lib \
 -L../../CRGBName/lib \
+-L../../CUtil/lib \
 -L../../COS/lib \
+-lCQPropertyTree \
+-lCQUtil \
 -lCXML \
+-lCImportModel \
+-lCConfig \
 -lCImageLib \
+-lCFont \
 -lCThread \
+-lCFileUtil \
 -lCFile \
+-lCMath \
 -lCRegExp \
 -lCStrUtil \
 -lCRGBName \
+-lCUtil \
 -lCOS \
 -ltre -lpng -ljpeg
