@@ -86,6 +86,7 @@ INCLUDEPATH += \
 ../../CQPropertyTree/include \
 ../../CXML/include \
 ../../CImportModel/include \
+../../CGeometry3D/include \
 ../../CImageLib/include \
 ../../CFont/include \
 ../../CThread/include \
@@ -104,6 +105,7 @@ unix:LIBS += \
 -L../../CQUtil/lib \
 -L../../CXML/lib \
 -L../../CImportModel/lib \
+-L../../CGeometry3D/lib \
 -L../../CConfig/lib \
 -L../../CImageLib/lib \
 -L../../CFont/lib \
@@ -120,6 +122,7 @@ unix:LIBS += \
 -lCQUtil \
 -lCXML \
 -lCImportModel \
+-lCGeometry3D \
 -lCConfig \
 -lCImageLib \
 -lCFont \

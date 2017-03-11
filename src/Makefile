@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -m64 -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -m64 -pipe -std=c++11 -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I../include -I../../CQUtil/include -I../../CQPropertyTree/include -I../../CXML/include -I../../CImportModel/include -I../../CImageLib/include -I../../CFont/include -I../../CThread/include -I../../CFile/include -I../../CMath/include -I../../CRegExp/include -I../../CStrUtil/include -I../../CRGBName/include -I../../COS/include -I../../CUtil/include -I. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I.moc -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64
+INCPATH       = -I. -I../include -I../../CQUtil/include -I../../CQPropertyTree/include -I../../CXML/include -I../../CImportModel/include -I../../CGeometry3D/include -I../../CImageLib/include -I../../CFont/include -I../../CThread/include -I../../CFile/include -I../../CMath/include -I../../CRegExp/include -I../../CStrUtil/include -I../../CRGBName/include -I../../COS/include -I../../CUtil/include -I. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I.moc -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64
 QMAKE         = /usr/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = CQRayTrace1.0.0
 DISTDIR = /home/colinw/git/CRayTrace/obj/CQRayTrace1.0.0
 LINK          = g++
 LFLAGS        = -m64
-LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -L../lib -L../../CQPropertyTree/lib -L../../CQUtil/lib -L../../CXML/lib -L../../CImportModel/lib -L../../CConfig/lib -L../../CImageLib/lib -L../../CFont/lib -L../../CThread/lib -L../../CFileUtil/lib -L../../CFile/lib -L../../CMath/lib -L../../CRegExp/lib -L../../CStrUtil/lib -L../../CRGBName/lib -L../../CUtil/lib -L../../COS/lib -lCQPropertyTree -lCQUtil -lCXML -lCImportModel -lCConfig -lCImageLib -lCFont -lCThread -lCFileUtil -lCFile -lCMath -lCRegExp -lCStrUtil -lCRGBName -lCUtil -lCOS -ltre -lpng -ljpeg -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -L../lib -L../../CQPropertyTree/lib -L../../CQUtil/lib -L../../CXML/lib -L../../CImportModel/lib -L../../CGeometry3D/lib -L../../CConfig/lib -L../../CImageLib/lib -L../../CFont/lib -L../../CThread/lib -L../../CFileUtil/lib -L../../CFile/lib -L../../CMath/lib -L../../CRegExp/lib -L../../CStrUtil/lib -L../../CRGBName/lib -L../../CUtil/lib -L../../COS/lib -lCQPropertyTree -lCQUtil -lCXML -lCImportModel -lCGeometry3D -lCConfig -lCImageLib -lCFont -lCThread -lCFileUtil -lCFile -lCMath -lCRegExp -lCStrUtil -lCRGBName -lCUtil -lCOS -ltre -lpng -ljpeg -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -427,7 +427,7 @@ compiler_moc_header_clean:
 	-$(DEL_FILE) .moc/moc_CQRayTrace.cpp
 .moc/moc_CQRayTrace.cpp: ../../CQUtil/include/CQMainWindow.h \
 		CQRayTrace.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/colinw/git/CRayTrace/src -I/home/colinw/git/CRayTrace/include -I/home/colinw/git/CQUtil/include -I/home/colinw/git/CQPropertyTree/include -I/home/colinw/git/CXML/include -I/home/colinw/git/CImportModel/include -I/home/colinw/git/CImageLib/include -I/home/colinw/git/CFont/include -I/home/colinw/git/CThread/include -I/home/colinw/git/CFile/include -I/home/colinw/git/CMath/include -I/home/colinw/git/CRegExp/include -I/home/colinw/git/CStrUtil/include -I/home/colinw/git/CRGBName/include -I/home/colinw/git/COS/include -I/home/colinw/git/CUtil/include -I/home/colinw/git/CRayTrace/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include CQRayTrace.h -o .moc/moc_CQRayTrace.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/colinw/git/CRayTrace/src -I/home/colinw/git/CRayTrace/include -I/home/colinw/git/CQUtil/include -I/home/colinw/git/CQPropertyTree/include -I/home/colinw/git/CXML/include -I/home/colinw/git/CImportModel/include -I/home/colinw/git/CGeometry3D/include -I/home/colinw/git/CImageLib/include -I/home/colinw/git/CFont/include -I/home/colinw/git/CThread/include -I/home/colinw/git/CFile/include -I/home/colinw/git/CMath/include -I/home/colinw/git/CRegExp/include -I/home/colinw/git/CStrUtil/include -I/home/colinw/git/CRGBName/include -I/home/colinw/git/COS/include -I/home/colinw/git/CUtil/include -I/home/colinw/git/CRayTrace/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include CQRayTrace.h -o .moc/moc_CQRayTrace.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -463,13 +463,13 @@ compiler_clean: compiler_moc_header_clean
 		COctTree.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		CRay.h \
 		../../CUtil/include/accessor.h \
@@ -550,13 +550,13 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CVector2D.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
@@ -618,13 +618,13 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CVector2D.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
@@ -674,13 +674,13 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CVector2D.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
@@ -742,13 +742,13 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CVector2D.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
@@ -798,13 +798,13 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CVector2D.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
@@ -854,13 +854,13 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CVector2D.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
@@ -896,16 +896,16 @@ compiler_clean: compiler_moc_header_clean
 		CRayTexture.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
 		../../CMath/include/CMathGen.h \
 		../../COS/include/NaN.h \
 		../../CMath/include/CIPoint2D.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		../../CMath/include/CVector2D.h \
 		../../CMath/include/CPoint2D.h \
@@ -935,16 +935,16 @@ compiler_clean: compiler_moc_header_clean
 		CRayTexture.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
 		../../CMath/include/CMathGen.h \
 		../../COS/include/NaN.h \
 		../../CMath/include/CIPoint2D.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		../../CMath/include/CVector2D.h \
 		../../CMath/include/CPoint2D.h \
@@ -965,16 +965,16 @@ compiler_clean: compiler_moc_header_clean
 		CRayTexture.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
 		../../CMath/include/CMathGen.h \
 		../../COS/include/NaN.h \
 		../../CMath/include/CIPoint2D.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		../../CMath/include/CVector2D.h \
 		../../CMath/include/CPoint2D.h \
@@ -989,16 +989,16 @@ compiler_clean: compiler_moc_header_clean
 		CRayTexture.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
 		../../CMath/include/CMathGen.h \
 		../../COS/include/NaN.h \
 		../../CMath/include/CIPoint2D.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		../../CMath/include/CVector2D.h \
 		../../CMath/include/CPoint2D.h \
@@ -1029,13 +1029,13 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CVector2D.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
@@ -1085,13 +1085,13 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CVector2D.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
@@ -1152,13 +1152,13 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CVector2D.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
@@ -1202,13 +1202,13 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CVector2D.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
@@ -1261,13 +1261,13 @@ compiler_clean: compiler_moc_header_clean
 		COctTree.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		CRayTraceShapeData.h \
 		../../CThread/include/CThread.h \
@@ -1292,13 +1292,13 @@ compiler_clean: compiler_moc_header_clean
 		COctTree.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		CRay.h \
 		../../CUtil/include/accessor.h \
@@ -1378,33 +1378,33 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CMatrix2D.h \
 		CSample.h \
 		../../CImportModel/include/CImport3DS.h \
-		../../CImportModel/include/CGeomScene3D.h \
-		../../CImportModel/include/CGeomObject3D.h \
-		../../CImportModel/include/CGeomFace3D.h \
-		../../CImportModel/include/CGeomVertex3D.h \
+		../../CGeometry3D/include/CGeomScene3D.h \
+		../../CGeometry3D/include/CGeomObject3D.h \
+		../../CGeometry3D/include/CGeomFace3D.h \
+		../../CGeometry3D/include/CGeomVertex3D.h \
 		../../CUtil/include/CClipSide.h \
-		../../CImportModel/include/CGeomPoint3D.h \
+		../../CGeometry3D/include/CGeomPoint3D.h \
 		../../CMath/include/CCoordFrame3D.h \
 		../../CMath/include/COrthonormalBasis3D.h \
-		../../CImportModel/include/CGeomLine3D.h \
+		../../CGeometry3D/include/CGeomLine3D.h \
 		../../CImportModel/include/CMaterial.h \
 		../../CUtil/include/CLineDash.h \
 		../../CUtil/include/CILineDash.h \
-		../../CImportModel/include/CGeomLight3D.h \
-		../../CImportModel/include/CGeomAxes3D.h \
-		../../CImportModel/include/CGeomZBuffer.h \
+		../../CGeometry3D/include/CGeomLight3D.h \
+		../../CGeometry3D/include/CGeomAxes3D.h \
+		../../CGeometry3D/include/CGeomZBuffer.h \
 		../../CMath/include/CBresenham.h \
 		../../CFont/include/CFont.h \
 		../../CFont/include/CFontStyle.h \
 		../../CUtil/include/CFlags.h \
-		../../CImportModel/include/CGeom3DRenderer.h \
-		../../CImportModel/include/CGeomCamera3D.h \
+		../../CGeometry3D/include/CGeom3DRenderer.h \
+		../../CGeometry3D/include/CGeomCamera3D.h \
 		../../CUtil/include/CAutoPtr.h \
 		../../CImportModel/include/CImportV3D.h \
 		../../CImportModel/include/CImportScene.h \
-		../../CImportModel/include/CGeometry3D.h \
-		../../CImportModel/include/CGeomTexture.h \
-		../../CImportModel/include/CGeomMask.h
+		../../CGeometry3D/include/CGeometry3D.h \
+		../../CGeometry3D/include/CGeomTexture.h \
+		../../CGeometry3D/include/CGeomMask.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../obj/CRayTrace.o CRayTrace.cpp
 
 ../obj/CRayTraceLight.o: CRayTraceLight.cpp CRayTraceLight.h \
@@ -1414,16 +1414,16 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CIPoint3D.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
 		../../CMath/include/CMathGen.h \
 		../../COS/include/NaN.h \
 		../../CMath/include/CIPoint2D.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		CRayTrace.h \
 		../../CMath/include/CMatrix3DH.h \
@@ -1463,13 +1463,13 @@ compiler_clean: compiler_moc_header_clean
 		COctTree.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		CRay.h \
 		../../CUtil/include/accessor.h \
@@ -1571,13 +1571,13 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CVector2D.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
@@ -1620,16 +1620,16 @@ compiler_clean: compiler_moc_header_clean
 		CPointFractal.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
 		../../CMath/include/CMathGen.h \
 		../../COS/include/NaN.h \
 		../../CMath/include/CIPoint2D.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		CColorRange.h \
 		../../CMath/include/CTransform2D.h \
@@ -1644,16 +1644,16 @@ compiler_clean: compiler_moc_header_clean
 ../obj/CPointFractal.o: CPointFractal.cpp CPointFractal.h \
 		../../CUtil/include/CRGBA.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
 		../../CMath/include/CMathGen.h \
 		../../COS/include/NaN.h \
 		../../CMath/include/CIPoint2D.h \
-		../../CRGBName/include/CRGBName.h \
 		../../CUtil/include/CColorComponent.h \
 		CColorRange.h \
 		../../CMath/include/CTransform2D.h \
@@ -1669,18 +1669,18 @@ compiler_clean: compiler_moc_header_clean
 
 ../obj/CColorRange.o: CColorRange.cpp CColorRange.h \
 		../../CUtil/include/CRGB.h \
-		../../CUtil/include/CHSV.h \
+		../../CRGBName/include/CRGBName.h \
+		../../CUtil/include/CRGBA.h \
+		../../CUtil/include/CColorComponent.h \
 		../../CUtil/include/CRGBUtil.h \
 		../../CUtil/include/CCMYK.h \
 		../../CUtil/include/CHSL.h \
+		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
 		../../CMath/include/CMathGen.h \
 		../../COS/include/NaN.h \
-		../../CMath/include/CIPoint2D.h \
-		../../CRGBName/include/CRGBName.h \
-		../../CUtil/include/CRGBA.h \
-		../../CUtil/include/CColorComponent.h
+		../../CMath/include/CIPoint2D.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../obj/CColorRange.o CColorRange.cpp
 
 ../obj/CSample.o: CSample.cpp CSample.h \
