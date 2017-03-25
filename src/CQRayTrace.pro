@@ -35,9 +35,6 @@ CRayTraceLight.cpp \
 CRayTraceXML.cpp \
 CRayTriangle.cpp \
 \
-CMandelbrot.cpp \
-CPointFractal.cpp \
-CColorRange.cpp \
 CSample.cpp \
 CSolidNoise.cpp \
 
@@ -87,6 +84,7 @@ INCLUDEPATH += \
 ../../CXML/include \
 ../../CImportModel/include \
 ../../CGeometry3D/include \
+../../CFractal/include \
 ../../CImageLib/include \
 ../../CFont/include \
 ../../CThread/include \
@@ -106,6 +104,7 @@ unix:LIBS += \
 -L../../CXML/lib \
 -L../../CImportModel/lib \
 -L../../CGeometry3D/lib \
+-L../../CFractal/lib \
 -L../../CConfig/lib \
 -L../../CImageLib/lib \
 -L../../CFont/lib \
@@ -123,6 +122,7 @@ unix:LIBS += \
 -lCXML \
 -lCImportModel \
 -lCGeometry3D \
+-lCFractal \
 -lCConfig \
 -lCImageLib \
 -lCFont \

@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -m64 -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -m64 -pipe -std=c++11 -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I../include -I../../CQUtil/include -I../../CQPropertyTree/include -I../../CXML/include -I../../CImportModel/include -I../../CGeometry3D/include -I../../CImageLib/include -I../../CFont/include -I../../CThread/include -I../../CFile/include -I../../CMath/include -I../../CRegExp/include -I../../CStrUtil/include -I../../CRGBName/include -I../../COS/include -I../../CUtil/include -I. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I.moc -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64
+INCPATH       = -I. -I../include -I../../CQUtil/include -I../../CQPropertyTree/include -I../../CXML/include -I../../CImportModel/include -I../../CGeometry3D/include -I../../CFractal/include -I../../CImageLib/include -I../../CFont/include -I../../CThread/include -I../../CFile/include -I../../CMath/include -I../../CRegExp/include -I../../CStrUtil/include -I../../CRGBName/include -I../../COS/include -I../../CUtil/include -I. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I.moc -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64
 QMAKE         = /usr/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = CQRayTrace1.0.0
 DISTDIR = /home/colinw/git/CRayTrace/obj/CQRayTrace1.0.0
 LINK          = g++
 LFLAGS        = -m64
-LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -L../lib -L../../CQPropertyTree/lib -L../../CQUtil/lib -L../../CXML/lib -L../../CImportModel/lib -L../../CGeometry3D/lib -L../../CConfig/lib -L../../CImageLib/lib -L../../CFont/lib -L../../CThread/lib -L../../CFileUtil/lib -L../../CFile/lib -L../../CMath/lib -L../../CRegExp/lib -L../../CStrUtil/lib -L../../CRGBName/lib -L../../CUtil/lib -L../../COS/lib -lCQPropertyTree -lCQUtil -lCXML -lCImportModel -lCGeometry3D -lCConfig -lCImageLib -lCFont -lCThread -lCFileUtil -lCFile -lCMath -lCRegExp -lCStrUtil -lCRGBName -lCUtil -lCOS -ltre -lpng -ljpeg -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -L../lib -L../../CQPropertyTree/lib -L../../CQUtil/lib -L../../CXML/lib -L../../CImportModel/lib -L../../CGeometry3D/lib -L../../CFractal/lib -L../../CConfig/lib -L../../CImageLib/lib -L../../CFont/lib -L../../CThread/lib -L../../CFileUtil/lib -L../../CFile/lib -L../../CMath/lib -L../../CRegExp/lib -L../../CStrUtil/lib -L../../CRGBName/lib -L../../CUtil/lib -L../../COS/lib -lCQPropertyTree -lCQUtil -lCXML -lCImportModel -lCGeometry3D -lCFractal -lCConfig -lCImageLib -lCFont -lCThread -lCFileUtil -lCFile -lCMath -lCRegExp -lCStrUtil -lCRGBName -lCUtil -lCOS -ltre -lpng -ljpeg -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -68,9 +68,6 @@ SOURCES       = CQRayTrace.cpp \
 		CRayTraceLight.cpp \
 		CRayTraceXML.cpp \
 		CRayTriangle.cpp \
-		CMandelbrot.cpp \
-		CPointFractal.cpp \
-		CColorRange.cpp \
 		CSample.cpp \
 		CSolidNoise.cpp .moc/moc_CQRayTrace.cpp
 OBJECTS       = ../obj/CQRayTrace.o \
@@ -93,9 +90,6 @@ OBJECTS       = ../obj/CQRayTrace.o \
 		../obj/CRayTraceLight.o \
 		../obj/CRayTraceXML.o \
 		../obj/CRayTriangle.o \
-		../obj/CMandelbrot.o \
-		../obj/CPointFractal.o \
-		../obj/CColorRange.o \
 		../obj/CSample.o \
 		../obj/CSolidNoise.o \
 		../obj/moc_CQRayTrace.o
@@ -213,9 +207,6 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		CRayTraceLight.cpp \
 		CRayTraceXML.cpp \
 		CRayTriangle.cpp \
-		CMandelbrot.cpp \
-		CPointFractal.cpp \
-		CColorRange.cpp \
 		CSample.cpp \
 		CSolidNoise.cpp
 QMAKE_TARGET  = CQRayTrace
@@ -399,7 +390,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents CQRayTrace.h CRayBox.h CRayCone.h CRayCube.h CRayCylinder.h CRayDifferential.h CRayDisk.h CRayDynamicShape.h CRayDynamicSphere.h CRay.h CRayHitData.h CRayHyperboloid.h CRayImageTexture.h CRayMandelbrotTexture.h CRayMarbleTexture.h CRayNoiseTexture.h CRayParaboloid.h CRayPlane.h CRayShape.h CRayShapeLib.h CRaySimpleTexture.h CRaySphere.h CRayTexture.h CRayTraceCamera.h CRayTrace.h CRayTraceLight.h CRayTraceShapeData.h CRayTraceXML.h CRayTriangle.h COctTree.h CSample.h CSolidNoise.h $(DISTDIR)/
-	$(COPY_FILE) --parents CQRayTrace.cpp CRayBox.cpp CRayCone.cpp CRayCube.cpp CRayCylinder.cpp CRayDisk.cpp CRayHyperboloid.cpp CRayImageTexture.cpp CRayMandelbrotTexture.cpp CRayMarbleTexture.cpp CRayNoiseTexture.cpp CRayParaboloid.cpp CRayPlane.cpp CRayShape.cpp CRaySphere.cpp CRayTraceCamera.cpp CRayTrace.cpp CRayTraceLight.cpp CRayTraceXML.cpp CRayTriangle.cpp CMandelbrot.cpp CPointFractal.cpp CColorRange.cpp CSample.cpp CSolidNoise.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents CQRayTrace.cpp CRayBox.cpp CRayCone.cpp CRayCube.cpp CRayCylinder.cpp CRayDisk.cpp CRayHyperboloid.cpp CRayImageTexture.cpp CRayMandelbrotTexture.cpp CRayMarbleTexture.cpp CRayNoiseTexture.cpp CRayParaboloid.cpp CRayPlane.cpp CRayShape.cpp CRaySphere.cpp CRayTraceCamera.cpp CRayTrace.cpp CRayTraceLight.cpp CRayTraceXML.cpp CRayTriangle.cpp CSample.cpp CSolidNoise.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -427,7 +418,7 @@ compiler_moc_header_clean:
 	-$(DEL_FILE) .moc/moc_CQRayTrace.cpp
 .moc/moc_CQRayTrace.cpp: ../../CQUtil/include/CQMainWindow.h \
 		CQRayTrace.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/colinw/git/CRayTrace/src -I/home/colinw/git/CRayTrace/include -I/home/colinw/git/CQUtil/include -I/home/colinw/git/CQPropertyTree/include -I/home/colinw/git/CXML/include -I/home/colinw/git/CImportModel/include -I/home/colinw/git/CGeometry3D/include -I/home/colinw/git/CImageLib/include -I/home/colinw/git/CFont/include -I/home/colinw/git/CThread/include -I/home/colinw/git/CFile/include -I/home/colinw/git/CMath/include -I/home/colinw/git/CRegExp/include -I/home/colinw/git/CStrUtil/include -I/home/colinw/git/CRGBName/include -I/home/colinw/git/COS/include -I/home/colinw/git/CUtil/include -I/home/colinw/git/CRayTrace/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include CQRayTrace.h -o .moc/moc_CQRayTrace.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/colinw/git/CRayTrace/src -I/home/colinw/git/CRayTrace/include -I/home/colinw/git/CQUtil/include -I/home/colinw/git/CQPropertyTree/include -I/home/colinw/git/CXML/include -I/home/colinw/git/CImportModel/include -I/home/colinw/git/CGeometry3D/include -I/home/colinw/git/CFractal/include -I/home/colinw/git/CImageLib/include -I/home/colinw/git/CFont/include -I/home/colinw/git/CThread/include -I/home/colinw/git/CFile/include -I/home/colinw/git/CMath/include -I/home/colinw/git/CRegExp/include -I/home/colinw/git/CStrUtil/include -I/home/colinw/git/CRGBName/include -I/home/colinw/git/COS/include -I/home/colinw/git/CUtil/include -I/home/colinw/git/CRayTrace/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include CQRayTrace.h -o .moc/moc_CQRayTrace.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -952,9 +943,9 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CPoint3D.h \
 		../../CMath/include/CIPoint3D.h \
 		../../CMath/include/CMathMacros.h \
-		CMandelbrot.h \
-		CPointFractal.h \
-		CColorRange.h \
+		../../CFractal/include/CMandelbrot.h \
+		../../CFractal/include/CPointFractal.h \
+		../../CFractal/include/CColorRange.h \
 		../../CMath/include/CTransform2D.h \
 		../../CMath/include/CMatrix2D.h \
 		../../CMath/include/CMatrixType.h \
@@ -1371,9 +1362,9 @@ compiler_clean: compiler_moc_header_clean
 		CSolidNoise.h \
 		CRayMarbleTexture.h \
 		CRayMandelbrotTexture.h \
-		CMandelbrot.h \
-		CPointFractal.h \
-		CColorRange.h \
+		../../CFractal/include/CMandelbrot.h \
+		../../CFractal/include/CPointFractal.h \
+		../../CFractal/include/CColorRange.h \
 		../../CMath/include/CTransform2D.h \
 		../../CMath/include/CMatrix2D.h \
 		CSample.h \
@@ -1615,73 +1606,6 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/C3Bezier2D.h \
 		../../CMath/include/C2Bezier2D.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../obj/CRayTriangle.o CRayTriangle.cpp
-
-../obj/CMandelbrot.o: CMandelbrot.cpp CMandelbrot.h \
-		CPointFractal.h \
-		../../CUtil/include/CRGBA.h \
-		../../CUtil/include/CRGB.h \
-		../../CRGBName/include/CRGBName.h \
-		../../CUtil/include/CRGBUtil.h \
-		../../CUtil/include/CCMYK.h \
-		../../CUtil/include/CHSL.h \
-		../../CUtil/include/CHSV.h \
-		../../CUtil/include/CHSB.h \
-		../../CUtil/include/CHSI.h \
-		../../CMath/include/CMathGen.h \
-		../../COS/include/NaN.h \
-		../../CMath/include/CIPoint2D.h \
-		../../CUtil/include/CColorComponent.h \
-		CColorRange.h \
-		../../CMath/include/CTransform2D.h \
-		../../CMath/include/CMatrix2D.h \
-		../../CMath/include/CMathMacros.h \
-		../../CMath/include/CPoint2D.h \
-		../../CMath/include/CVector2D.h \
-		../../CMath/include/CMatrixType.h \
-		../../CUtil/include/CThrow.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../obj/CMandelbrot.o CMandelbrot.cpp
-
-../obj/CPointFractal.o: CPointFractal.cpp CPointFractal.h \
-		../../CUtil/include/CRGBA.h \
-		../../CUtil/include/CRGB.h \
-		../../CRGBName/include/CRGBName.h \
-		../../CUtil/include/CRGBUtil.h \
-		../../CUtil/include/CCMYK.h \
-		../../CUtil/include/CHSL.h \
-		../../CUtil/include/CHSV.h \
-		../../CUtil/include/CHSB.h \
-		../../CUtil/include/CHSI.h \
-		../../CMath/include/CMathGen.h \
-		../../COS/include/NaN.h \
-		../../CMath/include/CIPoint2D.h \
-		../../CUtil/include/CColorComponent.h \
-		CColorRange.h \
-		../../CMath/include/CTransform2D.h \
-		../../CMath/include/CMatrix2D.h \
-		../../CMath/include/CMathMacros.h \
-		../../CMath/include/CPoint2D.h \
-		../../CMath/include/CVector2D.h \
-		../../CMath/include/CMatrixType.h \
-		../../CUtil/include/CThrow.h \
-		../../CThread/include/CThread.h \
-		../../CThread/include/pthread_rdwr.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../obj/CPointFractal.o CPointFractal.cpp
-
-../obj/CColorRange.o: CColorRange.cpp CColorRange.h \
-		../../CUtil/include/CRGB.h \
-		../../CRGBName/include/CRGBName.h \
-		../../CUtil/include/CRGBA.h \
-		../../CUtil/include/CColorComponent.h \
-		../../CUtil/include/CRGBUtil.h \
-		../../CUtil/include/CCMYK.h \
-		../../CUtil/include/CHSL.h \
-		../../CUtil/include/CHSV.h \
-		../../CUtil/include/CHSB.h \
-		../../CUtil/include/CHSI.h \
-		../../CMath/include/CMathGen.h \
-		../../COS/include/NaN.h \
-		../../CMath/include/CIPoint2D.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../obj/CColorRange.o CColorRange.cpp
 
 ../obj/CSample.o: CSample.cpp CSample.h \
 		../../CMath/include/CVector2D.h \
