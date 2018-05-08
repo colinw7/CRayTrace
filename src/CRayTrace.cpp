@@ -219,23 +219,27 @@ addModel(const std::string &filename, double scale, bool auto_scale,
     CImport3DS import(scene);
 
     import.read(file);
+
+    addScene(*scene, scale, auto_scale, translate, auto_translate, rotate, shape_data);
   }
   else if (suffix == "v3d") {
     CImportV3D import(scene);
 
     import.read(file);
+
+    addScene(*scene, scale, auto_scale, translate, auto_translate, rotate, shape_data);
   }
   else if (suffix == "scene") {
     CImportScene import(scene);
 
     import.read(file);
+
+    addScene(*scene, scale, auto_scale, translate, auto_translate, rotate, shape_data);
   }
   else {
     std::cerr << "File " << filename << " not recognised" << std::endl;
     return;
   }
-
-  addScene(*scene, scale, auto_scale, translate, auto_translate, rotate, shape_data);
 
   delete scene;
 }

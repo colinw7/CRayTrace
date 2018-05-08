@@ -87,7 +87,7 @@ class CQRayTrace : public CQMainWindow {
 
   void checkChanged();
 
-  QSize sizeHint() const { return QSize(500, 500); }
+  QSize sizeHint() const { return QSize(800, 800); }
 
  private slots:
   void updateSlot();
@@ -98,8 +98,8 @@ class CQRayTrace : public CQMainWindow {
   typedef std::vector<CQRayTraceLight *> Lights;
   typedef std::vector<CQRayTraceShape *> Shapes;
 
-  int                       width_    { 500 };
-  int                       height_   { 500 };
+  int                       width_    { 800 };
+  int                       height_   { 800 };
   CRayTrace*                raytrace_ { nullptr };
   bool                      rendered_ { false };
   CQRayTraceCanvas*         canvas_   { nullptr };

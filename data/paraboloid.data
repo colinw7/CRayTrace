@@ -1,0 +1,4 @@
+<raytracer>
+  <paraboloid radius="0.4" zmin="0.1" zmax="0.6" translate="0.5,0.5,1" color="red" rotate="0,0,0"/>
+  <light position="0,0,0" color="white"/>
+</raytracer>

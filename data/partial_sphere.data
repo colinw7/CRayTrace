@@ -1,0 +1,4 @@
+<raytracer>
+  <sphere radius="0.3" color="red" phi_max="180" zmin="-0.2" zmax="0.25" translate="0.5,0.5,1" rotate="5,45,0"/>
+  <light position="0,0,0" color="white"/>
+</raytracer>

@@ -1,0 +1,5 @@
+<raytracer width="1000" height="1000">
+  <model name="models/3ds/robocop2.3ds" scale="0.005" translate="auto" rotate="-45,180,0"/>
+  <plane point1="-1,-1,2" point2="2,-1,2" point3="2,2,2" color="green" reflect="0.3"/>
+  <light position="0.0,0.0,0.0" color="white"/>
+</raytracer>

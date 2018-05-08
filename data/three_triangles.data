@@ -1,0 +1,5 @@
+<raytracer>
+  <triangle point1="0.6,1.0,1.0" point2="1.0,0.2,1.0" point3="0.2,0.6,1.0" color="#ff000044"/>
+  <triangle point1="0.2,0.4,0.9" point2="0.3,0.0,0.9" point3="0.4,0.2,0.9" color="#00ff0044"/>
+  <triangle point1="0.6,0.8,0.8" point2="0.6,0.4,0.8" point3="0.1,0.1,0.8" color="#0000ff44"/>
+</raytracer>

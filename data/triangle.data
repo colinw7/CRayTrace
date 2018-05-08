@@ -1,0 +1,3 @@
+<raytracer>
+  <triangle point1="0.6,1,0.9" point2="0,0.2,1" point3="0.9,0.04,1" color="red"/>
+</raytracer>

@@ -112,6 +112,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_eglfs_device_lib_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_multimedia.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_multimediawidgets.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl.pri \
@@ -134,6 +136,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_webkitwidgets.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_x11extras.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml_private.pri \
@@ -259,6 +262,8 @@ Makefile: CQRayTrace.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmak
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_eglfs_device_lib_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_multimedia.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_multimediawidgets.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl.pri \
@@ -281,6 +286,7 @@ Makefile: CQRayTrace.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmak
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_webkitwidgets.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_x11extras.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml_private.pri \
@@ -327,6 +333,8 @@ Makefile: CQRayTrace.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmak
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_eglfs_device_lib_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui_private.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_multimedia.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_multimediawidgets.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl.pri:
@@ -349,6 +357,7 @@ Makefile: CQRayTrace.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmak
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_webkitwidgets.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets_private.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_x11extras.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml_private.pri:
@@ -447,9 +456,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CVector3D.h \
 		../../CMath/include/CMathMacros.h \
 		../../CMath/include/CMatrix3D.h \
-		../../CMath/include/CMatrixType.h \
 		../../CMath/include/CGaussianMatrix.h \
-		../../CUtil/include/CThrow.h \
 		../../CMath/include/CBBox3D.h \
 		COctTree.h \
 		../../CUtil/include/CRGBA.h \
@@ -461,7 +468,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CUtil/include/CColorComponent.h \
+		../../CMath/include/CMathRound.h \
 		CRay.h \
 		../../CUtil/include/accessor.h \
 		../../CMath/include/CLine3D.h \
@@ -469,6 +476,7 @@ compiler_clean: compiler_moc_header_clean
 		CRayTraceShapeData.h \
 		../../CThread/include/CThread.h \
 		../../CThread/include/pthread_rdwr.h \
+		../../CUtil/include/CThrow.h \
 		CRayTraceCamera.h \
 		CRayTraceLight.h \
 		CRayShape.h \
@@ -507,6 +515,8 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CAngle.h \
 		../../CFont/include/CFontStyle.h \
 		../../CUtil/include/CFlags.h \
+		../../CUtil/include/CLineCapType.h \
+		../../CUtil/include/CLineJoinType.h \
 		../../CFont/include/CFont.h \
 		../../CMath/include/CBBox2D.h \
 		../../CMath/include/CSize2D.h \
@@ -517,8 +527,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CAutoPtr.h \
 		../../CMath/include/CGenGradient.h \
 		../../CUtil/include/CPen.h \
-		../../CUtil/include/CLineCapType.h \
-		../../CUtil/include/CLineJoinType.h
+		../../CQUtil/include/CQUtilMeta.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../obj/CQRayTrace.o CQRayTrace.cpp
 
 ../obj/CRayBox.o: CRayBox.cpp CRayBox.h \
@@ -548,7 +557,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CUtil/include/CColorComponent.h \
+		../../CMath/include/CMathRound.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
 		CRayImageTexture.h \
@@ -572,9 +581,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CBox3D.h \
 		../../CMath/include/CShape3D.h \
 		../../CMath/include/CMatrix3D.h \
-		../../CMath/include/CMatrixType.h \
 		../../CMath/include/CGaussianMatrix.h \
-		../../CUtil/include/CThrow.h \
 		../../CMath/include/CPlane3D.h \
 		../../CMath/include/CMathGeom3D.h \
 		../../CMath/include/CTriangle3D.h \
@@ -616,7 +623,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CUtil/include/CColorComponent.h \
+		../../CMath/include/CMathRound.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
 		CRayImageTexture.h \
@@ -640,9 +647,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CCone3D.h \
 		../../CMath/include/CShape3D.h \
 		../../CMath/include/CMatrix3D.h \
-		../../CMath/include/CMatrixType.h \
-		../../CMath/include/CGaussianMatrix.h \
-		../../CUtil/include/CThrow.h
+		../../CMath/include/CGaussianMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../obj/CRayCone.o CRayCone.cpp
 
 ../obj/CRayCube.o: CRayCube.cpp CRayCube.h \
@@ -672,7 +677,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CUtil/include/CColorComponent.h \
+		../../CMath/include/CMathRound.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
 		CRayImageTexture.h \
@@ -696,9 +701,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CCube3D.h \
 		../../CMath/include/CShape3D.h \
 		../../CMath/include/CMatrix3D.h \
-		../../CMath/include/CMatrixType.h \
 		../../CMath/include/CGaussianMatrix.h \
-		../../CUtil/include/CThrow.h \
 		../../CMath/include/CPlane3D.h \
 		../../CMath/include/CMathGeom3D.h \
 		../../CMath/include/CTriangle3D.h \
@@ -740,7 +743,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CUtil/include/CColorComponent.h \
+		../../CMath/include/CMathRound.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
 		CRayImageTexture.h \
@@ -764,9 +767,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CCylinder3D.h \
 		../../CMath/include/CShape3D.h \
 		../../CMath/include/CMatrix3D.h \
-		../../CMath/include/CMatrixType.h \
-		../../CMath/include/CGaussianMatrix.h \
-		../../CUtil/include/CThrow.h
+		../../CMath/include/CGaussianMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../obj/CRayCylinder.o CRayCylinder.cpp
 
 ../obj/CRayDisk.o: CRayDisk.cpp CRayDisk.h \
@@ -796,7 +797,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CUtil/include/CColorComponent.h \
+		../../CMath/include/CMathRound.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
 		CRayImageTexture.h \
@@ -820,9 +821,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CDisk3D.h \
 		../../CMath/include/CShape3D.h \
 		../../CMath/include/CMatrix3D.h \
-		../../CMath/include/CMatrixType.h \
-		../../CMath/include/CGaussianMatrix.h \
-		../../CUtil/include/CThrow.h
+		../../CMath/include/CGaussianMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../obj/CRayDisk.o CRayDisk.cpp
 
 ../obj/CRayHyperboloid.o: CRayHyperboloid.cpp CRayHyperboloid.h \
@@ -852,7 +851,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CUtil/include/CColorComponent.h \
+		../../CMath/include/CMathRound.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
 		CRayImageTexture.h \
@@ -876,9 +875,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CHyperboloid3D.h \
 		../../CMath/include/CShape3D.h \
 		../../CMath/include/CMatrix3D.h \
-		../../CMath/include/CMatrixType.h \
-		../../CMath/include/CGaussianMatrix.h \
-		../../CUtil/include/CThrow.h
+		../../CMath/include/CGaussianMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../obj/CRayHyperboloid.o CRayHyperboloid.cpp
 
 ../obj/CRayImageTexture.o: CRayImageTexture.cpp CRayImageTexture.h \
@@ -894,12 +891,12 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
+		../../CMath/include/CMathRound.h \
+		../../CMath/include/CVector2D.h \
+		../../CMath/include/CPoint2D.h \
 		../../CMath/include/CMathGen.h \
 		../../COS/include/NaN.h \
 		../../CMath/include/CIPoint2D.h \
-		../../CUtil/include/CColorComponent.h \
-		../../CMath/include/CVector2D.h \
-		../../CMath/include/CPoint2D.h \
 		../../CMath/include/CVector3D.h \
 		../../CMath/include/CPoint3D.h \
 		../../CMath/include/CIPoint3D.h \
@@ -933,12 +930,12 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
+		../../CMath/include/CMathRound.h \
+		../../CMath/include/CVector2D.h \
+		../../CMath/include/CPoint2D.h \
 		../../CMath/include/CMathGen.h \
 		../../COS/include/NaN.h \
 		../../CMath/include/CIPoint2D.h \
-		../../CUtil/include/CColorComponent.h \
-		../../CMath/include/CVector2D.h \
-		../../CMath/include/CPoint2D.h \
 		../../CMath/include/CVector3D.h \
 		../../CMath/include/CPoint3D.h \
 		../../CMath/include/CIPoint3D.h \
@@ -947,9 +944,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CFractal/include/CPointFractal.h \
 		../../CFractal/include/CColorRange.h \
 		../../CMath/include/CTransform2D.h \
-		../../CMath/include/CMatrix2D.h \
-		../../CMath/include/CMatrixType.h \
-		../../CUtil/include/CThrow.h
+		../../CMath/include/CMatrix2D.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../obj/CRayMandelbrotTexture.o CRayMandelbrotTexture.cpp
 
 ../obj/CRayMarbleTexture.o: CRayMarbleTexture.cpp CRayMarbleTexture.h \
@@ -963,12 +958,12 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
+		../../CMath/include/CMathRound.h \
+		../../CMath/include/CVector2D.h \
+		../../CMath/include/CPoint2D.h \
 		../../CMath/include/CMathGen.h \
 		../../COS/include/NaN.h \
 		../../CMath/include/CIPoint2D.h \
-		../../CUtil/include/CColorComponent.h \
-		../../CMath/include/CVector2D.h \
-		../../CMath/include/CPoint2D.h \
 		../../CMath/include/CVector3D.h \
 		../../CMath/include/CPoint3D.h \
 		../../CMath/include/CIPoint3D.h \
@@ -987,12 +982,12 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
+		../../CMath/include/CMathRound.h \
+		../../CMath/include/CVector2D.h \
+		../../CMath/include/CPoint2D.h \
 		../../CMath/include/CMathGen.h \
 		../../COS/include/NaN.h \
 		../../CMath/include/CIPoint2D.h \
-		../../CUtil/include/CColorComponent.h \
-		../../CMath/include/CVector2D.h \
-		../../CMath/include/CPoint2D.h \
 		../../CMath/include/CVector3D.h \
 		../../CMath/include/CPoint3D.h \
 		../../CMath/include/CIPoint3D.h \
@@ -1027,7 +1022,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CUtil/include/CColorComponent.h \
+		../../CMath/include/CMathRound.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
 		CRayImageTexture.h \
@@ -1051,9 +1046,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CParaboloid3D.h \
 		../../CMath/include/CShape3D.h \
 		../../CMath/include/CMatrix3D.h \
-		../../CMath/include/CMatrixType.h \
-		../../CMath/include/CGaussianMatrix.h \
-		../../CUtil/include/CThrow.h
+		../../CMath/include/CGaussianMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../obj/CRayParaboloid.o CRayParaboloid.cpp
 
 ../obj/CRayPlane.o: CRayPlane.cpp CRayPlane.h \
@@ -1083,7 +1076,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CUtil/include/CColorComponent.h \
+		../../CMath/include/CMathRound.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
 		CRayImageTexture.h \
@@ -1107,9 +1100,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CSquare3D.h \
 		../../CMath/include/CShape3D.h \
 		../../CMath/include/CMatrix3D.h \
-		../../CMath/include/CMatrixType.h \
 		../../CMath/include/CGaussianMatrix.h \
-		../../CUtil/include/CThrow.h \
 		../../CMath/include/CPlane3D.h \
 		../../CMath/include/CMathGeom3D.h \
 		../../CMath/include/CTriangle3D.h \
@@ -1150,7 +1141,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CUtil/include/CColorComponent.h \
+		../../CMath/include/CMathRound.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
 		CRayImageTexture.h \
@@ -1200,7 +1191,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CUtil/include/CColorComponent.h \
+		../../CMath/include/CMathRound.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
 		CRayImageTexture.h \
@@ -1224,9 +1215,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CSphere3D.h \
 		../../CMath/include/CShape3D.h \
 		../../CMath/include/CMatrix3D.h \
-		../../CMath/include/CMatrixType.h \
-		../../CMath/include/CGaussianMatrix.h \
-		../../CUtil/include/CThrow.h
+		../../CMath/include/CGaussianMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../obj/CRaySphere.o CRaySphere.cpp
 
 ../obj/CRayTraceCamera.o: CRayTraceCamera.cpp CRayTraceCamera.h \
@@ -1240,9 +1229,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CMathMacros.h \
 		../../CMath/include/CMatrix3DH.h \
 		../../CMath/include/CMatrix3D.h \
-		../../CMath/include/CMatrixType.h \
 		../../CMath/include/CGaussianMatrix.h \
-		../../CUtil/include/CThrow.h \
 		CRay.h \
 		../../CUtil/include/accessor.h \
 		../../CMath/include/CLine3D.h \
@@ -1259,10 +1246,11 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CUtil/include/CColorComponent.h \
+		../../CMath/include/CMathRound.h \
 		CRayTraceShapeData.h \
 		../../CThread/include/CThread.h \
-		../../CThread/include/pthread_rdwr.h
+		../../CThread/include/pthread_rdwr.h \
+		../../CUtil/include/CThrow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../obj/CRayTraceCamera.o CRayTraceCamera.cpp
 
 ../obj/CRayTrace.o: CRayTrace.cpp CRayTrace.h \
@@ -1276,9 +1264,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CVector3D.h \
 		../../CMath/include/CMathMacros.h \
 		../../CMath/include/CMatrix3D.h \
-		../../CMath/include/CMatrixType.h \
 		../../CMath/include/CGaussianMatrix.h \
-		../../CUtil/include/CThrow.h \
 		../../CMath/include/CBBox3D.h \
 		COctTree.h \
 		../../CUtil/include/CRGBA.h \
@@ -1290,7 +1276,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CUtil/include/CColorComponent.h \
+		../../CMath/include/CMathRound.h \
 		CRay.h \
 		../../CUtil/include/accessor.h \
 		../../CMath/include/CLine3D.h \
@@ -1298,6 +1284,7 @@ compiler_clean: compiler_moc_header_clean
 		CRayTraceShapeData.h \
 		../../CThread/include/CThread.h \
 		../../CThread/include/pthread_rdwr.h \
+		../../CUtil/include/CThrow.h \
 		CRayTraceCamera.h \
 		CRayTraceLight.h \
 		CRayTraceXML.h \
@@ -1412,18 +1399,16 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
+		../../CMath/include/CMathRound.h \
+		CRayTrace.h \
+		../../CMath/include/CMatrix3DH.h \
 		../../CMath/include/CMathGen.h \
 		../../COS/include/NaN.h \
 		../../CMath/include/CIPoint2D.h \
-		../../CUtil/include/CColorComponent.h \
-		CRayTrace.h \
-		../../CMath/include/CMatrix3DH.h \
 		../../CMath/include/CVector3D.h \
 		../../CMath/include/CMathMacros.h \
 		../../CMath/include/CMatrix3D.h \
-		../../CMath/include/CMatrixType.h \
 		../../CMath/include/CGaussianMatrix.h \
-		../../CUtil/include/CThrow.h \
 		../../CMath/include/CBBox3D.h \
 		COctTree.h \
 		CRay.h \
@@ -1431,7 +1416,8 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CNormal3D.h \
 		CRayTraceShapeData.h \
 		../../CThread/include/CThread.h \
-		../../CThread/include/pthread_rdwr.h
+		../../CThread/include/pthread_rdwr.h \
+		../../CUtil/include/CThrow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ../obj/CRayTraceLight.o CRayTraceLight.cpp
 
 ../obj/CRayTraceXML.o: CRayTraceXML.cpp CRayTraceXML.h \
@@ -1447,9 +1433,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CVector3D.h \
 		../../CMath/include/CMathMacros.h \
 		../../CMath/include/CMatrix3D.h \
-		../../CMath/include/CMatrixType.h \
 		../../CMath/include/CGaussianMatrix.h \
-		../../CUtil/include/CThrow.h \
 		../../CMath/include/CBBox3D.h \
 		COctTree.h \
 		../../CUtil/include/CRGBA.h \
@@ -1461,13 +1445,14 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CUtil/include/CColorComponent.h \
+		../../CMath/include/CMathRound.h \
 		CRay.h \
 		../../CUtil/include/accessor.h \
 		../../CMath/include/CLine3D.h \
 		../../CMath/include/CNormal3D.h \
 		../../CThread/include/CThread.h \
 		../../CThread/include/pthread_rdwr.h \
+		../../CUtil/include/CThrow.h \
 		CRayTraceCamera.h \
 		CRayTraceLight.h \
 		CRayShapeLib.h \
@@ -1569,7 +1554,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CUtil/include/CHSV.h \
 		../../CUtil/include/CHSB.h \
 		../../CUtil/include/CHSI.h \
-		../../CUtil/include/CColorComponent.h \
+		../../CMath/include/CMathRound.h \
 		CRaySimpleTexture.h \
 		CRayTexture.h \
 		CRayImageTexture.h \
@@ -1593,9 +1578,7 @@ compiler_clean: compiler_moc_header_clean
 		../../CMath/include/CTriangle3D.h \
 		../../CMath/include/CShape3D.h \
 		../../CMath/include/CMatrix3D.h \
-		../../CMath/include/CMatrixType.h \
 		../../CMath/include/CGaussianMatrix.h \
-		../../CUtil/include/CThrow.h \
 		../../CMath/include/CPolygonOrientation.h \
 		../../CMath/include/CMathGeom2D.h \
 		../../CMath/include/CBBox2D.h \

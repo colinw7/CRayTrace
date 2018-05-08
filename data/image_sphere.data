@@ -1,0 +1,4 @@
+<raytracer width="500" height="500">
+  <sphere translate="0.5,0.5,1" radius="0.6" color="red" image="textures/jupiter2_4k.jpg"/>
+  <light position="0,0,0" color="white"/>
+</raytracer>

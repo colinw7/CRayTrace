@@ -1,0 +1,3 @@
+<raytracer>
+  <plane point1="-1,-1,2" point2="2,-1,2" point3="2,2,2" color="red" image="textures/checkerboard.png"/>
+</raytracer>

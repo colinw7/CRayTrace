@@ -1,0 +1,7 @@
+<raytracer width="800" height="800">
+  <!camera perspective="false"/>
+  <sphere center="0.5,0.5,0.5" radius="0.4" color="white" image="textures/MoonMap2_2500x1250.jpg"/>
+  <light position="0,0,0"   color="#AA0000"/>
+  <light position="1,0,0"   color="#00AA00"/>
+  <light position="0.5,1,0" color="#0000AA"/>
+</raytracer>

@@ -1,0 +1,6 @@
+<raytracer>
+  <sphere center="0.5,0.5,1" radius="0.7" image="textures/checkerboard3.png"/>
+  <light position="1,0,0" color="red"/>
+  <light position="0,1,0" color="green"/>
+  <light position="0,0,1" color="blue"/>
+</raytracer>

@@ -1,0 +1,4 @@
+<raytracer>
+  <cylinder radius="0.4" height="0.6" color="red" translate="0.5,0.2,1"/>
+  <light position="0,0,0" color="white"/>
+</raytracer>

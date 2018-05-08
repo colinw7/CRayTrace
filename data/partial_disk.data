@@ -1,0 +1,4 @@
+<raytracer>
+  <disk radius="0.5" height="0.5" inner_radius="0.2" phi_max="235" color="red" translate="0.5,0.5,1" rotate="10,10,10"/>
+  <light position="0,0,0" color="white"/>
+</raytracer>

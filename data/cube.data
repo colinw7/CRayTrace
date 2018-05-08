@@ -1,0 +1,4 @@
+<raytracer>
+  <cube size="0.5" color="white" translate="0.5,0.5,2" rotate="10,20,30"/>
+  <light position="0,0,1" color="green"/>
+</raytracer>

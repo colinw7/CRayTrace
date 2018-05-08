@@ -1,4 +1,1 @@
-CRayTrace
-=========
-
-Ray Tracer
+doc/README.md

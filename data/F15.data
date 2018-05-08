@@ -1,0 +1,5 @@
+<raytracer width="400" height="400">
+  <model name="models/v3d/F15.V3D" scale="0.1" translate="auto" rotate="45,-45,45"/>
+  <plane point1="-1,-1,2" point2="2,-1,2" point3="2,2,2" color="green" reflect="0.3"/>
+  <light position="0.0,0.0,0.0" color="white"/>
+</raytracer>

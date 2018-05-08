@@ -1,0 +1,4 @@
+<raytracer>
+  <model name="models/v3d/F15.V3D" scale="auto" translate="auto"/>
+  <light position="0,0,0" color="white"/>
+</raytracer>

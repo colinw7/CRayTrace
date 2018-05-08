@@ -1,0 +1,8 @@
+<raytracer refract_depth="8">
+  <plane point1="0,0  ,0" point2="1,0  ,0" point3="1,0.4,1" color="red" image="textures/whitmarb.gif" reflect="0.2"/>
+  <plane point1="0,0.4,1" point2="1,0.4,1" point3="1,0.8,1" color="red" image="textures/whitmarb.gif" reflect="0.2"/>
+  <plane point1="0,0.8,1" point2="1,0.8,1" point3="1,1  ,0" color="red" image="textures/whitmarb.gif" reflect="0.2"/>
+  <sphere translate="0.5,0.5,0.2" radius="0.2" color="red" refract="0.8" reflect="0.2" refract_index="1.1"/>
+  <light position="0,0.5,0" color="white"/>
+  <camera perspective="true" z1="0.1" z2="100" fov="60"/>
+</raytracer>

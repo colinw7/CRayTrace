@@ -1,0 +1,5 @@
+<raytracer>
+  <cone radius="0.5" height="1.0" color="white" translate="0.5,0.5,1" reflect="1.0" rotate="45,45,45"/>
+  <sphere radius="100" color="white" translate="0.5,0.5,2" image="textures/sphere_map.jpg" rotate="270,0,0" ignore_light="true"/>
+  <light position="0,0,1" color="red"/>
+</raytracer>

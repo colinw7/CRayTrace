@@ -1,0 +1,3 @@
+<raytracer>
+  <sphere center="250,250,-1000" radius="150" color="red"/>
+</raytracer>

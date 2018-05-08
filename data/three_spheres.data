@@ -1,0 +1,7 @@
+<raytracer bg="#202020">
+  <!camera z1="0" z2="-500"/>
+  <sphere translate="0.05,0.35,0.15" radius="0.25" color="red"  />
+  <sphere translate="0.25,0.05,0.15" radius="0.25" color="green"/>
+  <sphere translate="0.45,0.35,0.15" radius="0.25" color="blue" />
+  <light position="1,1,1" color="white"/>
+</raytracer>

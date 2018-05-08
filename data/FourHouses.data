@@ -1,0 +1,6 @@
+<raytracer width="500" height="500">
+  <model name="models/scene/Four_Houses.scene" translate="auto" scale="auto" reflect="0.8" rotate="30,20,10"/>
+  <sphere radius="100" color="white" translate="0.5,0.5,2" image="textures/sphere_map.jpg" rotate="270,0,0" ignore_light="true"/>
+  <light position="1,1,0" color="red"/>
+  <light position="0,1,0" color="green"/>
+</raytracer>
