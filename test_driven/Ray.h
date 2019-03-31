@@ -9,6 +9,8 @@ namespace RayTrace {
 
 class Ray {
  public:
+  Ray() { }
+
   Ray(const Point &origin, const Vector &direction) :
    origin_(origin), direction_(direction) {
   }
@@ -33,8 +35,8 @@ class Ray {
   }
 
  private:
-  Point  origin_;
-  Vector direction_;
+  Point  origin_    { 0, 0, 0 };
+  Vector direction_ { 0, 0, 1 };
 };
 
 }

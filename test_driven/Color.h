@@ -1,9 +1,20 @@
 #ifndef Color_H
 #define Color_H
 
+#include <Point.h>
+#include <iostream>
+
 namespace RayTrace {
 
 class Color {
+ public:
+  static Color makeBlack () { return Color(0, 0, 0); }
+  static Color makeWhite () { return Color(1, 1, 1); }
+  static Color makeRed   () { return Color(1, 0, 0); }
+  static Color makeGreen () { return Color(0, 1, 0); }
+  static Color makeBlue  () { return Color(0, 0, 1); }
+  static Color makeYellow() { return Color(1, 1, 0); }
+
  public:
   Color() { }
 

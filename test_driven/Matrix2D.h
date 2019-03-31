@@ -1,7 +1,9 @@
 #ifndef Matrix2D_H
 #define Matrix2D_H
 
+#include <cmath>
 #include <cstring>
+#include <cassert>
 #include <iostream>
 #include <iomanip>
 
@@ -144,7 +146,7 @@ class Matrix2D {
     return true;
   }
 
-  Matrix2D inverse() const {
+  Matrix2D inverted() const {
     Matrix2D imatrix;
 
     if (! invert(imatrix))

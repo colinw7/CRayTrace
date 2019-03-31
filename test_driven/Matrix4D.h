@@ -3,6 +3,7 @@
 
 #include <Matrix3D.h>
 #include <Tuple.h>
+#include <cmath>
 #include <cstring>
 #include <iostream>
 #include <iomanip>
@@ -41,7 +42,7 @@ class Matrix4D {
     memcpy(&m00_, &a.m00_, 16*sizeof(double));
   }
 
-  ~Matrix4D() { }
+  ~Matrix4D() { delete inverse_; }
 
   //---
 
@@ -58,6 +59,8 @@ class Matrix4D {
     m10_ = 0.0; m11_ = 1.0; m12_ = 0.0; m13_ = 0.0;
     m20_ = 0.0; m21_ = 0.0; m22_ = 1.0; m23_ = 0.0;
     m30_ = 0.0; m31_ = 0.0; m32_ = 0.0; m33_ = 1.0;
+
+    inverseValid_ = false;
   }
 
   //---
@@ -75,6 +78,8 @@ class Matrix4D {
     m10_ = 0.0; m11_ = 1.0; m12_ = 0.0; m13_ = ty ;
     m20_ = 0.0; m21_ = 0.0; m22_ = 1.0; m23_ = tz ;
     m30_ = 0.0; m31_ = 0.0; m32_ = 0.0; m33_ = 1.0;
+
+    inverseValid_ = false;
   }
 
   //---
@@ -92,6 +97,8 @@ class Matrix4D {
     m10_ = 0.0; m11_ = sy ; m12_ = 0.0; m13_ = 0.0;
     m20_ = 0.0; m21_ = 0.0; m22_ = sz ; m23_ = 0.0;
     m30_ = 0.0; m31_ = 0.0; m32_ = 0.0; m33_ = 1.0;
+
+    inverseValid_ = false;
   }
 
   //---
@@ -129,6 +136,8 @@ class Matrix4D {
 
     m03_ = 0.0; m13_ = 0.0; m23_ = 0.0;
     m30_ = 0.0; m31_ = 0.0; m32_ = 0.0; m33_ = 1.0;
+
+    inverseValid_ = false;
   }
 
   //---
@@ -146,6 +155,8 @@ class Matrix4D {
     m10_ = yx ; m11_ = 1.0; m12_ = yz ; m13_ = 0.0;
     m20_ = zx ; m21_ = zy ; m22_ = 1.0; m23_ = 0.0;
     m30_ = 0.0; m31_ = 0.0; m32_ = 0.0; m33_ = 1.0;
+
+    inverseValid_ = false;
   }
 
   //---
@@ -172,6 +183,8 @@ class Matrix4D {
     m10_ = m10; m11_ = m11; m12_ = m12; m13_ = m13;
     m20_ = m20; m21_ = m21; m22_ = m22; m23_ = m23;
     m30_ = m30; m31_ = m31; m32_ = m32; m33_ = m33;
+
+    inverseValid_ = false;
   }
 
   //---
@@ -190,6 +203,8 @@ class Matrix4D {
 
   void setValue(unsigned int i, double value) {
     (&m00_)[i] = value;
+
+    inverseValid_ = false;
   }
 
   void setValue(unsigned int r, unsigned int c, double value) {
@@ -198,6 +213,8 @@ class Matrix4D {
     double &m = (&m00_)[4*r + c];
 
     m = value;
+
+    inverseValid_ = false;
   }
 
   //---
@@ -208,6 +225,8 @@ class Matrix4D {
     double *m = &(&m00_)[r*4];
 
     m[0] = x; m[1] = y; m[2] = z; m[3] = w;
+
+    inverseValid_ = false;
   }
 
   void getRow(int r, double *x, double *y, double *z, double *w) {
@@ -229,6 +248,8 @@ class Matrix4D {
     double *m = &(&m00_)[c];
 
     m[0] = x; m[4] = y; m[8] = z; m[12] = w;
+
+    inverseValid_ = false;
   }
 
   void getColumn(int c, double *x, double *y, double *z, double *w) {
@@ -284,76 +305,19 @@ class Matrix4D {
   }
 
   bool invert(Matrix4D &imatrix) const {
-    double det = determinant();
+    calcInverse();
 
-    if (std::abs(det) == 0.0)
-      return false;
+    imatrix = *inverse_;
 
-    double idet = 1.0/det;
-
-    imatrix.m00_ =  idet*calcDeterminant(m11_, m12_, m13_,
-                                         m21_, m22_, m23_,
-                                         m31_, m32_, m33_);
-    imatrix.m10_ = -idet*calcDeterminant(m10_, m12_, m13_,
-                                         m20_, m22_, m23_,
-                                         m30_, m32_, m33_);
-    imatrix.m20_ =  idet*calcDeterminant(m10_, m11_, m13_,
-                                         m20_, m21_, m23_,
-                                         m30_, m31_, m33_);
-    imatrix.m30_ = -idet*calcDeterminant(m10_, m11_, m12_,
-                                         m20_, m21_, m22_,
-                                         m30_, m31_, m32_);
-
-    imatrix.m01_ = -idet*calcDeterminant(m01_, m02_, m03_,
-                                         m21_, m22_, m23_,
-                                         m31_, m32_, m33_);
-    imatrix.m11_ =  idet*calcDeterminant(m00_, m02_, m03_,
-                                         m20_, m22_, m23_,
-                                         m30_, m32_, m33_);
-    imatrix.m21_ = -idet*calcDeterminant(m00_, m01_, m03_,
-                                         m20_, m21_, m23_,
-                                         m30_, m31_, m33_);
-    imatrix.m31_ =  idet*calcDeterminant(m00_, m01_, m02_,
-                                         m20_, m21_, m22_,
-                                         m30_, m31_, m32_);
-
-    imatrix.m02_ =  idet*calcDeterminant(m01_, m02_, m03_,
-                                         m11_, m12_, m13_,
-                                         m31_, m32_, m33_);
-    imatrix.m12_ = -idet*calcDeterminant(m00_, m02_, m03_,
-                                         m10_, m12_, m13_,
-                                         m30_, m32_, m33_);
-    imatrix.m22_ =  idet*calcDeterminant(m00_, m01_, m03_,
-                                         m10_, m11_, m13_,
-                                         m30_, m31_, m33_);
-    imatrix.m32_ = -idet*calcDeterminant(m00_, m01_, m02_,
-                                         m10_, m11_, m12_,
-                                         m30_, m31_, m32_);
-
-    imatrix.m03_ = -idet*calcDeterminant(m01_, m02_, m03_,
-                                         m11_, m12_, m13_,
-                                         m21_, m22_, m23_);
-    imatrix.m13_ =  idet*calcDeterminant(m00_, m02_, m03_,
-                                         m10_, m12_, m13_,
-                                         m20_, m22_, m23_);
-    imatrix.m23_ = -idet*calcDeterminant(m00_, m01_, m03_,
-                                         m10_, m11_, m13_,
-                                         m20_, m21_, m23_);
-    imatrix.m33_ =  idet*calcDeterminant(m00_, m01_, m02_,
-                                         m10_, m11_, m12_,
-                                         m20_, m21_, m22_);
-
-    return true;
+    return inverseValid_;
   }
 
   Matrix4D inverted() const {
-    Matrix4D im;
+    calcInverse();
 
-    bool b = invert(im);
+    assert(inverseValid_);
 
-    assert(b);
-
-    return im;
+    return *inverse_;
   }
 
   //---
@@ -374,6 +338,8 @@ class Matrix4D {
     std::swap(m30_, m03_);
     std::swap(m31_, m13_);
     std::swap(m32_, m23_);
+
+    inverseValid_ = false;
   }
 
   Matrix4D transposed() const {
@@ -413,12 +379,18 @@ class Matrix4D {
 
   //--
 
-  void zero() { memset(&m00_, 0, 16*sizeof(double)); }
+  void zero() {
+    memset(&m00_, 0, 16*sizeof(double));
+
+    inverseValid_ = false;
+  }
 
   //---
 
   Matrix4D &operator=(const Matrix4D &a) {
     memcpy(&m00_, &a.m00_, 16*sizeof(double));
+
+    inverseValid_ = false;
 
     return *this;
   }
@@ -428,6 +400,8 @@ class Matrix4D {
     m10_ += b.m10_; m11_ += b.m11_; m12_ += b.m12_; m13_ += b.m13_;
     m20_ += b.m20_; m21_ += b.m21_; m22_ += b.m22_; m23_ += b.m23_;
     m30_ += b.m30_; m31_ += b.m31_; m32_ += b.m32_; m33_ += b.m33_;
+
+    inverseValid_ = false;
 
     return *this;
   }
@@ -445,6 +419,8 @@ class Matrix4D {
     m10_ -= b.m10_; m11_ -= b.m11_; m12_ -= b.m12_; m13_ -= b.m13_;
     m20_ -= b.m20_; m21_ -= b.m21_; m22_ -= b.m22_; m23_ -= b.m23_;
     m30_ -= b.m30_; m31_ -= b.m31_; m32_ -= b.m32_; m33_ -= b.m33_;
+
+    inverseValid_ = false;
 
     return *this;
   }
@@ -482,6 +458,8 @@ class Matrix4D {
     m32_ = a.m30_*b.m02_ + a.m31_*b.m12_ + a.m32_*b.m22_ + a.m33_*b.m32_;
     m33_ = a.m30_*b.m03_ + a.m31_*b.m13_ + a.m32_*b.m23_ + a.m33_*b.m33_;
 
+    inverseValid_ = false;
+
     return *this;
   }
 
@@ -510,6 +488,8 @@ class Matrix4D {
     m10_ *= s; m11_ *= s; m12_ *= s; m13_ *= s;
     m20_ *= s; m21_ *= s; m22_ *= s; m23_ *= s;
     m30_ *= s; m31_ *= s; m32_ *= s; m33_ *= s;
+
+    inverseValid_ = false;
 
     return *this;
   }
@@ -543,7 +523,7 @@ class Matrix4D {
 
   //---
 
-  double        operator[](unsigned int i)       { return (&m00_)[i]; }
+  double       &operator[](unsigned int i)       { return (&m00_)[i]; }
   const double &operator[](unsigned int i) const { return (&m00_)[i]; }
 
   //---
@@ -636,6 +616,78 @@ class Matrix4D {
     return std::abs(r1 - r2) < 1E-6;
   }
 
+  void calcInverse() const {
+    if (! inverseValid_) {
+      if (! inverse_)
+        inverse_ = new Matrix4D;
+
+      inverseValid_ = calcInverse(*inverse_);
+    }
+  }
+
+  bool calcInverse(Matrix4D &imatrix) const {
+    double det = determinant();
+
+    if (std::abs(det) == 0.0)
+      return false;
+
+    double idet = 1.0/det;
+
+    imatrix.m00_ =  idet*calcDeterminant(m11_, m12_, m13_,
+                                         m21_, m22_, m23_,
+                                         m31_, m32_, m33_);
+    imatrix.m10_ = -idet*calcDeterminant(m10_, m12_, m13_,
+                                         m20_, m22_, m23_,
+                                         m30_, m32_, m33_);
+    imatrix.m20_ =  idet*calcDeterminant(m10_, m11_, m13_,
+                                         m20_, m21_, m23_,
+                                         m30_, m31_, m33_);
+    imatrix.m30_ = -idet*calcDeterminant(m10_, m11_, m12_,
+                                         m20_, m21_, m22_,
+                                         m30_, m31_, m32_);
+
+    imatrix.m01_ = -idet*calcDeterminant(m01_, m02_, m03_,
+                                         m21_, m22_, m23_,
+                                         m31_, m32_, m33_);
+    imatrix.m11_ =  idet*calcDeterminant(m00_, m02_, m03_,
+                                         m20_, m22_, m23_,
+                                         m30_, m32_, m33_);
+    imatrix.m21_ = -idet*calcDeterminant(m00_, m01_, m03_,
+                                         m20_, m21_, m23_,
+                                         m30_, m31_, m33_);
+    imatrix.m31_ =  idet*calcDeterminant(m00_, m01_, m02_,
+                                         m20_, m21_, m22_,
+                                         m30_, m31_, m32_);
+
+    imatrix.m02_ =  idet*calcDeterminant(m01_, m02_, m03_,
+                                         m11_, m12_, m13_,
+                                         m31_, m32_, m33_);
+    imatrix.m12_ = -idet*calcDeterminant(m00_, m02_, m03_,
+                                         m10_, m12_, m13_,
+                                         m30_, m32_, m33_);
+    imatrix.m22_ =  idet*calcDeterminant(m00_, m01_, m03_,
+                                         m10_, m11_, m13_,
+                                         m30_, m31_, m33_);
+    imatrix.m32_ = -idet*calcDeterminant(m00_, m01_, m02_,
+                                         m10_, m11_, m12_,
+                                         m30_, m31_, m32_);
+
+    imatrix.m03_ = -idet*calcDeterminant(m01_, m02_, m03_,
+                                         m11_, m12_, m13_,
+                                         m21_, m22_, m23_);
+    imatrix.m13_ =  idet*calcDeterminant(m00_, m02_, m03_,
+                                         m10_, m12_, m13_,
+                                         m20_, m22_, m23_);
+    imatrix.m23_ = -idet*calcDeterminant(m00_, m01_, m03_,
+                                         m10_, m11_, m13_,
+                                         m20_, m21_, m23_);
+    imatrix.m33_ =  idet*calcDeterminant(m00_, m01_, m02_,
+                                         m10_, m11_, m12_,
+                                         m20_, m21_, m22_);
+
+    return true;
+  }
+
   double calcDeterminant(double a, double b, double c,
                          double d, double e, double f,
                          double g, double h, double i) const {
@@ -647,6 +699,9 @@ class Matrix4D {
   double m10_ { 0.0 }, m11_ { 0.0 }, m12_ { 0.0 }, m13_ { 0.0 };
   double m20_ { 0.0 }, m21_ { 0.0 }, m22_ { 0.0 }, m23_ { 0.0 };
   double m30_ { 0.0 }, m31_ { 0.0 }, m32_ { 0.0 }, m33_ { 0.0 };
+
+  mutable Matrix4D *inverse_      { nullptr };
+  mutable bool      inverseValid_ { false };
 };
 
 }

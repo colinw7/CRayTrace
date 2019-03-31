@@ -207,7 +207,7 @@ class Matrix3D {
     return true;
   }
 
-  Matrix3D inverse() const {
+  Matrix3D inverted() const {
     Matrix3D imatrix;
 
     if (! invert(imatrix))
