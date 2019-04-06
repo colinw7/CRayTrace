@@ -1,21 +1,34 @@
-#include <Tuple.h>
 #include <Point.h>
 #include <Vector.h>
-#include <Color.h>
+
 #include <Matrix4D.h>
 #include <Matrix3D.h>
 #include <Matrix2D.h>
+
+#include <Color.h>
+
 #include <Ray.h>
-#include <Sphere.h>
-#include <Plane.h>
-#include <PointLight.h>
-#include <Material.h>
-#include <Pattern.h>
-#include <Canvas.h>
-#include <World.h>
-#include <Camera.h>
-#include <RayTrace.h>
+
 #include <IntersectionData.h>
+
+#include <Sphere.h>
+#include <Cube.h>
+#include <Plane.h>
+#include <Cylinder.h>
+#include <Cone.h>
+
+#include <PointLight.h>
+
+#include <Material.h>
+
+#include <Pattern.h>
+
+#include <Canvas.h>
+#include <Camera.h>
+
+#include <World.h>
+
+#include <RayTrace.h>
 
 // Point, Vector
 using RayTrace::Tuple;
@@ -44,8 +57,14 @@ using RayTrace::Sphere;
 using RayTrace::SphereP;
 using RayTrace::GlassSphere;
 using RayTrace::GlassSphereP;
+using RayTrace::Cube;
+using RayTrace::CubeP;
 using RayTrace::Plane;
 using RayTrace::PlaneP;
+using RayTrace::Cylinder;
+using RayTrace::CylinderP;
+using RayTrace::Cone;
+using RayTrace::ConeP;
 
 // lights
 using RayTrace::Light;

@@ -45,6 +45,15 @@ class Intersections {
 
   const Intersection &operator[](int i) { updateOrder(); return intersections_[i]; }
 
+  Intersection at(int i) {
+    updateOrder();
+
+    if (i < 0 || i >= int(intersections_.size()))
+      return Intersection();
+
+    return intersections_[i];
+  }
+
   Intersections &operator+=(const Intersections &intersections) {
     for (const auto &intersection : intersections.intersections_)
       intersections_.push_back(intersection);

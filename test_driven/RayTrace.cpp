@@ -107,4 +107,30 @@ lighting(const Object *object, const Material &material, const PointLight &light
   return ambient + diffuse + specular;
 }
 
+bool
+solveQuadratic(double a, double b, double c, double &r1, double &r2)
+{
+  if (a == 0.0) return false;
+
+  double b2_4ac = b*b - 4.0*a*c;
+
+  if (b2_4ac < 0) return false;
+
+  double sqrt_b2_4ac = std::sqrt(b2_4ac);
+
+  double q;
+
+  if (b < 0.0)
+    q = -0.5*(b - sqrt_b2_4ac);
+  else
+    q = -0.5*(b + sqrt_b2_4ac);
+
+  r1 = q/a;
+  r2 = c/q;
+
+  if (r1 > r2) std::swap(r1, r2);
+
+  return true;
+}
+
 }

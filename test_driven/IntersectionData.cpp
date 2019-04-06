@@ -94,4 +94,30 @@ IntersectionData(const Intersection &intersection, const Ray &ray,
   }
 }
 
+double
+IntersectionData::
+schlick() const
+{
+  double cos = eye().dotProduct(normal());
+
+  if (n1() > n2()) {
+    double n = n1()/n2();
+
+    double sin2t = n*n*(1 - cos*cos);
+
+    if (sin2t > 1.0)
+      return 1.0;
+
+    double cost = std::sqrt(1 - sin2t);
+
+    cos = cost;
+  }
+
+  double n1_n2_f = (n1() - n2())/(n1() + n2());
+
+  double r0 = n1_n2_f*n1_n2_f;
+
+  return r0 + (1 - r0)*std::pow(1 - cos, 5);
+}
+
 }

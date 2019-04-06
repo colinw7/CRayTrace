@@ -222,13 +222,13 @@ assertReal(double r1, double r2)
   if (realCmp(r1, r2))
     std::cerr << "[32mPASS[0m";
   else
-    std::cerr << "[31mFAIL[0m (!= " << r2 << ")";
+    std::cerr << "[31mFAIL[0m (!= " << std::setprecision(7) << r2 << ")";
 }
 
 void
 testReal(double r1, double r2)
 {
-  std::cerr << r1 << " ";
+  std::cerr << std::setprecision(7) << r1 << " ";
 
   assertReal(r1, r2);
 
@@ -1620,10 +1620,10 @@ testWorld()
 
   testInt(intersections.count(), 4);
 
-  testReal(intersections[0].t(), 4);
-  testReal(intersections[1].t(), 4.5);
-  testReal(intersections[2].t(), 5.5);
-  testReal(intersections[3].t(), 6);
+  testReal(intersections.at(0).t(), 4);
+  testReal(intersections.at(1).t(), 4.5);
+  testReal(intersections.at(2).t(), 5.5);
+  testReal(intersections.at(3).t(), 6);
   }
 
   //--
@@ -2243,7 +2243,7 @@ testRenderShape()
 
   render(canvas, camera, world);
 
-  auto fs = std::ofstream("images/render3.ppm", std::ofstream::out);
+  auto fs = std::ofstream("images/render_shape.ppm", std::ofstream::out);
 
   canvas.writePPM(fs);
 }
@@ -2483,7 +2483,7 @@ testRenderPattern()
 
   render(canvas, camera, world);
 
-  auto fs = std::ofstream("images/render4.ppm", std::ofstream::out);
+  auto fs = std::ofstream("images/render_pattern.ppm", std::ofstream::out);
 
   canvas.writePPM(fs);
 }
@@ -2813,7 +2813,7 @@ testRenderReflect()
 
   render(canvas, camera, world);
 
-  auto fs = std::ofstream("images/render5.ppm", std::ofstream::out);
+  auto fs = std::ofstream("images/render_reflect.ppm", std::ofstream::out);
 
   canvas.writePPM(fs);
 }
@@ -2852,6 +2852,120 @@ testRefract()
 
   testBool(intersectionData.point().z() < intersectionData.underPoint().z(), true);
   }
+
+  {
+  DefaultWorld defaultWorld;
+
+  ObjectP object = defaultWorld.objects()[0];
+
+  Ray ray(Point(0, 0, -5), Vector(0, 0, 1));
+
+  Intersections intersections { Intersection(4, object.get()), Intersection(6, object.get()), };
+
+  IntersectionData intersectionData(intersections.at(0), ray, intersections);
+
+  Color color = defaultWorld.refractedColor(intersectionData, 5);
+
+  testColor(color, Color(0, 0, 0));
+  }
+
+  {
+  DefaultWorld defaultWorld;
+
+  ObjectP object = defaultWorld.objects()[0];
+
+  object->material().setTransparency   (1.0);
+  object->material().setRefractiveIndex(1.5);
+
+  Ray ray(Point(0, 0, -5), Vector(0, 0, 1));
+
+  Intersections intersections { Intersection(4, object.get()), Intersection(6, object.get()), };
+
+  IntersectionData intersectionData(intersections.at(0), ray, intersections);
+
+  Color color = defaultWorld.refractedColor(intersectionData, 0);
+
+  testColor(color, Color(0, 0, 0));
+  }
+
+  {
+  DefaultWorld defaultWorld;
+
+  ObjectP object = defaultWorld.objects()[0];
+
+  object->material().setTransparency   (1.0);
+  object->material().setRefractiveIndex(1.5);
+
+  Ray ray(Point(0, 0, sqrt(2)/2), Vector(0, 1, 0));
+
+  Intersections intersections { Intersection(-sqrt(2)/2, object.get()),
+                                Intersection( sqrt(2)/2, object.get()) };
+
+  IntersectionData intersectionData(intersections.at(1), ray, intersections);
+
+  Color color = defaultWorld.refractedColor(intersectionData, 5);
+
+  testColor(color, Color(0, 0, 0));
+  }
+
+  {
+  DefaultWorld defaultWorld;
+
+  auto pattern = std::make_shared<TestPattern>();
+
+  ObjectP object1 = defaultWorld.objects()[0];
+
+  object1->material().setAmbient(1.0);
+  object1->material().setPattern(pattern);
+
+  ObjectP object2 = defaultWorld.objects()[1];
+
+  object2->material().setTransparency   (1.0);
+  object2->material().setRefractiveIndex(1.5);
+
+  Ray ray(Point(0, 0, 0.1), Vector(0, 1, 0));
+
+  Intersections intersections { Intersection(-0.9899, object1.get()),
+                                Intersection(-0.4899, object2.get()),
+                                Intersection( 0.4899, object2.get()),
+                                Intersection( 0.9899, object1.get())  };
+
+  IntersectionData intersectionData(intersections.at(2), ray, intersections);
+
+  Color color = defaultWorld.refractedColor(intersectionData, 5);
+
+  testColor(color, Color(0, 0.998884, 0.0472167));
+  }
+
+  {
+  DefaultWorld defaultWorld;
+
+  PlaneP floor = std::make_shared<Plane>();
+
+  floor->setTransform(Matrix4D::translation(0, -1, 0));
+  floor->material().setTransparency   (0.5);
+  floor->material().setRefractiveIndex(1.5);
+
+  defaultWorld.addObject(floor);
+
+  SphereP ball = std::make_shared<Sphere>();
+
+  ball->material().setColor(Color(1, 0, 0));
+  ball->material().setAmbient(0.5);
+  ball->setTransform(Matrix4D::translation(0, -3.5, -0.5));
+
+  defaultWorld.addObject(ball);
+
+  Ray ray(Point(0, 0, -3), Vector(0, -sqrt(2)/2, sqrt(2)/2));
+
+  Intersections intersections { Intersection(sqrt(2), floor.get()) };
+
+  IntersectionData intersectionData(intersections.at(0), ray, intersections);
+
+  Color color = defaultWorld.shadeHit(intersectionData, 5);
+
+  testColor(color, Color(0.936425, 0.686425, 0.686425));
+  }
 }
 
 void
@@ -2884,12 +2998,12 @@ testRefractN1N2()
     Intersection(6.00, sphere1.get())
   };
 
-  IntersectionData intersectionData1(intersections[0], ray, intersections);
-  IntersectionData intersectionData2(intersections[1], ray, intersections);
-  IntersectionData intersectionData3(intersections[2], ray, intersections);
-  IntersectionData intersectionData4(intersections[3], ray, intersections);
-  IntersectionData intersectionData5(intersections[4], ray, intersections);
-  IntersectionData intersectionData6(intersections[5], ray, intersections);
+  IntersectionData intersectionData1(intersections.at(0), ray, intersections);
+  IntersectionData intersectionData2(intersections.at(1), ray, intersections);
+  IntersectionData intersectionData3(intersections.at(2), ray, intersections);
+  IntersectionData intersectionData4(intersections.at(3), ray, intersections);
+  IntersectionData intersectionData5(intersections.at(4), ray, intersections);
+  IntersectionData intersectionData6(intersections.at(5), ray, intersections);
 
   testReal(intersectionData1.n1(), 1.0); testReal(intersectionData1.n2(), 1.5);
   testReal(intersectionData2.n1(), 1.5); testReal(intersectionData2.n2(), 2.0);
@@ -2898,6 +3012,1010 @@ testRefractN1N2()
   testReal(intersectionData5.n1(), 2.5); testReal(intersectionData5.n2(), 1.5);
   testReal(intersectionData6.n1(), 1.5); testReal(intersectionData6.n2(), 1.0);
   }
+}
+
+void
+testRenderRefract()
+{
+  World world;
+
+  auto checkerPattern  = std::make_shared<CheckerPattern >(Color::makeWhite(), Color::makeBlack());
+
+  //--
+
+  PlaneP floor = std::make_shared<Plane>();
+
+  floor->material().setColor(Color(0.0, 0.0, 0.0));
+  floor->material().setSpecular(0);
+  floor->material().setPattern(checkerPattern);
+  floor->material().setReflective(0.7);
+
+  world.addObject(floor);
+
+  //--
+
+  PlaneP leftWall = std::make_shared<Plane>();
+
+  leftWall->transform(Matrix4D::translation(0, 0, 5)*
+                      Matrix4D::rotation(Matrix4D::AxisType::Y, -M_PI/4.0)*
+                      Matrix4D::rotation(Matrix4D::AxisType::X,  M_PI/2.0));
+
+  leftWall->material().setColor(Color(0.0, 0.0, 0.0));
+  leftWall->material().setSpecular(0);
+  leftWall->material().setPattern(checkerPattern);
+
+  world.addObject(leftWall);
+
+  //--
+
+  PlaneP rightWall = std::make_shared<Plane>();
+
+  rightWall->transform(Matrix4D::translation(0, 0, 5)*
+                       Matrix4D::rotation(Matrix4D::AxisType::Y, M_PI/4.0)*
+                       Matrix4D::rotation(Matrix4D::AxisType::X, M_PI/2.0));
+
+  rightWall->material().setColor(Color(0.0, 0.0, 0.0));
+  rightWall->material().setSpecular(0);
+  rightWall->material().setPattern(checkerPattern);
+
+  world.addObject(rightWall);
+
+  //--
+
+  SphereP middle = std::make_shared<Sphere>();
+
+  middle->transform(Matrix4D::translation(-0.5, 1, 0.5));
+
+  middle->material().setColor(Color(0.8, 0.2, 0.2));
+  middle->material().setDiffuse(0.3);
+  middle->material().setSpecular(0.3);
+  middle->material().setTransparency(0.9);
+  middle->material().setReflective(0.9);
+  middle->material().setRefractiveIndex(1.5);
+
+  world.addObject(middle);
+
+  //--
+
+  SphereP right = std::make_shared<Sphere>();
+
+  right->transform(Matrix4D::translation(1.5, 0.5, -0.5)*
+                   Matrix4D::scale(0.5, 0.5, 0.5));
+
+  right->material().setColor(Color(0.2, 0.8, 0.2));
+  right->material().setDiffuse(0.3);
+  right->material().setSpecular(0.3);
+  right->material().setTransparency(0.7);
+  right->material().setReflective(0.7);
+  right->material().setRefractiveIndex(1.5);
+
+  world.addObject(right);
+
+  //--
+
+  SphereP left = std::make_shared<Sphere>();
+
+  left->transform(Matrix4D::translation(-1.5, 0.33, -0.75)*
+                  Matrix4D::scale(0.33, 0.33, 0.33));
+
+  left->material().setColor(Color(0.2, 0.2, 0.8));
+  left->material().setDiffuse(0.3);
+  left->material().setSpecular(0.3);
+  left->material().setTransparency(0.5);
+  left->material().setReflective(0.5);
+  left->material().setRefractiveIndex(1.5);
+
+  world.addObject(left);
+
+  //---
+
+  auto light = std::make_shared<PointLight>(Point(-10, 10, -10), Color(1, 1, 1));
+
+  world.addLight(light);
+
+  //---
+
+  //Camera camera(100, 50, M_PI/3.0);
+  Camera camera(512, 384, M_PI/3.0);
+
+  camera.setTransform(viewTransform(Point(0, 1.5, -5), Point(0, 1, 0), Vector(0, 1, 0)));
+
+  Canvas canvas;
+
+  render(canvas, camera, world);
+
+  auto fs = std::ofstream("images/render_refract.ppm", std::ofstream::out);
+
+  canvas.writePPM(fs);
+}
+
+void
+testSchlick()
+{
+  {
+  GlassSphereP sphere = std::make_shared<GlassSphere>();
+
+  Ray ray(Point(0, 0, sqrt(2)/2), Vector(0, 1, 0));
+
+  Intersections intersections = {
+    Intersection(-sqrt(2)/2, sphere.get()),
+    Intersection( sqrt(2)/2, sphere.get())
+  };
+
+  IntersectionData intersectionData(intersections.at(1), ray, intersections);
+
+  double reflectance = intersectionData.schlick();
+
+  testReal(reflectance, 1.0);
+  }
+
+  {
+  GlassSphereP sphere = std::make_shared<GlassSphere>();
+
+  Ray ray(Point(0, 0, 0), Vector(0, 1, 0));
+
+  Intersections intersections = {
+    Intersection(-1, sphere.get()),
+    Intersection( 1, sphere.get())
+  };
+
+  IntersectionData intersectionData(intersections.at(1), ray, intersections);
+
+  double reflectance = intersectionData.schlick();
+
+  testReal(reflectance, 0.04);
+  }
+
+  {
+  GlassSphereP sphere = std::make_shared<GlassSphere>();
+
+  Ray ray(Point(0, 0.99, -2), Vector(0, 0, 1));
+
+  Intersections intersections = {
+    Intersection(1.8589, sphere.get())
+  };
+
+  IntersectionData intersectionData(intersections.at(0), ray, intersections);
+
+  double reflectance = intersectionData.schlick();
+
+  testReal(reflectance, 0.48873);
+  }
+
+  {
+  DefaultWorld defaultWorld;
+
+  Ray ray(Point(0, 0, -3), Vector(0, -sqrt(2)/2, sqrt(2)/2));
+
+  PlaneP floor = std::make_shared<Plane>();
+
+  floor->setTransform(Matrix4D::translation(0, -1, 0));
+  floor->material().setReflective     (0.5);
+  floor->material().setTransparency   (0.5);
+  floor->material().setRefractiveIndex(1.5);
+
+  defaultWorld.addObject(floor);
+
+  SphereP ball = std::make_shared<Sphere>();
+
+  ball->material().setColor(Color(1, 0, 0));
+  ball->material().setAmbient(0.5);
+  ball->setTransform(Matrix4D::translation(0, -3.5, -0.5));
+
+  defaultWorld.addObject(ball);
+
+  Intersections intersections { Intersection(sqrt(2), floor.get()) };
+
+  IntersectionData intersectionData(intersections.at(0), ray, intersections);
+
+  Color color = defaultWorld.shadeHit(intersectionData, 5);
+
+  testColor(color, Color(0.933915, 0.696434, 0.692431));
+  }
+}
+
+void
+testCube()
+{
+  {
+  CubeP cube = std::make_shared<Cube>();
+
+  struct TestData {
+    Ray    ray;
+    double t1 { 0.0 };
+    double t2 { 0.0 };
+
+    TestData(const Ray &ray, double t1, double t2) :
+     ray(ray), t1(t1), t2(t2) {
+    }
+  };
+
+  using TestDatas = std::vector<TestData>;
+
+  TestDatas testDatas = {
+    { Ray(Point( 5.0,  0.5,  0.0), Vector(-1,  0,  0)),  4, 6 },
+    { Ray(Point(-5.0,  0.5,  0.0), Vector( 1,  0,  0)),  4, 6 },
+    { Ray(Point( 0.5,  5.0,  0.0), Vector( 0, -1,  0)),  4, 6 },
+    { Ray(Point( 0.5, -5.0,  0.0), Vector( 0,  1,  0)),  4, 6 },
+    { Ray(Point( 0.5,  0.0,  5.0), Vector( 0,  0, -1)),  4, 6 },
+    { Ray(Point( 0.5,  0.0, -5.0), Vector( 0,  0,  1)),  4, 6 },
+    { Ray(Point( 0.0,  0.5,  0.0), Vector( 0,  0,  1)), -1, 1 }
+  };
+
+  for (const auto &testData : testDatas) {
+    Intersections intersections = cube->intersect(testData.ray);
+
+    testInt (intersections.count(), 2);
+    testReal(intersections.at(0).t(), testData.t1);
+    testReal(intersections.at(1).t(), testData.t2);
+  }
+  }
+
+  {
+  CubeP cube = std::make_shared<Cube>();
+
+  struct TestData {
+    Ray ray;
+
+    TestData(const Ray &ray) :
+     ray(ray) {
+    }
+  };
+
+  using TestDatas = std::vector<TestData>;
+
+  TestDatas testDatas = {
+    { Ray(Point(-2.0,  0.0,  0.0), Vector( 0.2673,  0.5345,  0.8018)) },
+    { Ray(Point( 0.0, -2.0,  0.0), Vector( 0.8018,  0.2673,  0.5345)) },
+    { Ray(Point( 0.0,  0.0, -2.0), Vector( 0.5345,  0.8018,  0.2673)) },
+    { Ray(Point( 2.0,  0.0,  2.0), Vector( 0     ,  0     , -1     )) },
+    { Ray(Point( 0.0,  2.0,  2.0), Vector( 0     , -1     ,  0     )) },
+    { Ray(Point( 2.0,  2.0,  0.0), Vector(-1     ,  0     ,  0     )) }
+  };
+
+  for (const auto &testData : testDatas) {
+    Intersections intersections = cube->intersect(testData.ray);
+
+    testInt(intersections.count(), 0);
+  }
+  }
+
+  {
+  CubeP cube = std::make_shared<Cube>();
+
+  struct TestData {
+    Point  point;
+    Vector normal;
+
+    TestData(const Point &point, const Vector &normal) :
+     point(point), normal(normal) {
+    }
+  };
+
+  using TestDatas = std::vector<TestData>;
+
+  TestDatas testDatas = {
+    { Point( 1.0,  0.5, -0.8), Vector( 1,  0,  0) },
+    { Point(-1.0, -0.2,  0.9), Vector(-1,  0,  0) },
+    { Point(-0.4,  1.0, -0.1), Vector( 0,  1,  0) },
+    { Point( 0.3, -1.0, -0.7), Vector( 0, -1,  0) },
+    { Point(-0.6,  0.3,  1.0), Vector( 0,  0,  1) },
+    { Point( 0.4,  0.4, -1.0), Vector( 0,  0, -1) },
+    { Point( 1.0,  1.0,  1.0), Vector( 1,  0,  0) },
+    { Point(-1.0, -1.0, -1.0), Vector(-1,  0,  0) }
+  };
+
+  for (const auto &testData : testDatas) {
+    Vector normal = cube->pointNormal(testData.point);
+
+    testVector(testData.normal, normal);
+  }
+  }
+}
+
+void
+testRenderCube()
+{
+  World world;
+
+  auto checkerPattern  = std::make_shared<CheckerPattern >(Color::makeWhite(), Color::makeBlack());
+
+  //--
+
+  PlaneP floor = std::make_shared<Plane>();
+
+  floor->material().setColor(Color(0.0, 0.0, 0.0));
+  floor->material().setSpecular(0);
+  floor->material().setPattern(checkerPattern);
+  floor->material().setReflective(0.7);
+
+  world.addObject(floor);
+
+  //--
+
+  PlaneP leftWall = std::make_shared<Plane>();
+
+  leftWall->transform(Matrix4D::translation(0, 0, 5)*
+                      Matrix4D::rotation(Matrix4D::AxisType::Y, -M_PI/4.0)*
+                      Matrix4D::rotation(Matrix4D::AxisType::X,  M_PI/2.0));
+
+  leftWall->material().setColor(Color(0.0, 0.0, 0.0));
+  leftWall->material().setSpecular(0);
+  leftWall->material().setPattern(checkerPattern);
+
+  world.addObject(leftWall);
+
+  //--
+
+  PlaneP rightWall = std::make_shared<Plane>();
+
+  rightWall->transform(Matrix4D::translation(0, 0, 5)*
+                       Matrix4D::rotation(Matrix4D::AxisType::Y, M_PI/4.0)*
+                       Matrix4D::rotation(Matrix4D::AxisType::X, M_PI/2.0));
+
+  rightWall->material().setColor(Color(0.0, 0.0, 0.0));
+  rightWall->material().setSpecular(0);
+  rightWall->material().setPattern(checkerPattern);
+
+  world.addObject(rightWall);
+
+  //--
+
+  CubeP middle = std::make_shared<Cube>();
+
+  middle->transform(Matrix4D::translation(-0.5, 1, 0.5));
+
+  middle->material().setColor(Color(0.8, 0.2, 0.2));
+  middle->material().setDiffuse(0.3);
+  middle->material().setSpecular(0.3);
+  middle->material().setTransparency(0.9);
+  middle->material().setReflective(0.9);
+  middle->material().setRefractiveIndex(1.5);
+
+  world.addObject(middle);
+
+  //--
+
+  CubeP right = std::make_shared<Cube>();
+
+  right->transform(Matrix4D::translation(1.5, 0.5, -0.5)*
+                   Matrix4D::scale(0.5, 0.5, 0.5));
+
+  right->material().setColor(Color(0.2, 0.8, 0.2));
+  right->material().setDiffuse(0.3);
+  right->material().setSpecular(0.3);
+  right->material().setTransparency(0.7);
+  right->material().setReflective(0.7);
+  right->material().setRefractiveIndex(1.5);
+
+  world.addObject(right);
+
+  //--
+
+  CubeP left = std::make_shared<Cube>();
+
+  left->transform(Matrix4D::translation(-1.5, 0.33, -0.75)*
+                  Matrix4D::scale(0.33, 0.33, 0.33));
+
+  left->material().setColor(Color(0.2, 0.2, 0.8));
+  left->material().setDiffuse(0.3);
+  left->material().setSpecular(0.3);
+  left->material().setTransparency(0.5);
+  left->material().setReflective(0.5);
+  left->material().setRefractiveIndex(1.5);
+
+  world.addObject(left);
+
+  //---
+
+  auto light = std::make_shared<PointLight>(Point(-10, 10, -10), Color(1, 1, 1));
+
+  world.addLight(light);
+
+  //---
+
+  //Camera camera(100, 50, M_PI/3.0);
+  Camera camera(512, 384, M_PI/3.0);
+
+  camera.setTransform(viewTransform(Point(0, 1.5, -5), Point(0, 1, 0), Vector(0, 1, 0)));
+
+  Canvas canvas;
+
+  render(canvas, camera, world);
+
+  auto fs = std::ofstream("images/render_cube.ppm", std::ofstream::out);
+
+  canvas.writePPM(fs);
+}
+
+void
+testCylinder()
+{
+  {
+  CylinderP cylinder = std::make_shared<Cylinder>();
+
+  struct TestData {
+    Point  origin;
+    Vector direction;
+
+    TestData(const Point &origin, const Vector &direction) :
+     origin(origin), direction(direction) {
+    }
+  };
+
+  using TestDatas = std::vector<TestData>;
+
+  TestDatas testDatas = {
+    { Point(1.0, 0.0,  0.0), Vector(0, 1, 0) },
+    { Point(0.0, 0.0,  0.0), Vector(0, 1, 0) },
+    { Point(0.0, 0.0, -5.0), Vector(1, 1, 1) }
+  };
+
+  for (const auto &testData : testDatas) {
+    Vector direction = testData.direction.normalized();
+
+    Ray ray(testData.origin, direction);
+
+    Intersections intersections = cylinder->intersect(ray);
+
+    testInt(intersections.count(), 0);
+  }
+  }
+
+  {
+  CylinderP cylinder = std::make_shared<Cylinder>();
+
+  struct TestData {
+    Point  origin;
+    Vector direction;
+    double t1 { 0.0 };
+    double t2 { 0.0 };
+
+    TestData(const Point &origin, const Vector &direction, double t1, double t2) :
+     origin(origin), direction(direction), t1(t1), t2(t2) {
+    }
+  };
+
+  using TestDatas = std::vector<TestData>;
+
+  TestDatas testDatas = {
+    { Point(1.0, 0.0, -5.0), Vector(0.0, 0, 1), 5.000000, 5.000000 },
+    { Point(0.0, 0.0, -5.0), Vector(0.0, 0, 1), 4.000000, 6.000000 },
+    { Point(0.5, 0.0, -5.0), Vector(0.1, 1, 1), 6.807982, 7.088723 }
+  };
+
+  for (const auto &testData : testDatas) {
+    Vector direction = testData.direction.normalized();
+
+    Ray ray(testData.origin, direction);
+
+    Intersections intersections = cylinder->intersect(ray);
+
+    testInt (intersections.count(), 2);
+    testReal(intersections.at(0).t(), testData.t1);
+    testReal(intersections.at(1).t(), testData.t2);
+  }
+  }
+
+  {
+  CylinderP cylinder = std::make_shared<Cylinder>();
+
+  struct TestData {
+    Point  point;
+    Vector normal;
+
+    TestData(const Point &point, const Vector &normal) :
+     point(point), normal(normal) {
+    }
+  };
+
+  using TestDatas = std::vector<TestData>;
+
+  TestDatas testDatas = {
+    { Point( 1.0,  0.0,  0.0), Vector( 1, 0,  0) },
+    { Point( 0.0,  5.0, -1.0), Vector( 0, 0, -1) },
+    { Point( 0.0, -2.0,  1.0), Vector( 0, 0,  1) },
+    { Point(-1.0,  1.0,  0.0), Vector(-1, 0,  0) }
+  };
+
+  for (const auto &testData : testDatas) {
+    Vector normal = cylinder->pointNormal(testData.point);
+
+    testVector(testData.normal, normal);
+  }
+  }
+
+  {
+  CylinderP cylinder = std::make_shared<Cylinder>();
+
+  testReal(cylinder->minimum(), -RayTrace::INFINITY());
+  testReal(cylinder->maximum(),  RayTrace::INFINITY());
+  }
+
+  {
+  CylinderP cylinder = std::make_shared<Cylinder>();
+
+  cylinder->setMinimum(1);
+  cylinder->setMaximum(2);
+
+  struct TestData {
+    Point  point;
+    Vector direction;
+    int    n { 0 };
+
+    TestData(const Point &point, const Vector &direction, int n) :
+     point(point), direction(direction), n(n) {
+    }
+  };
+
+  using TestDatas = std::vector<TestData>;
+
+  TestDatas testDatas = {
+    { Point(0.0, 1.5,  0.0), Vector(0.1, 1, 0), 0 },
+    { Point(0.0, 3.0, -5.0), Vector(0.0, 0, 1), 0 },
+    { Point(0.0, 0.0, -5.0), Vector(0.0, 0, 1), 0 },
+    { Point(0.0, 2.0, -5.0), Vector(0.0, 0, 1), 0 },
+    { Point(0.0, 1.0, -5.0), Vector(0.0, 0, 1), 0 },
+    { Point(0.0, 1.5, -2.0), Vector(0.0, 0, 1), 2 }
+  };
+
+  for (const auto &testData : testDatas) {
+    Vector direction = testData.direction.normalized();
+
+    Ray ray(testData.point, direction);
+
+    Intersections intersections = cylinder->intersect(ray);
+
+    testInt (intersections.count(), testData.n);
+  }
+  }
+
+  {
+  CylinderP cylinder = std::make_shared<Cylinder>();
+
+  testBool(cylinder->isClosed(), false);
+  }
+
+  {
+  CylinderP cylinder = std::make_shared<Cylinder>();
+
+  cylinder->setMinimum(1);
+  cylinder->setMaximum(2);
+  cylinder->setClosed(true);
+
+  struct TestData {
+    Point  point;
+    Vector direction;
+    int    n { 0 };
+
+    TestData(const Point &point, const Vector &direction, int n) :
+     point(point), direction(direction), n(n) {
+    }
+  };
+
+  using TestDatas = std::vector<TestData>;
+
+  TestDatas testDatas = {
+    { Point(0.0,  3.0,  0.0), Vector(0, -1, 0), 2 },
+    { Point(0.0,  3.0, -2.0), Vector(0, -1, 2), 2 },
+    { Point(0.0,  4.0, -2.0), Vector(0, -1, 1), 2 },
+    { Point(0.0,  0.0, -2.0), Vector(0,  1, 2), 2 },
+    { Point(0.0, -1.0, -2.0), Vector(0,  1, 1), 2 }
+  };
+
+  for (const auto &testData : testDatas) {
+    Vector direction = testData.direction.normalized();
+
+    Ray ray(testData.point, direction);
+
+    Intersections intersections = cylinder->intersect(ray);
+
+    testInt(intersections.count(), testData.n);
+  }
+  }
+
+  {
+  CylinderP cylinder = std::make_shared<Cylinder>();
+
+  cylinder->setMinimum(1);
+  cylinder->setMaximum(2);
+  cylinder->setClosed(true);
+
+  struct TestData {
+    Point  point;
+    Vector normal;
+
+    TestData(const Point &point, const Vector &normal) :
+     point(point), normal(normal) {
+    }
+  };
+
+  using TestDatas = std::vector<TestData>;
+
+  TestDatas testDatas = {
+    { Point(0.0, 1.0,  0.0), Vector(0, -1, 0) },
+    { Point(0.5, 1.0,  0.0), Vector(0, -1, 0) },
+    { Point(0.0, 1.0,  0.5), Vector(0, -1, 0) },
+    { Point(0.0, 2.0,  0.0), Vector(0,  1, 0) },
+    { Point(0.5, 2.0,  0.0), Vector(0,  1, 0) },
+    { Point(0.0, 2.0,  0.5), Vector(0,  1, 0) }
+  };
+
+  for (const auto &testData : testDatas) {
+    Vector normal = cylinder->pointNormal(testData.point);
+
+    testVector(normal, testData.normal);
+  }
+  }
+}
+
+void
+testRenderCylinder()
+{
+  World world;
+
+  auto checkerPattern  = std::make_shared<CheckerPattern >(Color::makeWhite(), Color::makeBlack());
+
+  //--
+
+  PlaneP floor = std::make_shared<Plane>();
+
+  floor->material().setColor(Color(0.0, 0.0, 0.0));
+  floor->material().setSpecular(0);
+  floor->material().setPattern(checkerPattern);
+  floor->material().setReflective(0.7);
+
+  world.addObject(floor);
+
+  //--
+
+  PlaneP leftWall = std::make_shared<Plane>();
+
+  leftWall->transform(Matrix4D::translation(0, 0, 5)*
+                      Matrix4D::rotation(Matrix4D::AxisType::Y, -M_PI/4.0)*
+                      Matrix4D::rotation(Matrix4D::AxisType::X,  M_PI/2.0));
+
+  leftWall->material().setColor(Color(0.0, 0.0, 0.0));
+  leftWall->material().setSpecular(0);
+  leftWall->material().setPattern(checkerPattern);
+
+  world.addObject(leftWall);
+
+  //--
+
+  PlaneP rightWall = std::make_shared<Plane>();
+
+  rightWall->transform(Matrix4D::translation(0, 0, 5)*
+                       Matrix4D::rotation(Matrix4D::AxisType::Y, M_PI/4.0)*
+                       Matrix4D::rotation(Matrix4D::AxisType::X, M_PI/2.0));
+
+  rightWall->material().setColor(Color(0.0, 0.0, 0.0));
+  rightWall->material().setSpecular(0);
+  rightWall->material().setPattern(checkerPattern);
+
+  world.addObject(rightWall);
+
+  //--
+
+  CylinderP middle = std::make_shared<Cylinder>();
+
+  middle->setMinimum(0);
+  middle->setMaximum(2);
+  middle->setClosed(true);
+
+  middle->transform(Matrix4D::translation(-0.5, 0, 0.5));
+
+  middle->material().setColor(Color(0.8, 0.2, 0.2));
+  middle->material().setDiffuse(0.3);
+  middle->material().setSpecular(0.3);
+  middle->material().setTransparency(0.9);
+  middle->material().setReflective(0.9);
+  middle->material().setRefractiveIndex(1.5);
+
+  world.addObject(middle);
+
+  //--
+
+  CylinderP right = std::make_shared<Cylinder>();
+
+  right->setMinimum(0);
+  right->setMaximum(1.5);
+  right->setClosed(true);
+
+  right->transform(Matrix4D::translation(1.5, 0.0, -0.5)*
+                   Matrix4D::scale(0.5, 1.0, 0.5));
+
+  right->material().setColor(Color(0.2, 0.8, 0.2));
+  right->material().setDiffuse(0.3);
+  right->material().setSpecular(0.3);
+  right->material().setTransparency(0.7);
+  right->material().setReflective(0.7);
+  right->material().setRefractiveIndex(1.5);
+
+  world.addObject(right);
+
+  //--
+
+  CylinderP left = std::make_shared<Cylinder>();
+
+  left->setMinimum(0);
+  left->setMaximum(1);
+  left->setClosed(true);
+
+  left->transform(Matrix4D::translation(-1.5, 0.0, -0.75)*
+                  Matrix4D::scale(0.33, 1.0, 0.33));
+
+  left->material().setColor(Color(0.2, 0.2, 0.8));
+  left->material().setDiffuse(0.3);
+  left->material().setSpecular(0.3);
+  left->material().setTransparency(0.5);
+  left->material().setReflective(0.5);
+  left->material().setRefractiveIndex(1.5);
+
+  world.addObject(left);
+
+  //---
+
+  auto light = std::make_shared<PointLight>(Point(-10, 10, -10), Color(1, 1, 1));
+
+  world.addLight(light);
+
+  //---
+
+  //Camera camera(100, 50, M_PI/3.0);
+  Camera camera(512, 384, M_PI/3.0);
+
+  camera.setTransform(viewTransform(Point(0, 1.5, -5), Point(0, 1, 0), Vector(0, 1, 0)));
+
+  Canvas canvas;
+
+  render(canvas, camera, world);
+
+  auto fs = std::ofstream("images/render_cylinder.ppm", std::ofstream::out);
+
+  canvas.writePPM(fs);
+}
+
+void
+testCone()
+{
+  {
+  ConeP cone = std::make_shared<Cone>();
+
+  struct TestData {
+    Point  origin;
+    Vector direction;
+    double t1 { 0.0 };
+    double t2 { 0.0 };
+
+    TestData(const Point &origin, const Vector &direction, double t1, double t2) :
+     origin(origin), direction(direction), t1(t1), t2(t2) {
+    }
+  };
+
+  using TestDatas = std::vector<TestData>;
+
+  TestDatas testDatas = {
+    { Point(0.0, 0.0, -5.0), Vector( 0.0,  0, 1), 5.000000,  5.000000 },
+    { Point(0.0, 0.0, -5.0), Vector( 1.0,  1, 1), 8.660254,  8.660254 },
+    { Point(1.0, 1.0, -5.0), Vector(-0.5, -1, 1), 4.550056, 49.449944 }
+  };
+
+  for (const auto &testData : testDatas) {
+    Vector direction = testData.direction.normalized();
+
+    Ray ray(testData.origin, direction);
+
+    Intersections intersections = cone->intersect(ray);
+
+    testInt (intersections.count(), 2);
+    testReal(intersections.at(0).t(), testData.t1);
+    testReal(intersections.at(1).t(), testData.t2);
+  }
+  }
+
+  {
+  ConeP cone = std::make_shared<Cone>();
+
+  Vector direction = Vector(0, 1, 1).normalized();
+
+  Ray ray(Point(0, 0, -1), direction);
+
+  Intersections intersections = cone->intersect(ray);
+
+  testInt (intersections.count(), 1);
+  testReal(intersections.at(0).t(), 0.3535534);
+  }
+
+  {
+  ConeP cone = std::make_shared<Cone>();
+
+  cone->setMinimum(-0.5);
+  cone->setMaximum(0.5);
+  cone->setClosed(true);
+
+  struct TestData {
+    Point  origin;
+    Vector direction;
+    int    n { 0 };
+
+    TestData(const Point &origin, const Vector &direction, int n) :
+     origin(origin), direction(direction), n(n) {
+    }
+  };
+
+  using TestDatas = std::vector<TestData>;
+
+  TestDatas testDatas = {
+    { Point(0.0, 0.0, -5.00), Vector(0, 1, 0), 0 },
+    { Point(0.0, 0.0, -0.25), Vector(0, 1, 1), 2 },
+    { Point(0.0, 0.0, -0.25), Vector(0, 1, 0), 4 }
+  };
+
+  for (const auto &testData : testDatas) {
+    Vector direction = testData.direction.normalized();
+
+    Ray ray(testData.origin, direction);
+
+    Intersections intersections = cone->intersect(ray);
+
+    testInt(intersections.count(), testData.n);
+  }
+  }
+
+  {
+  ConeP cone = std::make_shared<Cone>();
+
+  struct TestData {
+    Point  point;
+    Vector normal;
+
+    TestData(const Point &point, const Vector &normal) :
+     point(point), normal(normal) {
+    }
+  };
+
+  using TestDatas = std::vector<TestData>;
+
+  TestDatas testDatas = {
+    { Point( 0.0,  0.0, 0.0), Vector(       0.0,          0, 0.0) },
+    { Point( 1.0,  1.0, 1.0), Vector(       0.5, -sqrt(2)/2, 0.5) },
+    { Point(-1.0, -1.0, 0.0), Vector(-sqrt(2)/2,  sqrt(2)/2, 0.0) }
+  };
+
+  for (const auto &testData : testDatas) {
+    Vector normal = cone->pointNormal(testData.point);
+
+    testVector(normal, testData.normal);
+  }
+  }
+}
+
+void
+testRenderCone()
+{
+  World world;
+
+  auto checkerPattern  = std::make_shared<CheckerPattern >(Color::makeWhite(), Color::makeBlack());
+
+  //--
+
+  PlaneP floor = std::make_shared<Plane>();
+
+  floor->material().setColor(Color(0.0, 0.0, 0.0));
+  floor->material().setSpecular(0);
+  floor->material().setPattern(checkerPattern);
+  floor->material().setReflective(0.7);
+
+  world.addObject(floor);
+
+  //--
+
+  PlaneP leftWall = std::make_shared<Plane>();
+
+  leftWall->transform(Matrix4D::translation(0, 0, 5)*
+                      Matrix4D::rotation(Matrix4D::AxisType::Y, -M_PI/4.0)*
+                      Matrix4D::rotation(Matrix4D::AxisType::X,  M_PI/2.0));
+
+  leftWall->material().setColor(Color(0.0, 0.0, 0.0));
+  leftWall->material().setSpecular(0);
+  leftWall->material().setPattern(checkerPattern);
+
+  world.addObject(leftWall);
+
+  //--
+
+  PlaneP rightWall = std::make_shared<Plane>();
+
+  rightWall->transform(Matrix4D::translation(0, 0, 5)*
+                       Matrix4D::rotation(Matrix4D::AxisType::Y, M_PI/4.0)*
+                       Matrix4D::rotation(Matrix4D::AxisType::X, M_PI/2.0));
+
+  rightWall->material().setColor(Color(0.0, 0.0, 0.0));
+  rightWall->material().setSpecular(0);
+  rightWall->material().setPattern(checkerPattern);
+
+  world.addObject(rightWall);
+
+  //--
+
+  ConeP middle = std::make_shared<Cone>();
+
+  middle->setMinimum(0);
+  middle->setMaximum(2);
+  middle->setClosed(true);
+
+  middle->transform(Matrix4D::translation(-0.5, 0, 0.5));
+
+  middle->material().setColor(Color(0.8, 0.2, 0.2));
+  middle->material().setDiffuse(0.3);
+  middle->material().setSpecular(0.3);
+  middle->material().setTransparency(0.9);
+  middle->material().setReflective(0.9);
+  middle->material().setRefractiveIndex(1.5);
+
+  world.addObject(middle);
+
+  //--
+
+  ConeP right = std::make_shared<Cone>();
+
+  right->setMinimum(0);
+  right->setMaximum(1.5);
+  right->setClosed(true);
+
+  right->transform(Matrix4D::translation(1.5, 0.0, -0.5)*
+                   Matrix4D::scale(0.5, 1.0, 0.5));
+
+  right->material().setColor(Color(0.2, 0.8, 0.2));
+  right->material().setDiffuse(0.3);
+  right->material().setSpecular(0.3);
+  right->material().setTransparency(0.7);
+  right->material().setReflective(0.7);
+  right->material().setRefractiveIndex(1.5);
+
+  world.addObject(right);
+
+  //--
+
+  ConeP left = std::make_shared<Cone>();
+
+  left->setMinimum(0);
+  left->setMaximum(1);
+  left->setClosed(true);
+
+  left->transform(Matrix4D::translation(-1.5, 0.0, -0.75)*
+                  Matrix4D::scale(0.33, 1.0, 0.33));
+
+  left->material().setColor(Color(0.2, 0.2, 0.8));
+  left->material().setDiffuse(0.3);
+  left->material().setSpecular(0.3);
+  left->material().setTransparency(0.5);
+  left->material().setReflective(0.5);
+  left->material().setRefractiveIndex(1.5);
+
+  world.addObject(left);
+
+  //---
+
+  auto light = std::make_shared<PointLight>(Point(-10, 10, -10), Color(1, 1, 1));
+
+  world.addLight(light);
+
+  //---
+
+  //Camera camera(100, 50, M_PI/3.0);
+  Camera camera(512, 384, M_PI/3.0);
+
+  camera.setTransform(viewTransform(Point(0, 1.5, -5), Point(0, 1, 0), Vector(0, 1, 0)));
+
+  Canvas canvas;
+
+  render(canvas, camera, world);
+
+  auto fs = std::ofstream("images/render_cone.ppm", std::ofstream::out);
+
+  canvas.writePPM(fs);
 }
 
 int
@@ -2984,9 +4102,35 @@ main(int /*argc*/, char** /*argv*/)
 
   //---
 
-  testRefract();
+  //testRefract();
 
   //testRefractN1N2();
+
+  //testRenderRefract();
+
+  //---
+
+  //testSchlick();
+
+  //testRenderRefract();
+
+  //---
+
+  //testCube();
+
+  //testRenderCube();
+
+  //---
+
+  //testCylinder();
+
+  //testRenderCylinder();
+
+  //---
+
+  //testCone();
+
+  testRenderCone();
 
   return 0;
 }

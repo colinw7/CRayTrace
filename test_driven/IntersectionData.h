@@ -36,6 +36,8 @@ class IntersectionData {
 
   bool inside() const { return inside_; }
 
+  double schlick() const;
+
   static double EPSILON() { return 1E-6; }
 
  private:

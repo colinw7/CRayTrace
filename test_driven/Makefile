@@ -8,6 +8,9 @@ CQRayTraceTest.cpp \
 Camera.cpp \
 Canvas.cpp \
 Color.cpp \
+Cone.cpp \
+Cube.cpp \
+Cylinder.cpp \
 IntersectionData.cpp \
 Light.cpp \
 Material.cpp \
@@ -22,5 +25,3 @@ World.cpp \
 EXTRA_CFLAGS = \
 
 include $(MAKE_DIR)/bin.mk
-
-CQRayTraceTest.h: Canvas.h Color.h Matrix2D.h Matrix3D.h Matrix4D.h Point.h Tuple.h Vector.h

@@ -1,4 +1,5 @@
 #include <Sphere.h>
+#include <RayTrace.h>
 
 namespace RayTrace {
 
@@ -41,7 +42,7 @@ intersectInternal(const Ray &ray) const
 
   double a = rd.dotProduct(rd);
   double b = 2*rd.dotProduct(ro);
-  double c = ro.dotProduct(ro) - radius_*radius_;
+  double c = ro.dotProduct(ro) - 1.0;
 
   double tmin, tmax;
 
@@ -61,33 +62,6 @@ Sphere::
 pointNormalInternal(const Point &point) const
 {
   return point - Point(0, 0, 0);
-}
-
-bool
-Sphere::
-solveQuadratic(double a, double b, double c, double &r1, double &r2) const
-{
-  if (a == 0.0) return false;
-
-  double b2_4ac = b*b - 4.0*a*c;
-
-  if (b2_4ac < 0) return false;
-
-  double sqrt_b2_4ac = std::sqrt(b2_4ac);
-
-  double q;
-
-  if (b < 0.0)
-    q = -0.5*(b - sqrt_b2_4ac);
-  else
-    q = -0.5*(b + sqrt_b2_4ac);
-
-  r1 = q/a;
-  r2 = c/q;
-
-  if (r1 > r2) std::swap(r1, r2);
-
-  return true;
 }
 
 //---

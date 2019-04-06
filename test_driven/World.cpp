@@ -24,20 +24,37 @@ shadeHit(const IntersectionData &intersectionData, int remaining) const
 {
   assert(intersectionData.object());
 
-  bool inShadow = isShadowed(intersectionData.overPoint());
-
   Color color;
+
+  const Material &material = intersectionData.object()->material();
+
+  //---
+
+  // add light color
+  bool inShadow = isShadowed(intersectionData.overPoint());
 
   for (auto &light : lights_) {
     PointLight *pointLight = dynamic_cast<PointLight *>(light.get());
+    if (! pointLight) continue;
 
-    if (pointLight)
-      color += lighting(intersectionData.object(), intersectionData.object()->material(),
-                        *pointLight, intersectionData.overPoint(), intersectionData.eye(),
-                        intersectionData.normal(), inShadow);
-
-    color += reflectedColor(intersectionData, remaining);
+    color += lighting(intersectionData.object(), material, *pointLight,
+                      intersectionData.overPoint(), intersectionData.eye(),
+                      intersectionData.normal(), inShadow);
   }
+
+  //---
+
+  // add reflected/refracted color
+  Color reflectedColor = this->reflectedColor(intersectionData, remaining);
+  Color refractedColor = this->refractedColor(intersectionData, remaining);
+
+  if (material.reflective() > 0 && material.transparency() > 0) {
+    double reflectance = intersectionData.schlick();
+
+    color += reflectedColor*reflectance + refractedColor*(1 - reflectance);
+  }
+  else
+    color += reflectedColor + refractedColor;
 
   return color;
 }
@@ -107,6 +124,43 @@ reflectedColor(const IntersectionData &intersectionData, int remaining) const
   Color color = colorAt(reflectRay, remaining - 1);
 
   return color*intersectionData.object()->material().reflective();
+}
+
+Color
+World::
+refractedColor(const IntersectionData &intersectionData, int remaining) const
+{
+  if (remaining <= 0)
+    return Color(0, 0, 0);
+
+  if (intersectionData.object()->material().transparency() == 0.0)
+    return Color(0, 0, 0);
+
+  //---
+
+  // check for internal reflection
+  double nRatio = intersectionData.n1()/intersectionData.n2();
+
+  double cosi  = intersectionData.eye().dotProduct(intersectionData.normal());
+  double sin2i = 1.0 - cosi*cosi;
+
+  double sin2t = nRatio*nRatio*sin2i;
+
+  if (sin2t > 1)
+    return Color(0, 0, 0);
+
+  //---
+
+  double cost = std::sqrt(1.0 - sin2t);
+
+  Vector direction = intersectionData.normal()*(nRatio*cosi - cost) -
+                     intersectionData.eye   ()* nRatio;
+
+  Ray refractRay(intersectionData.underPoint(), direction);
+
+  Color color = colorAt(refractRay, remaining - 1);
+
+  return color*intersectionData.object()->material().transparency();
 }
 
 }
