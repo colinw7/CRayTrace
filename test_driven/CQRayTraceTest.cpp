@@ -4018,6 +4018,151 @@ testRenderCone()
   canvas.writePPM(fs);
 }
 
+void
+testGroup()
+{
+  {
+  GroupP group = std::make_shared<Group>();
+
+  testMatrix(group->transform(), Matrix4D::identity());
+
+  testInt(group->children().size(), 0);
+
+  SphereP sphere = std::make_shared<Sphere>();
+
+  testPtr(sphere->parent(), nullptr);
+
+  group->addObject(sphere);
+
+  testInt(group->children().size(), 1);
+
+  testPtr(group->children()[0].get(), sphere.get());
+
+  testPtr(sphere->parent(), group.get());
+  }
+
+  {
+  GroupP group = std::make_shared<Group>();
+
+  Ray ray(Point(0, 0, 0), Vector(0, 0, 1));
+
+  Intersections intersections = group->intersect(ray);
+
+  testInt(intersections.count(), 0);
+  }
+
+  {
+  GroupP group = std::make_shared<Group>();
+
+  SphereP sphere1 = std::make_shared<Sphere>();
+  SphereP sphere2 = std::make_shared<Sphere>();
+
+  sphere2->setTransform(Matrix4D::translation(0, 0, -3));
+
+  SphereP sphere3 = std::make_shared<Sphere>();
+
+  sphere3->setTransform(Matrix4D::translation(5, 0, 0));
+
+  group->addObject(sphere1);
+  group->addObject(sphere2);
+  group->addObject(sphere3);
+
+  Ray ray(Point(0, 0, -5), Vector(0, 0, 1));
+
+  Intersections intersections = group->intersect(ray);
+
+  testInt(intersections.count(), 4);
+  testPtr(intersections.at(0).object(), sphere2.get());
+  testPtr(intersections.at(1).object(), sphere2.get());
+  testPtr(intersections.at(2).object(), sphere1.get());
+  testPtr(intersections.at(3).object(), sphere1.get());
+  }
+
+  {
+  GroupP group = std::make_shared<Group>();
+
+  group->setTransform(Matrix4D::scale(2, 2, 2));
+
+  SphereP sphere = std::make_shared<Sphere>();
+
+  sphere->setTransform(Matrix4D::translation(5, 0, 0));
+
+  group->addObject(sphere);
+
+  Ray ray(Point(10, 0, -10), Vector(0, 0, 1));
+
+  Intersections intersections = group->intersect(ray);
+
+  testInt(intersections.count(), 2);
+  }
+
+  {
+  GroupP group1 = std::make_shared<Group>();
+
+  group1->setTransform(Matrix4D::rotation(Matrix4D::AxisType::Y, M_PI/2.0));
+
+  GroupP group2 = std::make_shared<Group>();
+
+  group2->setTransform(Matrix4D::scale(2, 2, 2));
+
+  group1->addObject(group2);
+
+  SphereP sphere = std::make_shared<Sphere>();
+
+  sphere->setTransform(Matrix4D::translation(5, 0, 0));
+
+  group2->addObject(sphere);
+
+  Point p = sphere->transformPoint(Point(-2, 0, -10));
+
+  testPoint(p, Point(0, 0, -1));
+  }
+
+  {
+  GroupP group1 = std::make_shared<Group>();
+
+  group1->setTransform(Matrix4D::rotation(Matrix4D::AxisType::Y, M_PI/2.0));
+
+  GroupP group2 = std::make_shared<Group>();
+
+  group2->setTransform(Matrix4D::scale(1, 2, 3));
+
+  group1->addObject(group2);
+
+  SphereP sphere = std::make_shared<Sphere>();
+
+  sphere->setTransform(Matrix4D::translation(5, 0, 0));
+
+  group2->addObject(sphere);
+
+  Vector n = sphere->transformNormal(Vector(sqrt(3)/3, sqrt(3)/3, sqrt(3)/3));
+
+  testVector(n, Vector(0.2857143, 0.4285714, -0.8571429));
+  }
+
+  {
+  GroupP group1 = std::make_shared<Group>();
+
+  group1->setTransform(Matrix4D::rotation(Matrix4D::AxisType::Y, M_PI/2.0));
+
+  GroupP group2 = std::make_shared<Group>();
+
+  group2->setTransform(Matrix4D::scale(1, 2, 3));
+
+  group1->addObject(group2);
+
+  SphereP sphere = std::make_shared<Sphere>();
+
+  sphere->setTransform(Matrix4D::translation(5, 0, 0));
+
+  group2->addObject(sphere);
+
+  Vector n = sphere->pointNormal(Point(1.732051, 1.154701, -5.577350));
+
+  testVector(n, Vector(0.2857143, 0.4285714, -0.8571429));
+  }
+}
+
 int
 main(int /*argc*/, char** /*argv*/)
 {
@@ -4130,7 +4275,11 @@ main(int /*argc*/, char** /*argv*/)
 
   //testCone();
 
-  testRenderCone();
+  //testRenderCone();
+
+  //---
+
+  testGroup();
 
   return 0;
 }

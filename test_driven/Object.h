@@ -16,6 +16,9 @@ class Object {
 
   virtual ~Object() { }
 
+  Object *parent() const { return parent_; }
+  void setParent(Object *parent) { parent_ = parent; }
+
   const Matrix4D &transform() const { return transform_; }
   void setTransform(const Matrix4D &v) { transform_ = v; }
 
@@ -34,15 +37,25 @@ class Object {
   }
 
   Vector pointNormal(const Point &point) const {
-    Point localPoint = transform_.inverted()*point;
+    Point localPoint = transformPoint(point);
 
     Vector localNormal = pointNormalInternal(localPoint);
 
-    Tuple tuple = transform_.inverted().transposed()*localNormal;
+    return transformNormal(localNormal);
+  }
 
-    Vector normal(tuple.x(), tuple.y(), tuple.z());
+  Point transformPoint(const Point &point) const {
+    Point point1 = (parent_ ? parent_->transformPoint(point) : point);
 
-    return normal.normalized();
+    return transform_.inverted()*point1;
+  }
+
+  Vector transformNormal(const Vector &normal) const {
+    Tuple tuple = transform_.inverted().transposed()*normal;
+
+    Vector normal1 = Vector(tuple.x(), tuple.y(), tuple.z()).normalized();
+
+    return (parent_ ? parent_->transformNormal(normal1) : normal1);
   }
 
  protected:
@@ -51,6 +64,7 @@ class Object {
   virtual Vector pointNormalInternal(const Point &point) const = 0;
 
  protected:
+  Object*  parent_ { nullptr };
   Matrix4D transform_;
   Material material_;
 };

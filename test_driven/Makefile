@@ -11,6 +11,7 @@ Color.cpp \
 Cone.cpp \
 Cube.cpp \
 Cylinder.cpp \
+Group.cpp \
 IntersectionData.cpp \
 Light.cpp \
 Material.cpp \
