@@ -16,6 +16,7 @@
 #include <Plane.h>
 #include <Cylinder.h>
 #include <Cone.h>
+#include <Triangle.h>
 #include <Group.h>
 
 #include <PointLight.h>
@@ -66,6 +67,8 @@ using RayTrace::Cylinder;
 using RayTrace::CylinderP;
 using RayTrace::Cone;
 using RayTrace::ConeP;
+using RayTrace::Triangle;
+using RayTrace::TriangleP;
 using RayTrace::Group;
 using RayTrace::GroupP;
 

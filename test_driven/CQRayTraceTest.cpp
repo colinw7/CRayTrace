@@ -4163,6 +4163,108 @@ testGroup()
   }
 }
 
+void
+testRenderGroup()
+{
+  auto hexagonCorner = []() {
+    SphereP corner = std::make_shared<Sphere>();
+
+    corner->setTransform(Matrix4D::translation(0, 0, -1)*
+                         Matrix4D::scale(0.25, 0.25, 0.25));
+
+    return corner;
+  };
+
+  auto hexagonEdge = []() {
+    CylinderP edge = std::make_shared<Cylinder>();
+
+    edge->setMinimum(0.0);
+    edge->setMaximum(1.0);
+
+    edge->setTransform(Matrix4D::translation(0, 0, -1)*
+                       Matrix4D::rotation(Matrix4D::AxisType::Y, -M_PI/6.0)*
+                       Matrix4D::rotation(Matrix4D::AxisType::Z, -M_PI/2.0)*
+                       Matrix4D::scale(0.25, 1.00, 0.25));
+
+    return edge;
+  };
+
+  auto hexagonSide = [&]() {
+    GroupP side = std::make_shared<Group>();
+
+    side->addObject(hexagonCorner());
+    side->addObject(hexagonEdge  ());
+
+    return side;
+  };
+
+  auto hexagon = [&]() {
+    GroupP hex = std::make_shared<Group>();
+
+    for (int n = 0; n < 5; ++n) {
+      GroupP side = hexagonSide();
+
+      side->setTransform(Matrix4D::rotation(Matrix4D::AxisType::Y, n*M_PI/3.0));
+
+      hex->addObject(side);
+    }
+
+    return hex;
+  };
+
+  //----
+
+  World world;
+
+  //--
+
+  GroupP hex = hexagon();
+
+  world.addObject(hex);
+
+  //--
+
+  auto light = std::make_shared<PointLight>(Point(-10, 10, -10), Color(1, 1, 1));
+
+  world.addLight(light);
+
+  //---
+
+  //Camera camera(100, 50, M_PI/3.0);
+  Camera camera(512, 384, M_PI/3.0);
+
+  camera.setTransform(viewTransform(Point(0, 1.5, -5), Point(0, 1, 0), Vector(0, 1, 0)));
+
+  Canvas canvas;
+
+  render(canvas, camera, world);
+
+  auto fs = std::ofstream("images/render_group.ppm", std::ofstream::out);
+
+  canvas.writePPM(fs);
+}
+
+void
+tesTriangle()
+{
+  {
+  Point p1( 0, 1, 0);
+  Point p2(-1, 0, 0);
+  Point p3( 1, 0, 0);
+
+  Triangle triangle(p1, p2, p3);
+
+  testPoint(triangle.p1(), p1);
+  testPoint(triangle.p2(), p2);
+  testPoint(triangle.p3(), p3);
+
+  testVector(triangle.e1(), Vector(-1, -1, 0));
+  testVector(triangle.e2(), Vector( 1, -1, 0));
+
+  testVector(triangle.normal(), Vector(0, 0, -1));
+  }
+}
+
 int
 main(int /*argc*/, char** /*argv*/)
 {
@@ -4279,7 +4381,13 @@ main(int /*argc*/, char** /*argv*/)
 
   //---
 
-  testGroup();
+  //testGroup();
+
+  //testRenderGroup();
+
+  //---
+
+  tesTriangle();
 
   return 0;
 }

@@ -31,13 +31,8 @@ class Group : public Object {
     return intersections;
   }
 
-  Vector pointNormalInternal(const Point &point) const {
-    Vector normal;
-
-    for (auto &child : children_)
-      normal = child->pointNormal(point);
-
-    return normal;
+  Vector pointNormalInternal(const Point &) const {
+    assert(false);
   }
 
  private:
