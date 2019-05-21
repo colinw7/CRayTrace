@@ -2,6 +2,7 @@
 #include <Intersection.h>
 #include <Ray.h>
 #include <Object.h>
+#include <RayTrace.h>
 #include <set>
 
 namespace RayTrace {
@@ -17,7 +18,7 @@ IntersectionData(const Intersection &intersection, const Ray &ray,
 
   point_  = ray.position(t_);
   eye_    = -ray.direction();
-  normal_ = object_->pointNormal(point_);
+  normal_ = object_->pointNormal(point_, intersection);
 
   if (normal_.dotProduct(eye_) < 0) {
     inside_ = true;

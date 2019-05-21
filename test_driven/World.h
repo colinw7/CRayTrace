@@ -42,8 +42,6 @@ class World {
   Color refractedColor(const IntersectionData &intersectionData,
                        int remaining=INIT_REMAINING()) const;
 
-  static double EPSILON() { return 1E-6; }
-
   static int INIT_REMAINING() { return 4; }
 
  protected:

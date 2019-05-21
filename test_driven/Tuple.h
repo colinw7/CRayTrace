@@ -1,6 +1,7 @@
 #ifndef Tuple_H
 #define Tuple_H
 
+#include <RayTrace.h>
 #include <iostream>
 #include <cmath>
 #include <cassert>
@@ -103,7 +104,7 @@ class Tuple {
   // comparison
   int cmp(const Tuple &rhs) const {
     auto realCmp = [](double r1, double r2) {
-      return std::abs(r1 - r2) < 1E-6;
+      return std::abs(r1 - r2) < EPSILON();
     };
 
     if (realCmp(x_, rhs.x_) && realCmp(y_, rhs.y_) && realCmp(z_, rhs.z_) && realCmp(w_, rhs.w_))

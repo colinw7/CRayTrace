@@ -38,12 +38,15 @@ class Material {
   double refractiveIndex() const { return refractiveIndex_; }
   void setRefractiveIndex(double r) { refractiveIndex_ = r; }
 
+  const std::string &imageName() const { return imageName_; }
+  void setImageName(const std::string &v) { imageName_ = v; }
+
   //---
 
   // comparison
   int cmp(const Material &rhs) const {
     auto realCmp = [](double r1, double r2) {
-      return std::abs(r1 - r2) < 1E-6;
+      return std::abs(r1 - r2) < EPSILON();
     };
 
     if      (color_ < rhs.color_) return -1;
@@ -109,15 +112,16 @@ class Material {
   }
 
  protected:
-  Color    color_           { 1, 1, 1 };
-  PatternP pattern_;
-  double   ambient_         { 0.1 };
-  double   diffuse_         { 0.9 };
-  double   specular_        { 0.9 };
-  double   shininess_       { 200.0 };
-  double   reflective_      { 0.0 };
-  double   transparency_    { 0.0 };
-  double   refractiveIndex_ { 1.0 };
+  Color       color_           { 1, 1, 1 };
+  PatternP    pattern_;
+  double      ambient_         { 0.1 };
+  double      diffuse_         { 0.9 };
+  double      specular_        { 0.9 };
+  double      shininess_       { 200.0 };
+  double      reflective_      { 0.0 };
+  double      transparency_    { 0.0 };
+  double      refractiveIndex_ { 1.0 };
+  std::string imageName_;
 };
 
 }

@@ -613,7 +613,7 @@ class Matrix4D {
 
  private:
   bool realCmp(double r1, double r2) const {
-    return std::abs(r1 - r2) < 1E-6;
+    return std::abs(r1 - r2) < EPSILON();
   }
 
   void calcInverse() const {

@@ -1,7 +1,9 @@
 #ifndef RayTrace_H
 #define RayTrace_H
 
+#ifdef INFINITY
 #undef INFINITY
+#endif
 
 #include <Types.h>
 

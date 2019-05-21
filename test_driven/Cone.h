@@ -2,7 +2,10 @@
 #define Cone_H
 
 #include <Object.h>
-#include <RayTrace.h>
+
+#ifdef INFINITY
+#undef INFINITY
+#endif
 
 namespace RayTrace {
 

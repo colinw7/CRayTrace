@@ -38,8 +38,6 @@ class IntersectionData {
 
   double schlick() const;
 
-  static double EPSILON() { return 1E-6; }
-
  private:
   double        t_        { 0.0 };
   const Object *object_   { nullptr };

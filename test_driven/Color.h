@@ -162,7 +162,7 @@ class Color {
   // comparison
   int cmp(const Color &rhs) const {
     auto realCmp = [](double r1, double r2) {
-      return std::abs(r1 - r2) < 1E-6;
+      return std::abs(r1 - r2) < EPSILON();
     };
 
     if (realCmp(r_, rhs.r_) && realCmp(g_, rhs.g_) && realCmp(b_, rhs.b_) && realCmp(a_, rhs.a_))

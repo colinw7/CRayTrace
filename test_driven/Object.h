@@ -44,6 +44,14 @@ class Object {
     return transformNormal(localNormal);
   }
 
+  Vector pointNormal(const Point &point, const Intersection &intersection) const {
+    Point localPoint = transformPoint(point);
+
+    Vector localNormal = pointNormalInternal(localPoint, intersection);
+
+    return transformNormal(localNormal);
+  }
+
   Point transformPoint(const Point &point) const {
     Point point1 = (parent_ ? parent_->transformPoint(point) : point);
 
@@ -58,10 +66,18 @@ class Object {
     return (parent_ ? parent_->transformNormal(normal1) : normal1);
   }
 
+  virtual bool hasObject(const Object *object) const {
+    return (object == this);
+  }
+
  protected:
   virtual Intersections intersectInternal(const Ray &ray) const = 0;
 
   virtual Vector pointNormalInternal(const Point &point) const = 0;
+
+  virtual Vector pointNormalInternal(const Point &point, const Intersection &) const {
+    return pointNormalInternal(point);
+  }
 
  protected:
   Object*  parent_ { nullptr };

@@ -2,6 +2,7 @@
 #define Plane_H
 
 #include <Object.h>
+#include <RayTrace.h>
 
 namespace RayTrace {
 
@@ -26,9 +27,6 @@ class Plane : public Object {
   Vector pointNormalInternal(const Point & /*point*/) const override {
     return Vector(0, 1, 0);
   }
-
- private:
-  static double EPSILON() { return 1E-6; }
 
  private:
   double radius_ { 1.0 };

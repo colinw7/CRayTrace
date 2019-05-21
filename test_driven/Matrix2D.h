@@ -1,6 +1,7 @@
 #ifndef Matrix2D_H
 #define Matrix2D_H
 
+#include <RayTrace.h>
 #include <cmath>
 #include <cstring>
 #include <cassert>
@@ -133,7 +134,7 @@ class Matrix2D {
   bool invert(Matrix2D &imatrix) const {
     double det = determinant();
 
-    if (::fabs(det) < 1E-6)
+    if (::fabs(det) < EPSILON())
       return false;
 
     double id = 1.0/det;
@@ -306,7 +307,7 @@ class Matrix2D {
   // comparison
   int cmp(const Matrix2D &rhs) const {
     auto realCmp = [](double r1, double r2) {
-      return std::abs(r1 - r2) < 1E-6;
+      return std::abs(r1 - r2) < EPSILON();
     };
 
     if (realCmp(m00_, rhs.m00_) && realCmp(m01_, rhs.m01_) &&

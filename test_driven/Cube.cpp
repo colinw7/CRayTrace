@@ -1,6 +1,10 @@
 #include <Cube.h>
 #include <RayTrace.h>
 
+#ifdef INFINITY
+#undef INFINITY
+#endif
+
 namespace RayTrace {
 
 Intersections

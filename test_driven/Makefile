@@ -1,14 +1,17 @@
-CDEBUG = -g -Wall -fsanitize=address
-LDEBUG = -g -lasan
+#CDEBUG = -g -Wall -fsanitize=address
+#LDEBUG = -g -lasan
 
-PROG = CQRayTraceTest
+CDEBUG = -g -Wall
+LDEBUG = -g
+
+PROG = CQRayTraceApp
 
 CPP_SRC = \
-CQRayTraceTest.cpp \
 Camera.cpp \
 Canvas.cpp \
 Color.cpp \
 Cone.cpp \
+CSG.cpp \
 Cube.cpp \
 Cylinder.cpp \
 Group.cpp \
@@ -17,6 +20,7 @@ Light.cpp \
 Material.cpp \
 Matrix4D.cpp \
 Object.cpp \
+ObjFile.cpp \
 Pattern.cpp \
 Ray.cpp \
 RayTrace.cpp \
@@ -25,4 +29,4 @@ World.cpp \
 
 EXTRA_CFLAGS = \
 
-include $(MAKE_DIR)/bin.mk
+include $(MAKE_DIR)/lib.mk

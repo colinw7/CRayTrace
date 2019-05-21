@@ -1,0 +1,135 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+DefaultWorld	World.cpp	/^DefaultWorld()$/;"	f	class:RayTrace::DefaultWorld
+GlassSphere	Sphere.cpp	/^GlassSphere()$/;"	f	class:RayTrace::GlassSphere
+INFINITY	Cube.cpp	5;"	d	file:
+IntersectionData	IntersectionData.cpp	/^IntersectionData(const Intersection &intersection, const Ray &ray,$/;"	f	class:RayTrace::IntersectionData
+RayTrace	CSG.cpp	/^namespace RayTrace {$/;"	n	file:
+RayTrace	Camera.cpp	/^namespace RayTrace {$/;"	n	file:
+RayTrace	Canvas.cpp	/^namespace RayTrace {$/;"	n	file:
+RayTrace	Cone.cpp	/^namespace RayTrace {$/;"	n	file:
+RayTrace	Cube.cpp	/^namespace RayTrace {$/;"	n	file:
+RayTrace	Cylinder.cpp	/^namespace RayTrace {$/;"	n	file:
+RayTrace	IntersectionData.cpp	/^namespace RayTrace {$/;"	n	file:
+RayTrace	ObjFile.cpp	/^namespace RayTrace {$/;"	n	file:
+RayTrace	Pattern.cpp	/^namespace RayTrace {$/;"	n	file:
+RayTrace	RayTrace.cpp	/^namespace RayTrace {$/;"	n	file:
+RayTrace	Sphere.cpp	/^namespace RayTrace {$/;"	n	file:
+RayTrace	World.cpp	/^namespace RayTrace {$/;"	n	file:
+RayTrace::CSG::filterIntersections	CSG.cpp	/^filterIntersections(Intersections &intersectons) const$/;"	f	class:RayTrace::CSG
+RayTrace::CSG::intersectInternal	CSG.cpp	/^intersectInternal(const Ray &ray) const$/;"	f	class:RayTrace::CSG
+RayTrace::CSG::intersectionAllowed	CSG.cpp	/^intersectionAllowed(const Op &op, bool lhit, bool inl, bool inr)$/;"	f	class:RayTrace::CSG
+RayTrace::CSG::pointNormalInternal	CSG.cpp	/^pointNormalInternal(const Point &) const$/;"	f	class:RayTrace::CSG
+RayTrace::Camera::doUpdate	Camera.cpp	/^doUpdate()$/;"	f	class:RayTrace::Camera
+RayTrace::Camera::rayForPixel	Camera.cpp	/^rayForPixel(double x, double y) const$/;"	f	class:RayTrace::Camera
+RayTrace::Canvas::writePPM	Canvas.cpp	/^writePPM(std::ostream &os) const$/;"	f	class:RayTrace::Canvas
+RayTrace::Cone::checkCap	Cone.cpp	/^checkCap(const Ray &ray, double t, double r) const$/;"	f	class:RayTrace::Cone
+RayTrace::Cone::intersectCaps	Cone.cpp	/^intersectCaps(const Ray &ray, Intersections &intersections) const$/;"	f	class:RayTrace::Cone
+RayTrace::Cone::intersectInternal	Cone.cpp	/^intersectInternal(const Ray &ray) const$/;"	f	class:RayTrace::Cone
+RayTrace::Cone::pointNormalInternal	Cone.cpp	/^pointNormalInternal(const Point &point) const$/;"	f	class:RayTrace::Cone
+RayTrace::Cube::checkAxis	Cube.cpp	/^checkAxis(double origin, double direction) const$/;"	f	class:RayTrace::Cube
+RayTrace::Cube::intersectInternal	Cube.cpp	/^intersectInternal(const Ray &ray) const$/;"	f	class:RayTrace::Cube
+RayTrace::Cube::pointNormalInternal	Cube.cpp	/^pointNormalInternal(const Point &point) const$/;"	f	class:RayTrace::Cube
+RayTrace::Cylinder::checkCap	Cylinder.cpp	/^checkCap(const Ray &ray, double t) const$/;"	f	class:RayTrace::Cylinder
+RayTrace::Cylinder::intersectCaps	Cylinder.cpp	/^intersectCaps(const Ray &ray, Intersections &intersections) const$/;"	f	class:RayTrace::Cylinder
+RayTrace::Cylinder::intersectInternal	Cylinder.cpp	/^intersectInternal(const Ray &ray) const$/;"	f	class:RayTrace::Cylinder
+RayTrace::Cylinder::pointNormalInternal	Cylinder.cpp	/^pointNormalInternal(const Point &point) const$/;"	f	class:RayTrace::Cylinder
+RayTrace::DefaultWorld::DefaultWorld	World.cpp	/^DefaultWorld()$/;"	f	class:RayTrace::DefaultWorld
+RayTrace::GlassSphere::GlassSphere	Sphere.cpp	/^GlassSphere()$/;"	f	class:RayTrace::GlassSphere
+RayTrace::IntersectionData::IntersectionData	IntersectionData.cpp	/^IntersectionData(const Intersection &intersection, const Ray &ray,$/;"	f	class:RayTrace::IntersectionData
+RayTrace::IntersectionData::schlick	IntersectionData.cpp	/^schlick() const$/;"	f	class:RayTrace::IntersectionData
+RayTrace::ObjFile::Face::normal	ObjFile.cpp	/^normal(int i) const$/;"	f	class:RayTrace::ObjFile::Face
+RayTrace::ObjFile::Face::point	ObjFile.cpp	/^point(int i) const$/;"	f	class:RayTrace::ObjFile::Face
+RayTrace::ObjFile::Face::texturePoint	ObjFile.cpp	/^texturePoint(int i) const$/;"	f	class:RayTrace::ObjFile::Face
+RayTrace::ObjFile::createGroup	ObjFile.cpp	/^createGroup() const$/;"	f	class:RayTrace::ObjFile
+RayTrace::ObjFile::createGroup	ObjFile.cpp	/^createGroup(const ObjGroup &group) const$/;"	f	class:RayTrace::ObjFile
+RayTrace::ObjFile::error	ObjFile.cpp	/^error(const std::string &msg)$/;"	f	class:RayTrace::ObjFile
+RayTrace::ObjFile::read	ObjFile.cpp	/^read()$/;"	f	class:RayTrace::ObjFile
+RayTrace::ObjFile::readFace	ObjFile.cpp	/^readFace(const std::string &line)$/;"	f	class:RayTrace::ObjFile
+RayTrace::ObjFile::readGroupName	ObjFile.cpp	/^readGroupName(const std::string &line)$/;"	f	class:RayTrace::ObjFile
+RayTrace::ObjFile::readMaterial	ObjFile.cpp	/^readMaterial(const std::string &line)$/;"	f	class:RayTrace::ObjFile
+RayTrace::ObjFile::readParameterVertex	ObjFile.cpp	/^readParameterVertex(const std::string &)$/;"	f	class:RayTrace::ObjFile
+RayTrace::ObjFile::readTextureVertex	ObjFile.cpp	/^readTextureVertex(const std::string &line)$/;"	f	class:RayTrace::ObjFile
+RayTrace::ObjFile::readVertex	ObjFile.cpp	/^readVertex(const std::string &line)$/;"	f	class:RayTrace::ObjFile
+RayTrace::ObjFile::readVertexNormal	ObjFile.cpp	/^readVertexNormal(const std::string &line)$/;"	f	class:RayTrace::ObjFile
+RayTrace::Pattern::objectPointColor	Pattern.cpp	/^objectPointColor(const Object *object, const Point &point) const$/;"	f	class:RayTrace::Pattern
+RayTrace::Sphere::intersectInternal	Sphere.cpp	/^intersectInternal(const Ray &ray) const$/;"	f	class:RayTrace::Sphere
+RayTrace::Sphere::pointNormalInternal	Sphere.cpp	/^pointNormalInternal(const Point &point) const$/;"	f	class:RayTrace::Sphere
+RayTrace::World::colorAt	World.cpp	/^colorAt(const Ray &ray, int remaining) const$/;"	f	class:RayTrace::World
+RayTrace::World::intersect	World.cpp	/^intersect(const Ray &ray) const$/;"	f	class:RayTrace::World
+RayTrace::World::isShadowed	World.cpp	/^isShadowed(const Point &point) const$/;"	f	class:RayTrace::World
+RayTrace::World::reflectedColor	World.cpp	/^reflectedColor(const IntersectionData &intersectionData, int remaining) const$/;"	f	class:RayTrace::World
+RayTrace::World::refractedColor	World.cpp	/^refractedColor(const IntersectionData &intersectionData, int remaining) const$/;"	f	class:RayTrace::World
+RayTrace::World::shadeHit	World.cpp	/^shadeHit(const IntersectionData &intersectionData, int remaining) const$/;"	f	class:RayTrace::World
+RayTrace::lighting	RayTrace.cpp	/^lighting(const Object *object, const Material &material, const PointLight &light,$/;"	f	namespace:RayTrace
+RayTrace::render	RayTrace.cpp	/^render(Canvas &canvas, const Camera &camera, World &world)$/;"	f	namespace:RayTrace
+RayTrace::solveQuadratic	RayTrace.cpp	/^solveQuadratic(double a, double b, double c, double &r1, double &r2)$/;"	f	namespace:RayTrace
+RayTrace::viewTransform	RayTrace.cpp	/^viewTransform(const Point &from, const Point &to, const Vector &up)$/;"	f	namespace:RayTrace
+__anon1::addFields	ObjFile.cpp	/^  void addFields(const std::string &str, std::vector<std::string> &words, char sep) {$/;"	f	namespace:__anon1
+__anon1::addWords	ObjFile.cpp	/^  void addWords(const std::string &str, std::vector<std::string> &words) {$/;"	f	namespace:__anon1
+__anon1::isInteger	ObjFile.cpp	/^  bool isInteger(const std::string &str) {$/;"	f	namespace:__anon1
+__anon1::isReal	ObjFile.cpp	/^  bool isReal(const std::string &str) {$/;"	f	namespace:__anon1
+__anon1::line	ObjFile.cpp	/^  static std::string line;$/;"	m	namespace:__anon1	file:
+__anon1::readLine	ObjFile.cpp	/^  bool readLine(FILE *fp, std::string &line) {$/;"	f	namespace:__anon1
+__anon1::stripSpaces	ObjFile.cpp	/^  std::string stripSpaces(const std::string &str) {$/;"	f	namespace:__anon1
+__anon1::toInteger	ObjFile.cpp	/^  int toInteger(const std::string &str) {$/;"	f	namespace:__anon1
+__anon1::toReal	ObjFile.cpp	/^  double toReal(const std::string &str) {$/;"	f	namespace:__anon1
+addFields	ObjFile.cpp	/^  void addFields(const std::string &str, std::vector<std::string> &words, char sep) {$/;"	f	namespace:__anon1
+addWords	ObjFile.cpp	/^  void addWords(const std::string &str, std::vector<std::string> &words) {$/;"	f	namespace:__anon1
+checkAxis	Cube.cpp	/^checkAxis(double origin, double direction) const$/;"	f	class:RayTrace::Cube
+checkCap	Cone.cpp	/^checkCap(const Ray &ray, double t, double r) const$/;"	f	class:RayTrace::Cone
+checkCap	Cylinder.cpp	/^checkCap(const Ray &ray, double t) const$/;"	f	class:RayTrace::Cylinder
+colorAt	World.cpp	/^colorAt(const Ray &ray, int remaining) const$/;"	f	class:RayTrace::World
+createGroup	ObjFile.cpp	/^createGroup() const$/;"	f	class:RayTrace::ObjFile
+createGroup	ObjFile.cpp	/^createGroup(const ObjGroup &group) const$/;"	f	class:RayTrace::ObjFile
+doUpdate	Camera.cpp	/^doUpdate()$/;"	f	class:RayTrace::Camera
+error	ObjFile.cpp	/^error(const std::string &msg)$/;"	f	class:RayTrace::ObjFile
+filterIntersections	CSG.cpp	/^filterIntersections(Intersections &intersectons) const$/;"	f	class:RayTrace::CSG
+intersect	World.cpp	/^intersect(const Ray &ray) const$/;"	f	class:RayTrace::World
+intersectCaps	Cone.cpp	/^intersectCaps(const Ray &ray, Intersections &intersections) const$/;"	f	class:RayTrace::Cone
+intersectCaps	Cylinder.cpp	/^intersectCaps(const Ray &ray, Intersections &intersections) const$/;"	f	class:RayTrace::Cylinder
+intersectInternal	CSG.cpp	/^intersectInternal(const Ray &ray) const$/;"	f	class:RayTrace::CSG
+intersectInternal	Cone.cpp	/^intersectInternal(const Ray &ray) const$/;"	f	class:RayTrace::Cone
+intersectInternal	Cube.cpp	/^intersectInternal(const Ray &ray) const$/;"	f	class:RayTrace::Cube
+intersectInternal	Cylinder.cpp	/^intersectInternal(const Ray &ray) const$/;"	f	class:RayTrace::Cylinder
+intersectInternal	Sphere.cpp	/^intersectInternal(const Ray &ray) const$/;"	f	class:RayTrace::Sphere
+intersectionAllowed	CSG.cpp	/^intersectionAllowed(const Op &op, bool lhit, bool inl, bool inr)$/;"	f	class:RayTrace::CSG
+isInteger	ObjFile.cpp	/^  bool isInteger(const std::string &str) {$/;"	f	namespace:__anon1
+isReal	ObjFile.cpp	/^  bool isReal(const std::string &str) {$/;"	f	namespace:__anon1
+isShadowed	World.cpp	/^isShadowed(const Point &point) const$/;"	f	class:RayTrace::World
+lighting	RayTrace.cpp	/^lighting(const Object *object, const Material &material, const PointLight &light,$/;"	f	namespace:RayTrace
+line	ObjFile.cpp	/^  static std::string line;$/;"	m	namespace:__anon1	file:
+normal	ObjFile.cpp	/^normal(int i) const$/;"	f	class:RayTrace::ObjFile::Face
+objectPointColor	Pattern.cpp	/^objectPointColor(const Object *object, const Point &point) const$/;"	f	class:RayTrace::Pattern
+point	ObjFile.cpp	/^point(int i) const$/;"	f	class:RayTrace::ObjFile::Face
+pointNormalInternal	CSG.cpp	/^pointNormalInternal(const Point &) const$/;"	f	class:RayTrace::CSG
+pointNormalInternal	Cone.cpp	/^pointNormalInternal(const Point &point) const$/;"	f	class:RayTrace::Cone
+pointNormalInternal	Cube.cpp	/^pointNormalInternal(const Point &point) const$/;"	f	class:RayTrace::Cube
+pointNormalInternal	Cylinder.cpp	/^pointNormalInternal(const Point &point) const$/;"	f	class:RayTrace::Cylinder
+pointNormalInternal	Sphere.cpp	/^pointNormalInternal(const Point &point) const$/;"	f	class:RayTrace::Sphere
+rayForPixel	Camera.cpp	/^rayForPixel(double x, double y) const$/;"	f	class:RayTrace::Camera
+read	ObjFile.cpp	/^read()$/;"	f	class:RayTrace::ObjFile
+readFace	ObjFile.cpp	/^readFace(const std::string &line)$/;"	f	class:RayTrace::ObjFile
+readGroupName	ObjFile.cpp	/^readGroupName(const std::string &line)$/;"	f	class:RayTrace::ObjFile
+readLine	ObjFile.cpp	/^  bool readLine(FILE *fp, std::string &line) {$/;"	f	namespace:__anon1
+readMaterial	ObjFile.cpp	/^readMaterial(const std::string &line)$/;"	f	class:RayTrace::ObjFile
+readParameterVertex	ObjFile.cpp	/^readParameterVertex(const std::string &)$/;"	f	class:RayTrace::ObjFile
+readTextureVertex	ObjFile.cpp	/^readTextureVertex(const std::string &line)$/;"	f	class:RayTrace::ObjFile
+readVertex	ObjFile.cpp	/^readVertex(const std::string &line)$/;"	f	class:RayTrace::ObjFile
+readVertexNormal	ObjFile.cpp	/^readVertexNormal(const std::string &line)$/;"	f	class:RayTrace::ObjFile
+reflectedColor	World.cpp	/^reflectedColor(const IntersectionData &intersectionData, int remaining) const$/;"	f	class:RayTrace::World
+refractedColor	World.cpp	/^refractedColor(const IntersectionData &intersectionData, int remaining) const$/;"	f	class:RayTrace::World
+render	RayTrace.cpp	/^render(Canvas &canvas, const Camera &camera, World &world)$/;"	f	namespace:RayTrace
+schlick	IntersectionData.cpp	/^schlick() const$/;"	f	class:RayTrace::IntersectionData
+shadeHit	World.cpp	/^shadeHit(const IntersectionData &intersectionData, int remaining) const$/;"	f	class:RayTrace::World
+solveQuadratic	RayTrace.cpp	/^solveQuadratic(double a, double b, double c, double &r1, double &r2)$/;"	f	namespace:RayTrace
+stripSpaces	ObjFile.cpp	/^  std::string stripSpaces(const std::string &str) {$/;"	f	namespace:__anon1
+texturePoint	ObjFile.cpp	/^texturePoint(int i) const$/;"	f	class:RayTrace::ObjFile::Face
+toInteger	ObjFile.cpp	/^  int toInteger(const std::string &str) {$/;"	f	namespace:__anon1
+toReal	ObjFile.cpp	/^  double toReal(const std::string &str) {$/;"	f	namespace:__anon1
+viewTransform	RayTrace.cpp	/^viewTransform(const Point &from, const Point &to, const Vector &up)$/;"	f	namespace:RayTrace
+writePPM	Canvas.cpp	/^writePPM(std::ostream &os) const$/;"	f	class:RayTrace::Canvas

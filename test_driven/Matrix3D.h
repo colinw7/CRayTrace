@@ -382,7 +382,7 @@ class Matrix3D {
   // comparison
   int cmp(const Matrix3D &rhs) const {
     auto realCmp = [](double r1, double r2) {
-      return std::abs(r1 - r2) < 1E-6;
+      return std::abs(r1 - r2) < EPSILON();
     };
 
     if (realCmp(m00_, rhs.m00_) && realCmp(m01_, rhs.m01_) && realCmp(m02_, rhs.m02_) &&

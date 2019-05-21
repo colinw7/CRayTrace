@@ -6,6 +6,7 @@
 namespace RayTrace {
 
 class Object;
+class Group;
 class Pattern;
 class Light;
 class Matrix4D;
@@ -22,6 +23,7 @@ class Intersection;
 class Intersections;
 
 using ObjectP  = std::shared_ptr<Object>;
+using GroupP   = std::shared_ptr<Group>;
 using PatternP = std::shared_ptr<Pattern>;
 using LightP   = std::shared_ptr<Light>;
 
