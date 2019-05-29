@@ -130,6 +130,12 @@ namespace {
 
 namespace RayTrace {
 
+ObjFile::
+ObjFile(const std::string &filename) :
+ filename_(filename)
+{
+}
+
 bool
 ObjFile::
 read()

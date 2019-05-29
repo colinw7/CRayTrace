@@ -18,9 +18,13 @@ class Camera {
   }
 
   int hsize() const { return hsize_; }
+  void setHSize(int hsize) { hsize_ = hsize; }
+
   int vsize() const { return vsize_; }
+  void setVSize(int vsize) { vsize_ = vsize; }
 
   double fov() const { return fov_; }
+  void setFov(double fov) { fov_ = fov; }
 
   const Matrix4D &transform() const { return transform_; }
   void setTransform(const Matrix4D &t) { transform_ = t; }

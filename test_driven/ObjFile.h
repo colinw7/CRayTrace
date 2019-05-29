@@ -78,9 +78,7 @@ class ObjFile {
   using Groups = std::map<std::string,ObjGroup>;
 
  public:
-  ObjFile(const std::string &filename) :
-   filename_(filename) {
-  }
+  ObjFile(const std::string &filename);
 
   void setDebug(bool debug=true) { debug_ = debug; }
 

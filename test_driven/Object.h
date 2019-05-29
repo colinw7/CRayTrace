@@ -30,6 +30,10 @@ class Object {
     transform_ *= t;
   }
 
+  void preTransform(const Matrix4D &t) {
+    transform_ = t*transform_;
+  }
+
   Intersections intersect(const Ray &ray) const {
     Ray localRay = ray.transform(transform().inverted());
 

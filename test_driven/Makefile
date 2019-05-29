@@ -21,6 +21,7 @@ Material.cpp \
 Matrix4D.cpp \
 Object.cpp \
 ObjFile.cpp \
+ObjYaml.cpp \
 Pattern.cpp \
 Ray.cpp \
 RayTrace.cpp \
@@ -28,5 +29,6 @@ Sphere.cpp \
 World.cpp \
 
 EXTRA_CFLAGS = \
+-I$(INC_DIR)/CYaml \
 
 include $(MAKE_DIR)/lib.mk
