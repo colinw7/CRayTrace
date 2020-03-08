@@ -11,6 +11,8 @@ class CRayTraceLight {
  public:
   CRayTraceLight(CRayTrace *raytrace, const std::string &name="light");
 
+  CRayTrace *raytrace() const { return raytrace_; }
+
   ACCESSOR(Name    , std::string, name    )
   ACCESSOR(Position, CPoint3D   , position)
   ACCESSOR(Ambient , CRGBA      , ambient )

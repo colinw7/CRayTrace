@@ -120,9 +120,9 @@ read(const string &filename)
 
     const string &name = tag1->getName();
 
-    int num_options = tag1->getNumOptions();
+    int num_options1 = tag1->getNumOptions();
 
-    const CXMLTag::OptionArray &options = tag1->getOptions();
+    const CXMLTag::OptionArray &options1 = tag1->getOptions();
 
     CRayTraceShapeData shape_data;
 
@@ -135,8 +135,8 @@ read(const string &filename)
       double zmax   ( 1000);
       double phi_max(360.0);
 
-      for (int j = 0; j < num_options; ++j) {
-        CXMLTagOption *option = options[j];
+      for (int j = 0; j < num_options1; ++j) {
+        CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
         const string &opt_value = option->getValue();
@@ -170,11 +170,11 @@ read(const string &filename)
     // handle cone
     else if (name == "cone") {
       double radius (1.0);
-      double height (1.0);
+      double cheight (1.0);
       double phi_max(360.0);
 
-      for (int j = 0; j < num_options; ++j) {
-        CXMLTagOption *option = options[j];
+      for (int j = 0; j < num_options1; ++j) {
+        CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
         const string &opt_value = option->getValue();
@@ -183,7 +183,7 @@ read(const string &filename)
           parseReal(opt_name, opt_value, &radius);
         }
         else if (opt_name == "height") {
-          parseReal(opt_name, opt_value, &height);
+          parseReal(opt_name, opt_value, &cheight);
         }
         else if (opt_name == "phi_max") {
           parseReal(opt_name, opt_value, &phi_max);
@@ -193,20 +193,20 @@ read(const string &filename)
         }
       }
 
-      CRayCone *cone = raytrace_->addCone(radius, height, shape_data);
+      CRayCone *cone = raytrace_->addCone(radius, cheight, shape_data);
 
       cone->setPhiLimit(phi_max);
     }
     // handle cylinder
     else if (name == "cylinder") {
-      double radius (1.0);
-      double height (1.0);
-      double zmin   (-1000);
-      double zmax   ( 1000);
-      double phi_max(360.0);
+      double radius  (1.0);
+      double cheight (1.0);
+      double zmin    (-1000);
+      double zmax    ( 1000);
+      double phi_max (360.0);
 
-      for (int j = 0; j < num_options; ++j) {
-        CXMLTagOption *option = options[j];
+      for (int j = 0; j < num_options1; ++j) {
+        CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
         const string &opt_value = option->getValue();
@@ -215,7 +215,7 @@ read(const string &filename)
           parseReal(opt_name, opt_value, &radius);
         }
         else if (opt_name == "height") {
-          parseReal(opt_name, opt_value, &height);
+          parseReal(opt_name, opt_value, &cheight);
         }
         else if (opt_name == "zmin") {
           parseReal(opt_name, opt_value, &zmin);
@@ -231,7 +231,7 @@ read(const string &filename)
         }
       }
 
-      CRayCylinder *cylinder = raytrace_->addCylinder(radius, height, shape_data);
+      CRayCylinder *cylinder = raytrace_->addCylinder(radius, cheight, shape_data);
 
       cylinder->setPhiLimit(phi_max);
 
@@ -243,8 +243,8 @@ read(const string &filename)
       CPoint3D point2 (1,1,1);
       double   phi_max(360.0);
 
-      for (int j = 0; j < num_options; ++j) {
-        CXMLTagOption *option = options[j];
+      for (int j = 0; j < num_options1; ++j) {
+        CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
         const string &opt_value = option->getValue();
@@ -275,8 +275,8 @@ read(const string &filename)
       double zmax   (1.0);
       double phi_max(360.0);
 
-      for (int j = 0; j < num_options; ++j) {
-        CXMLTagOption *option = options[j];
+      for (int j = 0; j < num_options1; ++j) {
+        CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
         const string &opt_value = option->getValue();
@@ -305,12 +305,12 @@ read(const string &filename)
     // handle disk
     else if (name == "disk") {
       double radius      (1.0);
-      double height      (1.0);
+      double dheight     (1.0);
       double inner_radius(0.0);
       double phi_max     (360.0);
 
-      for (int j = 0; j < num_options; ++j) {
-        CXMLTagOption *option = options[j];
+      for (int j = 0; j < num_options1; ++j) {
+        CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
         const string &opt_value = option->getValue();
@@ -319,7 +319,7 @@ read(const string &filename)
           parseReal(opt_name, opt_value, &radius);
         }
         else if (opt_name == "height") {
-          parseReal(opt_name, opt_value, &height);
+          parseReal(opt_name, opt_value, &dheight);
         }
         else if (opt_name == "inner_radius") {
           parseReal(opt_name, opt_value, &inner_radius);
@@ -332,7 +332,7 @@ read(const string &filename)
         }
       }
 
-      CRayDisk *disk = raytrace_->addDisk(radius, height, inner_radius, shape_data);
+      CRayDisk *disk = raytrace_->addDisk(radius, dheight, inner_radius, shape_data);
 
       disk->setPhiLimit(phi_max);
     }
@@ -340,8 +340,8 @@ read(const string &filename)
     else if (name == "cube") {
       double size(1.0);
 
-      for (int j = 0; j < num_options; ++j) {
-        CXMLTagOption *option = options[j];
+      for (int j = 0; j < num_options1; ++j) {
+        CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
         const string &opt_value = option->getValue();
@@ -363,8 +363,8 @@ read(const string &filename)
       double ysize(1.0);
       double zsize(1.0);
 
-      for (int j = 0; j < num_options; ++j) {
-        CXMLTagOption *option = options[j];
+      for (int j = 0; j < num_options1; ++j) {
+        CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
         const string &opt_value = option->getValue();
@@ -405,8 +405,8 @@ read(const string &filename)
       CPoint3D point2(1,0,0);
       CPoint3D point3(0,1,0);
 
-      for (int j = 0; j < num_options; ++j) {
-        CXMLTagOption *option = options[j];
+      for (int j = 0; j < num_options1; ++j) {
+        CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
         const string &opt_value = option->getValue();
@@ -434,8 +434,8 @@ read(const string &filename)
       CPoint3D point2(1,0,0);
       CPoint3D point3(1,1,0);
 
-      for (int j = 0; j < num_options; ++j) {
-        CXMLTagOption *option = options[j];
+      for (int j = 0; j < num_options1; ++j) {
+        CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
         const string &opt_value = option->getValue();
@@ -459,30 +459,30 @@ read(const string &filename)
     }
     // handle model
     else if (name == "model") {
-      string   name           = "";
-      double   scale          = 1.0;
+      string   modelName      = "";
+      double   modelScale     = 1.0;
       bool     auto_scale     = false;
       CPoint3D translate      = CPoint3D(0,0,0);
       bool     auto_translate = false;
       CPoint3D rotate         = CPoint3D(0,0,0);
 
-      for (int j = 0; j < num_options; ++j) {
-        CXMLTagOption *option = options[j];
+      for (int j = 0; j < num_options1; ++j) {
+        CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
         const string &opt_value = option->getValue();
 
         if      (opt_name == "name") {
-          name = opt_value;
+          modelName = opt_value;
 
-          if (name[0] == '$')
-            name = CEnvInst.get(name.substr(1));
+          if (modelName[0] == '$')
+            modelName = CEnvInst.get(modelName.substr(1));
         }
         else if (opt_name == "scale") {
           if (opt_value == "auto")
             auto_scale = true;
           else
-            parseReal(opt_name, opt_value, &scale);
+            parseReal(opt_name, opt_value, &modelScale);
         }
         else if (opt_name == "translate") {
           if      (opt_value == "auto")
@@ -498,8 +498,8 @@ read(const string &filename)
         }
       }
 
-      if (name != "")
-        raytrace_->addModel(name, scale, auto_scale, translate, auto_translate,
+      if (modelName != "")
+        raytrace_->addModel(modelName, modelScale, auto_scale, translate, auto_translate,
                             rotate, shape_data);
     }
     // handle light
@@ -508,8 +508,8 @@ read(const string &filename)
       CPoint3D position = CPoint3D(0,0,0);
       string   color    = "";
 
-      for (int j = 0; j < num_options; ++j) {
-        CXMLTagOption *option = options[j];
+      for (int j = 0; j < num_options1; ++j) {
+        CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
         const string &opt_value = option->getValue();
@@ -541,8 +541,8 @@ read(const string &filename)
     }
     // handle camera
     else if (name == "camera") {
-      for (int j = 0; j < num_options; ++j) {
-        CXMLTagOption *option = options[j];
+      for (int j = 0; j < num_options1; ++j) {
+        CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
         const string &opt_value = option->getValue();
