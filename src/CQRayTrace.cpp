@@ -36,6 +36,8 @@ class CQRayTraceCanvasRenderer : public CRayTraceRenderer {
    canvas_(canvas) {
   }
 
+  CQRayTraceCanvas *canvas() const { return canvas_; }
+
   void setSize(uint w, uint h);
 
   void clear(const CRGBA &bg);

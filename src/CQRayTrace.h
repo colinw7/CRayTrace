@@ -87,7 +87,7 @@ class CQRayTrace : public CQMainWindow {
 
   void checkChanged();
 
-  QSize sizeHint() const { return QSize(800, 800); }
+  QSize sizeHint() const override { return QSize(800, 800); }
 
  private slots:
   void updateSlot();
