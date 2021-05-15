@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'CQRayTrace.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.5.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.8)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,12 +12,14 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'CQRayTrace.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.5.1. It"
+#error "This file was generated using the moc from 5.12.8. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
+QT_WARNING_PUSH
+QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_CQRayTrace_t {
     QByteArrayData data[17];
     char stringdata0[139];
@@ -58,7 +60,7 @@ QT_MOC_LITERAL(16, 133, 5) // "trace"
 static const uint qt_meta_data_CQRayTrace[] = {
 
  // content:
-       7,       // revision
+       8,       // revision
        0,       // classname
        0,    0, // classinfo
        2,   14, // methods
@@ -97,7 +99,7 @@ static const uint qt_meta_data_CQRayTrace[] = {
 void CQRayTrace::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        CQRayTrace *_t = static_cast<CQRayTrace *>(_o);
+        auto *_t = static_cast<CQRayTrace *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->updateSlot(); break;
@@ -107,7 +109,7 @@ void CQRayTrace::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     }
 #ifndef QT_NO_PROPERTIES
     else if (_c == QMetaObject::ReadProperty) {
-        CQRayTrace *_t = static_cast<CQRayTrace *>(_o);
+        auto *_t = static_cast<CQRayTrace *>(_o);
         Q_UNUSED(_t)
         void *_v = _a[0];
         switch (_id) {
@@ -127,7 +129,7 @@ void CQRayTrace::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         default: break;
         }
     } else if (_c == QMetaObject::WriteProperty) {
-        CQRayTrace *_t = static_cast<CQRayTrace *>(_o);
+        auto *_t = static_cast<CQRayTrace *>(_o);
         Q_UNUSED(_t)
         void *_v = _a[0];
         switch (_id) {
@@ -147,10 +149,14 @@ void CQRayTrace::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     Q_UNUSED(_a);
 }
 
-const QMetaObject CQRayTrace::staticMetaObject = {
-    { &CQMainWindow::staticMetaObject, qt_meta_stringdata_CQRayTrace.data,
-      qt_meta_data_CQRayTrace,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
-};
+QT_INIT_METAOBJECT const QMetaObject CQRayTrace::staticMetaObject = { {
+    &CQMainWindow::staticMetaObject,
+    qt_meta_stringdata_CQRayTrace.data,
+    qt_meta_data_CQRayTrace,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
 
 
 const QMetaObject *CQRayTrace::metaObject() const
@@ -160,9 +166,9 @@ const QMetaObject *CQRayTrace::metaObject() const
 
 void *CQRayTrace::qt_metacast(const char *_clname)
 {
-    if (!_clname) return Q_NULLPTR;
+    if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_CQRayTrace.stringdata0))
-        return static_cast<void*>(const_cast< CQRayTrace*>(this));
+        return static_cast<void*>(this);
     return CQMainWindow::qt_metacast(_clname);
 }
 
@@ -181,7 +187,7 @@ int CQRayTrace::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         _id -= 2;
     }
 #ifndef QT_NO_PROPERTIES
-   else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
+    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::RegisterPropertyMetaType) {
         qt_static_metacall(this, _c, _id, _a);
         _id -= 13;
@@ -234,7 +240,7 @@ QT_MOC_LITERAL(13, 71, 3) // "fov"
 static const uint qt_meta_data_CQRayTraceCamera[] = {
 
  // content:
-       7,       // revision
+       8,       // revision
        0,       // classname
        0,    0, // classinfo
        0,    0, // methods
@@ -267,7 +273,7 @@ void CQRayTraceCamera::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
 
 #ifndef QT_NO_PROPERTIES
     if (_c == QMetaObject::ReadProperty) {
-        CQRayTraceCamera *_t = static_cast<CQRayTraceCamera *>(_o);
+        auto *_t = static_cast<CQRayTraceCamera *>(_o);
         Q_UNUSED(_t)
         void *_v = _a[0];
         switch (_id) {
@@ -287,7 +293,7 @@ void CQRayTraceCamera::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         default: break;
         }
     } else if (_c == QMetaObject::WriteProperty) {
-        CQRayTraceCamera *_t = static_cast<CQRayTraceCamera *>(_o);
+        auto *_t = static_cast<CQRayTraceCamera *>(_o);
         Q_UNUSED(_t)
         void *_v = _a[0];
         switch (_id) {
@@ -315,10 +321,14 @@ void CQRayTraceCamera::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
     Q_UNUSED(_a);
 }
 
-const QMetaObject CQRayTraceCamera::staticMetaObject = {
-    { &QObject::staticMetaObject, qt_meta_stringdata_CQRayTraceCamera.data,
-      qt_meta_data_CQRayTraceCamera,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
-};
+QT_INIT_METAOBJECT const QMetaObject CQRayTraceCamera::staticMetaObject = { {
+    &QObject::staticMetaObject,
+    qt_meta_stringdata_CQRayTraceCamera.data,
+    qt_meta_data_CQRayTraceCamera,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
 
 
 const QMetaObject *CQRayTraceCamera::metaObject() const
@@ -328,9 +338,9 @@ const QMetaObject *CQRayTraceCamera::metaObject() const
 
 void *CQRayTraceCamera::qt_metacast(const char *_clname)
 {
-    if (!_clname) return Q_NULLPTR;
+    if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_CQRayTraceCamera.stringdata0))
-        return static_cast<void*>(const_cast< CQRayTraceCamera*>(this));
+        return static_cast<void*>(this);
     return QObject::qt_metacast(_clname);
 }
 
@@ -341,7 +351,7 @@ int CQRayTraceCamera::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     
 #ifndef QT_NO_PROPERTIES
-   if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
+    if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::RegisterPropertyMetaType) {
         qt_static_metacall(this, _c, _id, _a);
         _id -= 13;
@@ -384,7 +394,7 @@ QT_MOC_LITERAL(4, 22, 5) // "color"
 static const uint qt_meta_data_CQRayTraceLight[] = {
 
  // content:
-       7,       // revision
+       8,       // revision
        0,       // classname
        0,    0, // classinfo
        0,    0, // methods
@@ -408,7 +418,7 @@ void CQRayTraceLight::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
 
 #ifndef QT_NO_PROPERTIES
     if (_c == QMetaObject::ReadProperty) {
-        CQRayTraceLight *_t = static_cast<CQRayTraceLight *>(_o);
+        auto *_t = static_cast<CQRayTraceLight *>(_o);
         Q_UNUSED(_t)
         void *_v = _a[0];
         switch (_id) {
@@ -419,7 +429,7 @@ void CQRayTraceLight::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         default: break;
         }
     } else if (_c == QMetaObject::WriteProperty) {
-        CQRayTraceLight *_t = static_cast<CQRayTraceLight *>(_o);
+        auto *_t = static_cast<CQRayTraceLight *>(_o);
         Q_UNUSED(_t)
         void *_v = _a[0];
         switch (_id) {
@@ -438,10 +448,14 @@ void CQRayTraceLight::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
     Q_UNUSED(_a);
 }
 
-const QMetaObject CQRayTraceLight::staticMetaObject = {
-    { &QObject::staticMetaObject, qt_meta_stringdata_CQRayTraceLight.data,
-      qt_meta_data_CQRayTraceLight,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
-};
+QT_INIT_METAOBJECT const QMetaObject CQRayTraceLight::staticMetaObject = { {
+    &QObject::staticMetaObject,
+    qt_meta_stringdata_CQRayTraceLight.data,
+    qt_meta_data_CQRayTraceLight,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
 
 
 const QMetaObject *CQRayTraceLight::metaObject() const
@@ -451,9 +465,9 @@ const QMetaObject *CQRayTraceLight::metaObject() const
 
 void *CQRayTraceLight::qt_metacast(const char *_clname)
 {
-    if (!_clname) return Q_NULLPTR;
+    if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_CQRayTraceLight.stringdata0))
-        return static_cast<void*>(const_cast< CQRayTraceLight*>(this));
+        return static_cast<void*>(this);
     return QObject::qt_metacast(_clname);
 }
 
@@ -464,7 +478,7 @@ int CQRayTraceLight::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     
 #ifndef QT_NO_PROPERTIES
-   if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
+    if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::RegisterPropertyMetaType) {
         qt_static_metacall(this, _c, _id, _a);
         _id -= 4;
@@ -511,7 +525,7 @@ QT_MOC_LITERAL(7, 66, 5) // "color"
 static const uint qt_meta_data_CQRayTraceShape[] = {
 
  // content:
-       7,       // revision
+       8,       // revision
        0,       // classname
        0,    0, // classinfo
        0,    0, // methods
@@ -538,7 +552,7 @@ void CQRayTraceShape::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
 
 #ifndef QT_NO_PROPERTIES
     if (_c == QMetaObject::ReadProperty) {
-        CQRayTraceShape *_t = static_cast<CQRayTraceShape *>(_o);
+        auto *_t = static_cast<CQRayTraceShape *>(_o);
         Q_UNUSED(_t)
         void *_v = _a[0];
         switch (_id) {
@@ -552,7 +566,7 @@ void CQRayTraceShape::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         default: break;
         }
     } else if (_c == QMetaObject::WriteProperty) {
-        CQRayTraceShape *_t = static_cast<CQRayTraceShape *>(_o);
+        auto *_t = static_cast<CQRayTraceShape *>(_o);
         Q_UNUSED(_t)
         void *_v = _a[0];
         switch (_id) {
@@ -573,10 +587,14 @@ void CQRayTraceShape::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
     Q_UNUSED(_a);
 }
 
-const QMetaObject CQRayTraceShape::staticMetaObject = {
-    { &QObject::staticMetaObject, qt_meta_stringdata_CQRayTraceShape.data,
-      qt_meta_data_CQRayTraceShape,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
-};
+QT_INIT_METAOBJECT const QMetaObject CQRayTraceShape::staticMetaObject = { {
+    &QObject::staticMetaObject,
+    qt_meta_stringdata_CQRayTraceShape.data,
+    qt_meta_data_CQRayTraceShape,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
 
 
 const QMetaObject *CQRayTraceShape::metaObject() const
@@ -586,9 +604,9 @@ const QMetaObject *CQRayTraceShape::metaObject() const
 
 void *CQRayTraceShape::qt_metacast(const char *_clname)
 {
-    if (!_clname) return Q_NULLPTR;
+    if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_CQRayTraceShape.stringdata0))
-        return static_cast<void*>(const_cast< CQRayTraceShape*>(this));
+        return static_cast<void*>(this);
     return QObject::qt_metacast(_clname);
 }
 
@@ -599,7 +617,7 @@ int CQRayTraceShape::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     
 #ifndef QT_NO_PROPERTIES
-   if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
+    if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::RegisterPropertyMetaType) {
         qt_static_metacall(this, _c, _id, _a);
         _id -= 7;
@@ -617,4 +635,5 @@ int CQRayTraceShape::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 #endif // QT_NO_PROPERTIES
     return _id;
 }
+QT_WARNING_POP
 QT_END_MOC_NAMESPACE
