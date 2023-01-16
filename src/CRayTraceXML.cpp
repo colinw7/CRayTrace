@@ -31,25 +31,25 @@ read(const string &filename)
   // handle raytracer options
   const CXMLTag::OptionArray &options = tag->getOptions();
 
-  int num_options = tag->getNumOptions();
+  auto num_options = tag->getNumOptions();
 
-  for (int j = 0; j < num_options; ++j) {
+  for (size_t j = 0; j < num_options; ++j) {
     CXMLTagOption *option = options[j];
 
     const string &opt_name  = option->getName ();
     const string &opt_value = option->getValue();
 
     if      (opt_name == "width") {
-      width = CStrUtil::toInteger(opt_value);
+      width = int(CStrUtil::toInteger(opt_value));
     }
     else if (opt_name == "height") {
-      height = CStrUtil::toInteger(opt_value);
+      height = int(CStrUtil::toInteger(opt_value));
     }
     else if (opt_name == "scale") {
       scale = CStrUtil::toReal(opt_value);
     }
     else if (opt_name == "num_samples") {
-      int num_samples = CStrUtil::toInteger(opt_value);
+      int num_samples = int(CStrUtil::toInteger(opt_value));
 
       raytrace_->setNumSamples(num_samples);
     }
@@ -82,17 +82,17 @@ read(const string &filename)
       raytrace_->setFg(fg);
     }
     else if (opt_name == "reflect_depth") {
-      int reflect_depth = CStrUtil::toInteger(opt_value);
+      int reflect_depth = int(CStrUtil::toInteger(opt_value));
 
       raytrace_->setReflectDepth(reflect_depth);
     }
     else if (opt_name == "refract_depth") {
-      int refract_depth = CStrUtil::toInteger(opt_value);
+      int refract_depth = int(CStrUtil::toInteger(opt_value));
 
       raytrace_->setRefractDepth(refract_depth);
     }
     else if (opt_name == "alpha_depth") {
-      int alpha_depth = CStrUtil::toInteger(opt_value);
+      int alpha_depth = int(CStrUtil::toInteger(opt_value));
 
       raytrace_->setAlphaDepth(alpha_depth);
     }
@@ -109,9 +109,9 @@ read(const string &filename)
 
   CXMLTag::TokenArray children = tag->getChildren();
 
-  int num_children = tag->getNumChildren();
+  auto num_children = tag->getNumChildren();
 
-  for (int i = 0; i < num_children; ++i) {
+  for (size_t i = 0; i < num_children; ++i) {
     const CXMLToken *token = children[i];
 
     if (! token->isTag()) continue;
@@ -120,7 +120,7 @@ read(const string &filename)
 
     const string &name = tag1->getName();
 
-    int num_options1 = tag1->getNumOptions();
+    auto num_options1 = tag1->getNumOptions();
 
     const CXMLTag::OptionArray &options1 = tag1->getOptions();
 
@@ -135,7 +135,7 @@ read(const string &filename)
       double zmax   ( 1000);
       double phi_max(360.0);
 
-      for (int j = 0; j < num_options1; ++j) {
+      for (size_t j = 0; j < num_options1; ++j) {
         CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
@@ -173,7 +173,7 @@ read(const string &filename)
       double cheight (1.0);
       double phi_max(360.0);
 
-      for (int j = 0; j < num_options1; ++j) {
+      for (size_t j = 0; j < num_options1; ++j) {
         CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
@@ -205,7 +205,7 @@ read(const string &filename)
       double zmax    ( 1000);
       double phi_max (360.0);
 
-      for (int j = 0; j < num_options1; ++j) {
+      for (size_t j = 0; j < num_options1; ++j) {
         CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
@@ -243,7 +243,7 @@ read(const string &filename)
       CPoint3D point2 (1,1,1);
       double   phi_max(360.0);
 
-      for (int j = 0; j < num_options1; ++j) {
+      for (size_t j = 0; j < num_options1; ++j) {
         CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
@@ -275,7 +275,7 @@ read(const string &filename)
       double zmax   (1.0);
       double phi_max(360.0);
 
-      for (int j = 0; j < num_options1; ++j) {
+      for (size_t j = 0; j < num_options1; ++j) {
         CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
@@ -309,7 +309,7 @@ read(const string &filename)
       double inner_radius(0.0);
       double phi_max     (360.0);
 
-      for (int j = 0; j < num_options1; ++j) {
+      for (size_t j = 0; j < num_options1; ++j) {
         CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
@@ -340,7 +340,7 @@ read(const string &filename)
     else if (name == "cube") {
       double size(1.0);
 
-      for (int j = 0; j < num_options1; ++j) {
+      for (size_t j = 0; j < num_options1; ++j) {
         CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
@@ -350,7 +350,7 @@ read(const string &filename)
           parseReal(opt_name, opt_value, &size);
         }
         else if (! shapeOption(shape_data, opt_name, opt_value)) {
-          std::cerr << "Unrecognised cube option '" << opt_name << "'" << std::endl;
+          std::cerr << "Unrecognised cube option '" << opt_name << "'\n";
         }
       }
 
@@ -363,7 +363,7 @@ read(const string &filename)
       double ysize(1.0);
       double zsize(1.0);
 
-      for (int j = 0; j < num_options1; ++j) {
+      for (size_t j = 0; j < num_options1; ++j) {
         CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
@@ -405,7 +405,7 @@ read(const string &filename)
       CPoint3D point2(1,0,0);
       CPoint3D point3(0,1,0);
 
-      for (int j = 0; j < num_options1; ++j) {
+      for (size_t j = 0; j < num_options1; ++j) {
         CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
@@ -434,7 +434,7 @@ read(const string &filename)
       CPoint3D point2(1,0,0);
       CPoint3D point3(1,1,0);
 
-      for (int j = 0; j < num_options1; ++j) {
+      for (size_t j = 0; j < num_options1; ++j) {
         CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
@@ -466,7 +466,7 @@ read(const string &filename)
       bool     auto_translate = false;
       CPoint3D rotate         = CPoint3D(0,0,0);
 
-      for (int j = 0; j < num_options1; ++j) {
+      for (size_t j = 0; j < num_options1; ++j) {
         CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
@@ -508,7 +508,7 @@ read(const string &filename)
       CPoint3D position = CPoint3D(0,0,0);
       string   color    = "";
 
-      for (int j = 0; j < num_options1; ++j) {
+      for (size_t j = 0; j < num_options1; ++j) {
         CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
@@ -541,7 +541,7 @@ read(const string &filename)
     }
     // handle camera
     else if (name == "camera") {
-      for (int j = 0; j < num_options1; ++j) {
+      for (size_t j = 0; j < num_options1; ++j) {
         CXMLTagOption *option = options1[j];
 
         const string &opt_name  = option->getName ();
@@ -672,7 +672,7 @@ parsePoint(const string &name, const string &value, CPoint3D &point) const
 
   CStrUtil::addWords(value, words, " ,");
 
-  int num_words = words.size();
+  auto num_words = words.size();
 
   if (num_words != 3) {
     std::cerr << "Illegal number of values for '" << name << "'" << std::endl;

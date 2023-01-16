@@ -9,6 +9,7 @@
 #include <CQMenu.h>
 #include <CQDockWidget.h>
 #include <CQUtil.h>
+#include <CQUtilRGBA.h>
 
 #include <QVBoxLayout>
 #include <QPushButton>

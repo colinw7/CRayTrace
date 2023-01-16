@@ -350,9 +350,9 @@ addObject(CGeomObject3D &object, double scale, bool auto_scale,
   for (const auto &face : faces) {
     const CGeomFace3D::VertexList &vertices = face->getVertices();
 
-    uint num_vertices = vertices.size();
+    auto num_vertices = vertices.size();
 
-    for (uint i = 0; i < num_vertices; ++i) {
+    for (size_t i = 0; i < num_vertices; ++i) {
       CGeomVertex3D &vertex = object.getVertex(vertices[i]);
 
       object.addVertexFace(vertices[i], face->getInd());
@@ -377,14 +377,14 @@ addObject(CGeomObject3D &object, double scale, bool auto_scale,
 
     const CGeomFace3D::VertexList &vertices = face->getVertices();
 
-    uint num_vertices = vertices.size();
+    auto num_vertices = vertices.size();
 
     if (num_vertices < 3) continue;
 
     points .resize(num_vertices);
     normals.resize(num_vertices);
 
-    for (uint i = 0; i < num_vertices; ++i) {
+    for (size_t i = 0; i < num_vertices; ++i) {
       CGeomVertex3D &vertex = object.getVertex(vertices[i]);
 
       //points[i] = vertex.getModel();
