@@ -5,9 +5,9 @@ CRayTraceCamera::
 CRayTraceCamera(CRayTrace *raytrace) :
  raytrace_(raytrace)
 {
-  setPosition(CPoint3D (0.5,0.5,-1.0));
-  setLookAt  (CPoint3D (0.5,0.5, 0.0));
-  setUp      (CVector3D(0.0,1.0, 0.0));
+  setPosition(CPoint3D (0.5, 0.5, -1.0));
+  setLookAt  (CPoint3D (0.5, 0.5,  0.0));
+  setUp      (CVector3D(0.0, 1.0,  0.0));
 }
 
 void
@@ -44,7 +44,7 @@ init()
     valid_ = false;
 
   screenToRaster_ =
-    CMatrix3DH::scale(raytrace_->getWidth () - 1.0, raytrace_->getHeight() - 1.0, 1.0)*
+    CMatrix3DH::scale(raytrace_->getWidth() - 1.0, raytrace_->getHeight() - 1.0, 1.0)*
     CMatrix3DH::scale(1.0/(screen[1] - screen[0]), 1.0/(screen[2] - screen[3]), 1.0)*
     CMatrix3DH::translation(-screen[0], -screen[3], 0.0);
 
@@ -53,7 +53,7 @@ init()
 
   if (perspective_) {
     double iz21 = 1.0/(z2 - z1);
-    double itf2 = 1.0/tan(0.5*CMathGen::DegToRad(fov_));
+    double itf2 = 1.0/std::tan(0.5*CMathGen::DegToRad(fov_));
 
     cameraToScreen_ =
       CMatrix3DH(itf2, 0.0 ,     0.0,         0.0,
@@ -94,7 +94,7 @@ getRay(double x, double y) const
   if (perspective_)
     rd = CVector3D(sp).unit();
   else
-    rd = CVector3D(0,0,1);
+    rd = CVector3D(0, 0, 1);
 
   CPoint3D l1 = cameraToWorld_.multiplyPoint(ro);
   CPoint3D l2 = cameraToWorld_.multiplyPoint(ro + rd);
